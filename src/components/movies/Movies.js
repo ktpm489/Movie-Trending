@@ -15,11 +15,14 @@ class Movies extends Shows {
   /**
    * @overrides
    */
-  componentDidMount () {
+  componentDidMount = async () => {
     // calls base class functions
-    this.fetch('nowShowing', '/movie/now_playing')
-    this.fetch('comingSoon', '/movie/upcoming')
-    this.fetch('popular', '/movie/popular')
+      await this.fetch('nowShowing', '/movie/now_playing')
+      await this.fetch('comingSoon', '/movie/upcoming')
+      await this.fetch('popular', '/movie/popular')
+     // this.forceUpdate()
+   
+   
   }
 
   /**
@@ -39,21 +42,21 @@ const mapStateToProps = state => ({
   settings: state.settings
 })
 
-const mapDispatchToProps = dispatch => ({
-  onFetching: () => {
+const mapDispatchToProps = (dispatch) => ({
+  onFetching:  () => {
     dispatch(fetchingMovies())
   },
-  onFetchCompleted: (category, movies) => {
-    dispatch(movieFetched(category, movies))
+  onFetchCompleted:  (category, movies) => {
+      dispatch(movieFetched(category, movies))
   },
-  onShowDetails: (movie) => {
-    dispatch(selectedMovie(movie))
-    dispatch(NavigationActions.navigate({
+  onShowDetails:  (movie) => {
+      dispatch(selectedMovie(movie))
+     dispatch(NavigationActions.navigate({
       routeName: 'MovieDetails',
       params: {
         id: movie.id,
         name: movie.original_title
-      }
+    }
     }))
   }
 })

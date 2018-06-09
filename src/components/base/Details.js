@@ -37,19 +37,19 @@ class Details extends Component {
     console.error("Override!!");
   }
 
-  fetchDetails(imagesUri, peopleUri) {
+  fetchDetails = async (imagesUri, peopleUri) => {
     const { onDetailsFetched, currentTab, config } = this.props;
 
-    axios.get(imagesUri)
-      .then(({data}) => {
+   await axios.get(imagesUri)
+      .then( async ({data}) => {
         const {images, videos} = data;
         data.images = getUriPopulated(images.backdrops, config, 'backdropSize');
         data.videos = this.formVideoUrls(videos.results) 
         onDetailsFetched(data, 'imagesAndVideos', currentTab);
       }).catch((error) => { console.error(error.response); });
 
-    axios.get(peopleUri)
-      .then(({data}) => {
+   await axios.get(peopleUri)
+      .then(async ({data}) => {
         const {crew, cast} = data;
         const people = {
           'directors': getUriPopulated(crew.filter((member) => 
@@ -63,8 +63,8 @@ class Details extends Component {
   /**
    * Forms video urls
    */
-  formVideoUrls(videos) {
-    const filteredVideos = videos.filter((video) => video.site === 'YouTube');
+  formVideoUrls = async (videos) =>  {
+    const filteredVideos =  await videos.filter((video) => video.site === 'YouTube');
     return filteredVideos.map((video) => {
       return {
         name: video.name,

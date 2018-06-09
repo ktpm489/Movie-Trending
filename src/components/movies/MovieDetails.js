@@ -11,7 +11,7 @@ import {
 import { NavigationActions } from 'react-navigation'
 
 class MovieDetails extends Details {
-  componentDidMount () {
+  componentDidMount = async () => {
     const baseUrl = Constant.api_base_url
     const apiKey = Constant.api_key
     const movie_url = '/movie/'
@@ -21,7 +21,8 @@ class MovieDetails extends Details {
     const movieUrl = `${baseUrl}${movie_url}${movieId}?${apiKey}&${appendResponse}`
     const movieCreditsUrl = `${baseUrl}${movie_url}${movieId}/credits?${apiKey}`
 
-    this.fetchDetails(movieUrl, movieCreditsUrl)
+  await this.fetchDetails(movieUrl, movieCreditsUrl)
+  this.forceUpdate()
   }
 
   getSpecialComponent () {
@@ -39,17 +40,17 @@ const mapStateToProps = ({tabNavHelper, search, movies, configuration}) => ({
   config: configuration
 })
 
-const mapDispatchToProps = dispatch => ({
-  onDetailsFetched: (details, category, currentTab) => {
+const mapDispatchToProps =  dispatch => ({
+  onDetailsFetched:   (details, category, currentTab) => {
     if (currentTab === 'Search') {
       dispatch(searchItemDetailsFetched(details, category))
     } else {
       dispatch(movieDetailsFetched(details, category))
     }
   },
-  onCastSelected: (cast, currentTab) => {
+  onCastSelected:  (cast, currentTab) => {
     dispatch(castSelected(cast, currentTab))
-    dispatch(NavigationActions.navigate({routeName: 'CastDetails',
+     dispatch(NavigationActions.navigate({routeName: 'CastDetails',
       params: {
         name: cast.name,
         id: cast.id

@@ -1,7 +1,9 @@
 import React from 'react'
-import {View, Text, Image} from 'react-native'
+import {View, Text} from 'react-native'
 import {connect} from 'react-redux'
-
+import { CustomCachedImage } from "react-native-img-cache";
+import Image from 'react-native-image-progress';
+import ProgressBar from 'react-native-progress/Bar';
 import style from './../../styles/styles'
 
 const EpisodeItem = ({data, config}) => {
@@ -12,10 +14,15 @@ const EpisodeItem = ({data, config}) => {
   return (
     <View style={style.episodeItem}>
       <View style={style.episodePosterContainer}>
-        <Image
+        {/* <Image
           style={style.episodePoster}
           source={{uri: episodeImg}}
-        />
+        /> */}
+        <CustomCachedImage
+          component={Image}
+          indicator={ProgressBar}
+          style={style.episodePoster}
+          source={{ uri: episodeImg }} />
       </View>
       <View style={style.episodeDesc}>
         <Text style={[style.text, style.subHeadingText]}>{name}</Text>

@@ -16,16 +16,17 @@ class TvShows extends Shows {
   /**
    * @overrides
    */
-  componentDidMount () {
+  componentDidMount = async () => {
     // calls base class functions
     if (_.isEmpty(this.props.categories.showingToday)) {
-      this
+    await    this
         .props
         .onFetching()
     }
-    this.fetch('showingToday', '/tv/airing_today')
-    this.fetch('topRated', '/tv/top_rated')
-    this.fetch('popular', '/tv/popular')
+    await this.fetch('showingToday', '/tv/airing_today')
+    await this.fetch('topRated', '/tv/top_rated')
+    await this.fetch('popular', '/tv/popular')
+    this.forceUpdate()
   }
 
   /**

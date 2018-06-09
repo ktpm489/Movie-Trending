@@ -2,11 +2,17 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import {
   Dimensions,
-  Image,
+//Image,
   ScrollView, StyleSheet,
   Text, TouchableOpacity,
   View
 } from 'react-native'
+
+import { CustomCachedImage } from "react-native-img-cache";
+
+import Image from 'react-native-image-progress';
+import * as Progress from 'react-native-progress';
+
 import * as _ from 'lodash'
 import style from './../../styles/styles'
 
@@ -68,10 +74,25 @@ class Carousel extends Component {
 
 const ImageWithTitle = (props) => (
   <View>
-    <Image
+     {/* <Image
       style={props.style}
       source={{uri: props.image.uri}}
-    />
+    />  */}
+    <Image
+      style={props.style}
+      source={{ uri: props.image.uri }}
+      indicator={Progress.Pie}
+      indicatorProps={{
+        size: 10,
+        borderWidth: 0,
+        color: 'rgba(150, 150, 150, 1)',
+        unfilledColor: 'rgba(200, 200, 200, 0.2)'
+      }} />
+    {/* <CustomCachedImage
+      component={Image}
+      indicator={ProgressBar}
+      style={props.style}
+      source={{ uri: props.image.uri }} /> */}
     <View style={styles.absoluteTitle}>
       <Text style={[style.titleText, styles.titleText]}>
         {props.image.original_title || props.image.original_name}

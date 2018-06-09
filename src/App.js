@@ -4,7 +4,7 @@ import {Provider, connect} from 'react-redux'
 import {StyleSheet, View, StatusBar} from 'react-native'
 import Orientation from 'react-native-orientation'
 import promise from 'redux-promise'
-
+import logger from 'redux-logger'
 import AppNavigation from './components/AppNavigation'
 import SplashScreen from './components/SplashScreen'
 import MovieDB from './reducers/root'
@@ -34,7 +34,11 @@ const mapDispatchToProps = dispatch => ({
 })
 
 const AppRoot = connect(mapStateToProps, mapDispatchToProps)(Screen)
+const middleWare = [promise]
 
+if (process.env['NODE_ENV'] === 'development') {
+  middleWare.push(logger)
+}
 export default class App extends Component {
   // Component did mount event
   componentDidMount () {
@@ -44,7 +48,7 @@ export default class App extends Component {
   render () {
     // TODO - Use redux-promise middleware properly
     // https://medium.com/react-native-training/redux-4-ways-95a130da0cdc
-    const createStoreWithMiddleware = applyMiddleware(promise)(createStore)
+    const createStoreWithMiddleware = applyMiddleware(...middleWare)(createStore)
 
     return (
       <Provider store={createStoreWithMiddleware(MovieDB)}>

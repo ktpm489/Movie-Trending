@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import {
-  Image,
   FlatList,
   Text, TouchableOpacity,
   ScrollView, StyleSheet,
@@ -9,6 +8,9 @@ import {
 } from 'react-native'
 import { TouchableImage, TouchableText } from './Touchable'
 import * as _ from 'lodash'
+import { CustomCachedImage } from "react-native-img-cache";
+import Image from 'react-native-image-progress';
+import * as  Progress from 'react-native-progress';
 
 import style from '../../styles/light-theme'
 
@@ -26,11 +28,30 @@ const HorizontalImageList = (props) => (
             onPress={() => props.onPress(image)}
             uri={image.uri}
           />
-          : <Image
-            key={index}
+          : 
+          // <Image
+          //   key={index}
+          //   style={[style.imagePlaceholder, props.style]}
+          //   source={{uri: _.isString(image) ? image : image.uri}}
+          // />
+          <Image
+               key={index}
             style={[style.imagePlaceholder, props.style]}
             source={{uri: _.isString(image) ? image : image.uri}}
-          />
+            indicator={Progress.Pie}
+            indicatorProps={{
+              size: 10,
+              borderWidth: 0,
+              color: 'rgba(150, 150, 150, 1)',
+              unfilledColor: 'rgba(200, 200, 200, 0.2)'
+            }}
+           />
+          // : <CustomCachedImage
+          //   key={index}
+          //   component={Image}
+          //   source={{ uri: _.isString(image) ? image : image.uri }}
+          //   indicator={ProgressBar}
+          //   style={[style.imagePlaceholder, props.style]} />
       ))}
     </ScrollView>
   </View>
