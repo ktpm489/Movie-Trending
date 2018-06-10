@@ -1,7 +1,9 @@
 
 
 import React, { Component } from 'react'
-
+import {
+    Icon
+} from 'react-native-elements'
 import {
     Animated,
     View
@@ -72,7 +74,8 @@ export default class AsyncImage extends Component {
             placeholderColor,
             placeholderSource,
             style,
-            source
+            source,
+            isYoutubeIcon
         } = this.props
 
         const {
@@ -94,7 +97,8 @@ export default class AsyncImage extends Component {
                     {
                         opacity: imageOpacity,
                         position: 'absolute',
-                        resizeMode: 'cover'
+                        resizeMode: 'cover',
+                        overflow: 'hidden',
                        
                     }
                 ]
@@ -102,7 +106,21 @@ export default class AsyncImage extends Component {
             onLoad = {
                 this._onLoad
             } />
-
+            {
+            isYoutubeIcon && < Icon
+                                name='youtube-play'
+                                type='font-awesome'
+                                size={50}
+                                color='#ff0000'
+                                style = {
+                                [ {
+                                    position: 'absolute',
+                                    alignSelf: 'center',
+                                    zIndex: 999,
+                                    elevation: 2
+                                }]
+                             }/>
+            }
             {
                 (placeholderSource && !loaded) &&
                 < Animated.Image

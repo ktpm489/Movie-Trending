@@ -21,14 +21,14 @@ class Shows extends Component {
     console.error('Need to override this in base class')
   }
 
-  fetch =  async (category, route) =>  {
+  fetch =   (category, route) =>  {
     const baseUrl = Constant.api_base_url
     const apiKey = Constant.api_key
     const { onFetchCompleted, config } = this.props
     const { language, region } = this.props.settings
     const uri = `${baseUrl}${route}?${apiKey}&language=${language}&region=${region}&page=1`
-   await axios.get(uri)
-     .then(async ({ data }) => {
+    axios.get(uri)
+     .then( ({ data }) => {
        onFetchCompleted(category,
          getUriPopulated(data.results, config, 'posterSizeForImageList'))
      })

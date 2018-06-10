@@ -3,7 +3,6 @@ import {View, Text, ScrollView} from 'react-native'
 
 import TrailerItem from './TrailerItem'
 import style from '../../styles/light-theme'
-
 const Trailer = (props) => {
   const showTrailers = () => {
     return (
@@ -13,6 +12,7 @@ const Trailer = (props) => {
         style={style.posterList}>
 
         {props.videos.map((video, index) => (
+
           <TrailerItem key={index} video={video} onPlay={props.playVideo} />
         ))}
       </ScrollView>

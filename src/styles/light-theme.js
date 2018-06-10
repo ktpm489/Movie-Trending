@@ -117,7 +117,7 @@ const style = StyleSheet.create({
   trailerPlayIcon: {},
   trailerTitle: {
     textAlign: 'left',
-    paddingLeft: 4
+    paddingLeft: 4,
   },
   centerContentContainer: {
     flex: 1,

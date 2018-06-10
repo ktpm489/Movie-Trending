@@ -22,7 +22,7 @@ class MovieDetails extends Details {
     const movieCreditsUrl = `${baseUrl}${movie_url}${movieId}/credits?${apiKey}`
 
   await this.fetchDetails(movieUrl, movieCreditsUrl)
-  this.forceUpdate()
+  // this.forceUpdate()
   }
 
   getSpecialComponent () {

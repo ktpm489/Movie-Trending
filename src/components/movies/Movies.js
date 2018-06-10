@@ -20,7 +20,7 @@ class Movies extends Shows {
       await this.fetch('nowShowing', '/movie/now_playing')
       await this.fetch('comingSoon', '/movie/upcoming')
       await this.fetch('popular', '/movie/popular')
-       this.forceUpdate()
+      // this.forceUpdate()
    
    
   }
