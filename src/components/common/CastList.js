@@ -9,6 +9,7 @@ import {
 } from 'react-native'
 import { CustomCachedImage } from "react-native-img-cache";
 import Image from 'react-native-image-progress';
+import CustomImage from '../../utilities/globalView'
 import * as Progress from 'react-native-progress';
 import PropTypes from 'prop-types'
 
@@ -39,7 +40,7 @@ const CastList = (props) => {
                 source={{ uri: item.uri }}
                 indicator={ProgressBar}
                 style={style.avatarSize} /> */}
-              <Image
+              {/* <Image
                 style={style.avatarSize}
                 source={{
                   uri: item.uri
@@ -50,7 +51,16 @@ const CastList = (props) => {
                   borderWidth: 0,
                   color: 'rgba(150, 150, 150, 1)',
                   unfilledColor: 'rgba(200, 200, 200, 0.2)'
-                }}/>
+                }}/> */}
+                < CustomImage styles = {
+                  style.avatarSize
+                }
+                linkSource = {
+                  {
+                   uri: item.uri
+                  }
+                }
+                />
               <Text
                 style={[style.text, style.normalText, style.avatarText]}
                 numberOfLines={2}

@@ -5,7 +5,7 @@ import { CustomCachedImage } from "react-native-img-cache";
 import Image from 'react-native-image-progress';
 import ProgressBar from 'react-native-progress/Bar';
 import style from './../../styles/styles'
-
+import CustomImage from '../../utilities/globalView'
 const EpisodeItem = ({data, config}) => {
   const {name, overview, still_path, episode_number} = data
   const {secureBaseUrl, stillSize} = config.image
@@ -18,11 +18,20 @@ const EpisodeItem = ({data, config}) => {
           style={style.episodePoster}
           source={{uri: episodeImg}}
         /> */}
-        <CustomCachedImage
+        {/* <CustomCachedImage
           component={Image}
           indicator={ProgressBar}
           style={style.episodePoster}
-          source={{ uri: episodeImg }} />
+          source={{ uri: episodeImg }} /> */}
+          < CustomImage styles = {
+           style.episodePoster
+          }
+          linkSource = {
+            {
+             uri: episodeImg
+            }
+          }
+          />
       </View>
       <View style={style.episodeDesc}>
         <Text style={[style.text, style.subHeadingText]}>{name}</Text>

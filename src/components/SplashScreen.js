@@ -53,7 +53,7 @@ class SplashScreen extends Component {
          }).catch(error => console.log(error.response))
      }).catch(error => console.log(error.response))
 
- }, 5000)
+ }, 1000)
    
   }
 

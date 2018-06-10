@@ -5,6 +5,8 @@ import {bindActionCreators} from 'redux'
 import {View, Text, ActivityIndicator, ScrollView} from 'react-native'
 import axios from 'axios'
 import { CustomCachedImage } from "react-native-img-cache";
+import CustomImage from '../../utilities/globalView'
+
 import Image from 'react-native-image-progress';
 import * as Progress from 'react-native-progress';
 import HorizontalImageList from './ImageList'
@@ -93,7 +95,7 @@ class CastDetails extends Component {
                 uri: details.imageSrc
               }} /> */}
 
-            <Image
+            {/* <Image
               style={[style.avatarSize, style.avatarBigSize]}
               source={{
                 uri: details.imageSrc
@@ -105,6 +107,14 @@ class CastDetails extends Component {
                 color: 'rgba(150, 150, 150, 1)',
                 unfilledColor: 'rgba(200, 200, 200, 0.2)'
               }}
+               /> */}
+
+               < CustomImage styles ={[style.avatarSize, style.avatarBigSize]}
+               linkSource = {
+                 {
+                   uri: details.imageSrc
+                 }
+               }
                />
             {/* <CustomCachedImage
               component={Image}

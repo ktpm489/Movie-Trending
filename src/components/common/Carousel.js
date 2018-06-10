@@ -9,7 +9,7 @@ import {
 } from 'react-native'
 
 import { CustomCachedImage } from "react-native-img-cache";
-
+import CustomImage from '../../utilities/globalView'
 import Image from 'react-native-image-progress';
 import * as Progress from 'react-native-progress';
 
@@ -78,7 +78,7 @@ const ImageWithTitle = (props) => (
       style={props.style}
       source={{uri: props.image.uri}}
     />  */}
-    <Image
+    {/* <Image
       style={props.style}
       source={{ uri: props.image.uri }}
       indicator={Progress.Pie}
@@ -87,7 +87,17 @@ const ImageWithTitle = (props) => (
         borderWidth: 0,
         color: 'rgba(150, 150, 150, 1)',
         unfilledColor: 'rgba(200, 200, 200, 0.2)'
-      }} />
+      }} /> */}
+
+      < CustomImage styles = {
+        props.style
+      }
+      linkSource = {
+        {
+          uri: props.image.uri
+        }
+      }
+      />
     {/* <CustomCachedImage
       component={Image}
       indicator={ProgressBar}

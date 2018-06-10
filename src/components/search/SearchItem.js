@@ -2,6 +2,7 @@ import React from 'react'
 import {View, Text} from 'react-native'
 import { CustomCachedImage } from "react-native-img-cache";
 import Image from 'react-native-image-progress';
+import CustomImage from '../../utilities/globalView'
 import ProgressBar from 'react-native-progress/Bar';
 import style from '../../styles/light-theme'
 
@@ -24,10 +25,19 @@ const SearchItem = ({item, config}) => {
       <View style={[style.searchItemImage, style.imagePlaceholder]}>
         {/* <Image source={{uri}} style={style.searchItemImage} /> */}
 
-        <CustomCachedImage
+        {/* <CustomCachedImage
           component={Image}
           indicator={ProgressBar}
-          source={{ uri }} style={style.searchItemImage} />
+          source={{ uri }} style={style.searchItemImage} /> */}
+          < CustomImage styles = {
+            style.searchItemImage
+          }
+          linkSource = {
+            {
+              uri
+            }
+          }
+          />
       </View>
       <View style={style.searchItemData}>
         <Text style={[style.text, style.headingText]}>{name || title}</Text>

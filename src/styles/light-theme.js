@@ -93,7 +93,9 @@ const style = StyleSheet.create({
   },
   avatarText: {
     maxWidth: 90,
-    textAlign: 'center'
+    textAlign: 'center',
+   // marginLeft: 30,
+    //backgroundColor : 'red'
   },
   imagePlaceholder: {
     backgroundColor: '#C4C4C4'

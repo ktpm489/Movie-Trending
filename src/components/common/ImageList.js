@@ -7,6 +7,7 @@ import {
   View
 } from 'react-native'
 import { TouchableImage, TouchableText } from './Touchable'
+import CustomImage from '../../utilities/globalView'
 import * as _ from 'lodash'
 import { CustomCachedImage } from "react-native-img-cache";
 import Image from 'react-native-image-progress';
@@ -34,18 +35,31 @@ const HorizontalImageList = (props) => (
           //   style={[style.imagePlaceholder, props.style]}
           //   source={{uri: _.isString(image) ? image : image.uri}}
           // />
-          <Image
-               key={index}
-            style={[style.imagePlaceholder, props.style]}
-            source={{uri: _.isString(image) ? image : image.uri}}
-            indicator={Progress.Pie}
-            indicatorProps={{
-              size: 10,
-              borderWidth: 0,
-              color: 'rgba(150, 150, 150, 1)',
-              unfilledColor: 'rgba(200, 200, 200, 0.2)'
-            }}
-           />
+          // <Image
+          //      key={index}
+          //   style={[style.imagePlaceholder, props.style]}
+          //   source={{uri: _.isString(image) ? image : image.uri}}
+          //   indicator={Progress.Pie}
+          //   indicatorProps={{
+          //     size: 10,
+          //     borderWidth: 0,
+          //     color: 'rgba(150, 150, 150, 1)',
+          //     unfilledColor: 'rgba(200, 200, 200, 0.2)'
+          //   }}
+          //  />
+          < CustomImage 
+            key = {
+              index
+            }
+            styles = {
+              [style.imagePlaceholder, props.style]
+            }
+          linkSource = {
+            {
+              uri: _.isString(image) ? image : image.uri
+            }
+          }
+          />
           // : <CustomCachedImage
           //   key={index}
           //   component={Image}
