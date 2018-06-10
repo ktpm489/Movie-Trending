@@ -7,3 +7,8 @@ export function getLinkImgYoutube(linkYoutube) {
     console.log('imgLink' , imgLink)
     return imgLink
 }
+
+export function getIdYoutubeLink(linkYoutube) {
+    let arrMatched = linkYoutube.match(patternParseYoutube)
+    return arrMatched[1] || '70DUmBQytrc'
+}

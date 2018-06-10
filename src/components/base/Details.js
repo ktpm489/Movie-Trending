@@ -78,15 +78,15 @@ class Details extends Component {
   }
 
   playVideo(url) {
-    if (Platform.OS === 'ios') {
+    // if (Platform.OS === 'ios') {
       this.props
         .navigation
         .navigate('VideoPlayer', {url});
-    } else if (Platform.OS === 'android') {
-      Linking
-        .openURL(url)
-        .catch(err => console.error('An error occurred', err));
-    }
+    // } else if (Platform.OS === 'android') {
+    //   Linking
+    //     .openURL(url)
+    //     .catch(err => console.error('An error occurred', err));
+    // }
   }
 
   handleOnScroll = (e) => {
