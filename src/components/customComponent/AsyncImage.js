@@ -8,7 +8,7 @@ import {
     Animated,
     View
 } from 'react-native'
-
+// import { formatLinkImg } from '../.././utilities/globalFunction'
 
 export default class AsyncImage extends Component {
 
@@ -77,7 +77,7 @@ export default class AsyncImage extends Component {
             source,
             isYoutubeIcon
         } = this.props
-
+       // let sourceData = formatLinkImg(source)
         const {
             imageOpacity,
             loaded,
@@ -87,7 +87,8 @@ export default class AsyncImage extends Component {
 
         return ( 
             <View style = {[style,{backgroundColor : 'transparent' ,alignItems:'center', justifyContent: 'center' , borderRadius : 0 }]} >
-            <Animated.Image source = { source }
+                <Animated.Image source={source }
+            index= {Math.random(100).toString()}
             resizeMode = {
                 'cover'
             }
@@ -124,6 +125,7 @@ export default class AsyncImage extends Component {
             {
                 (placeholderSource && !loaded) &&
                 < Animated.Image
+                index={Math.random(100).toString()}
                 source = {  placeholderSource  }
                 style = {
                     [style,

@@ -15,13 +15,15 @@ import * as  Progress from 'react-native-progress';
 
 import style from '../../styles/light-theme'
 
-const HorizontalImageList = (props) => (
+const HorizontalImageList = (props) => {
+  let images = props.images.slice(4)
+  return (
   <View style={style.container}>
     <Title {...props} />
     <ScrollView horizontal
       showsHorizontalScrollIndicator={false}
       style={styles.posterList}>
-      {props.images.map((image, index) => (
+        {images.map((image, index) => (
         props.isTouchableImage
           ? <TouchableImage
             key={index}
@@ -68,8 +70,8 @@ const HorizontalImageList = (props) => (
           //   style={[style.imagePlaceholder, props.style]} />
       ))}
     </ScrollView>
-  </View>
-)
+  </View>)
+}
 
 // TODO: See All should be of normatText. Nesting of text should fix it
 // since TouchableText is involved, the situaion gets complicated.Fix this

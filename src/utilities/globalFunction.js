@@ -12,3 +12,17 @@ export function getIdYoutubeLink(linkYoutube) {
     let arrMatched = linkYoutube.match(patternParseYoutube)
     return arrMatched[1] || '70DUmBQytrc'
 }
+
+export const formatLinkImg = (linkImg) => {
+    // example https://image.tmdb.org/t/p/w185/roYyPiQDQKmIKUEhO912693tSja.jpg
+    let link = linkImg
+   // alert(link)
+    let data = 'https://image.tmdb.org/t/p/w185' + link.slice(link.lastIndexOf('/'))
+    return data
+}
+
+module.exports = {
+    getLinkImgYoutube,
+    formatLinkImg,
+    getIdYoutubeLink
+}

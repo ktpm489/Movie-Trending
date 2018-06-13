@@ -35,22 +35,22 @@ class SplashScreen extends Component {
           // await this.fetch('comingSoon', '/movie/upcoming')
          //  await this.fetch('popular', '/movie/popular')
          }).catch(error => console.log(error.response))
-       await axios.get(uriMoviePopular).
-         then(async ({ data }) => {
-           onFetchCompleted('popular', getUriPopulated(data.results, config, 'posterSizeForImageList'))
-           //   onFetchCompleted('comingSoon', getUriPopulated(data.results, config, 'posterSizeForImageList'))
-           //  onFetchCompleted('popular', getUriPopulated(data.results, config, 'posterSizeForImageList'))
-           // await this.fetch('comingSoon', '/movie/upcoming')
-           //  await this.fetch('popular', '/movie/popular')
-         }).catch(error => console.log(error.response))
-       await axios.get(uriMovieCommingSoon).
-         then(async ({ data }) => {
-           onFetchCompleted('comingSoon', getUriPopulated(data.results, config, 'posterSizeForImageList'))
-           //   onFetchCompleted('comingSoon', getUriPopulated(data.results, config, 'posterSizeForImageList'))
-           //  onFetchCompleted('popular', getUriPopulated(data.results, config, 'posterSizeForImageList'))
-           // await this.fetch('comingSoon', '/movie/upcoming')
-           //  await this.fetch('popular', '/movie/popular')
-         }).catch(error => console.log(error.response))
+      //  await axios.get(uriMoviePopular).
+      //    then(async ({ data }) => {
+      //      onFetchCompleted('popular', getUriPopulated(data.results, config, 'posterSizeForImageList'))
+      //      //   onFetchCompleted('comingSoon', getUriPopulated(data.results, config, 'posterSizeForImageList'))
+      //      //  onFetchCompleted('popular', getUriPopulated(data.results, config, 'posterSizeForImageList'))
+      //      // await this.fetch('comingSoon', '/movie/upcoming')
+      //      //  await this.fetch('popular', '/movie/popular')
+      //    }).catch(error => console.log(error.response))
+      //  await axios.get(uriMovieCommingSoon).
+      //    then(async ({ data }) => {
+      //      onFetchCompleted('comingSoon', getUriPopulated(data.results, config, 'posterSizeForImageList'))
+      //      //   onFetchCompleted('comingSoon', getUriPopulated(data.results, config, 'posterSizeForImageList'))
+      //      //  onFetchCompleted('popular', getUriPopulated(data.results, config, 'posterSizeForImageList'))
+      //      // await this.fetch('comingSoon', '/movie/upcoming')
+      //      //  await this.fetch('popular', '/movie/popular')
+      //    }).catch(error => console.log(error.response))
      }).catch(error => console.log(error.response))
 
  }, 1000)
