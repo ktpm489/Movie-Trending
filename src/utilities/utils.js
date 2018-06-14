@@ -11,15 +11,22 @@ export const getUriPopulated = (shows, config, key) => {
     //show['uri'] = `${image.secureBaseUrl}${image[key]}${path}`
     // to do check here 
    
-    // if (path === null) {
-    //   show['uri'] = imageLoading
+     if (path === ' null ' || path === '' || path === null) {
+       console.log('path', path)
+       show['uri'] = 'https://image.tmdb.org/t/p/w185/kqjL17yufvn9OVLyXYpvtyrFfak.jpg'
+      return show
+      }
     // } else {
     //   //let key= 'w185'
     //if (!image.secureBaseUrl){
     console.log('AA', image.secureBaseUrl)
+    // let object = ' ' + null
+   // console.log(object)
+
+  //  console.log(object === ' null')
     let imageLink = image.secureBaseUrl ? image.secureBaseUrl : 'https://image.tmdb.org/t/p/'
-    show['uri'] = `${imageLink}${'w300'}${path}` 
-   //show['uri'] = `${imageLink}${'w185'}${path}`
+   // show['uri'] = `${imageLink}${'w300'}${path}` 
+   show['uri'] = `${imageLink}${'w185'}${path}`
     // }
     console.log('SHow', show['uri'])
     return show

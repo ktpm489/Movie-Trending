@@ -3,6 +3,7 @@ package com.moviedb;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.rnfs.RNFSPackage;
 import com.inprogress.reactnativeyoutube.ReactNativeYouTube;
 import com.RNFetchBlob.RNFetchBlobPackage;
 import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
@@ -28,6 +29,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RNFSPackage(),
             new ReactNativeYouTube(),
             new RNFetchBlobPackage(),
             new ReactNativeConfigPackage(),
