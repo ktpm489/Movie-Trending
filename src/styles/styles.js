@@ -193,7 +193,8 @@ const style = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 10,
     borderBottomColor: '#e1e1e1',
-    borderBottomWidth: 1
+    borderBottomWidth: 1,
+   // backgroundColor : 'gray'
   },
   episodePosterContainer: {
     flex: 1,
@@ -202,7 +203,9 @@ const style = StyleSheet.create({
   },
   episodePoster: {
     width: 92,
-    height: 52
+    paddingHorizontal: 50,
+    alignSelf: 'center',
+    height: 68
   },
   episodeDesc: {
     flex: 3,

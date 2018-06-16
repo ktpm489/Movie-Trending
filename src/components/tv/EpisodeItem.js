@@ -8,6 +8,7 @@ import style from './../../styles/styles'
 import CustomImage from '../../utilities/globalView'
 const EpisodeItem = ({data, config}) => {
   const {name, overview, still_path, episode_number} = data
+  console.log('EpisodeItem', data)
   const {secureBaseUrl, stillSize} = config.image
   const episodeImg = `${secureBaseUrl}${stillSize}/${still_path}`
 
@@ -33,10 +34,10 @@ const EpisodeItem = ({data, config}) => {
           }
           /> 
       </View>
-      <View style={style.episodeDesc}>
-        <Text style={[style.text, style.subHeadingText]}>{name}</Text>
-        <Text style={[style.secondaryText, style.normalText]}>Episode #{episode_number}</Text>
-        <Text style={[style.text, style.normalText]}>{overview}</Text>
+      <View style={[style.episodeDesc]}>
+        <Text style={[style.text, style.subHeadingText, { color: 'gray' }]}>{name}</Text>
+        <Text style={[style.secondaryText, style.normalText, { color: 'gray' }]}>Episode #{episode_number}</Text>
+        <Text style={[style.text, style.normalText, { color: 'gray' }]}>{overview}</Text>
       </View>
     </View>
   )
