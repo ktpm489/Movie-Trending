@@ -112,6 +112,7 @@ class AllTvShows extends Component {
         .then(async (res) => {
           const data = this.state.data
           const newData = res.data.results;
+          console.log('res.data.total_pages', res.data.total_pages)
           if (res.data.total_pages !== this.state.totalPage) {
             this.setState({ totalPage: res.data.total_pages })
           }
@@ -164,7 +165,7 @@ class AllTvShows extends Component {
           ItemSeparatorComponent={this.renderSeparator}
           ListFooterComponent={this.renderFooter}
           onEndReached={this.retrieveNextPage}
-          onEndReachedThreshold={10}
+          onEndReachedThreshold={1200}
           keyExtractor={(item, index) => index}
         />
     )

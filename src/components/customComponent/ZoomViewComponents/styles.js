@@ -1,5 +1,5 @@
 import { StyleSheet, Platform } from 'react-native'
-import { width, heightScale, verticalScale } from 'common/globalStyles'
+import { width, heightScale, verticalScale } from './globalStyles'
 const ISIOS = Platform.OS === 'ios'
 const topNavBarIOS = heightScale(ISIOS ? 3 : 0)
 const heightNavBar = heightScale(ISIOS ? 11.5 : 8.5)

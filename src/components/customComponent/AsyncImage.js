@@ -6,9 +6,10 @@ import {
 } from 'react-native-elements'
 import {
     Animated,
-    View
+    View, TouchableWithoutFeedback
 } from 'react-native'
-
+import ZoomView from './ZoomViewComponents'
+import { height } from './ZoomViewComponents/globalStyles';
 export default class AsyncImage extends Component {
 
     constructor(props) {
@@ -19,7 +20,8 @@ export default class AsyncImage extends Component {
                 new Animated.Value(1.0) :
                 new Animated.Value(0.0),
             placeholderOpacity: new Animated.Value(1.0),
-            placeholderScale: new Animated.Value(1.0)
+            placeholderScale: new Animated.Value(1.0),
+            modalVisible : false
         }
     }
     _onLoad = () => {
@@ -68,44 +70,86 @@ export default class AsyncImage extends Component {
             }))
         })
     }
+
+
+    pressItem = () => {
+        const { isNeedShowFull, imgDetailsData } = this.props
+        console.log("Press Item", this.state.loaded , imgDetailsData , imgDetailsData.length > 0)
+        if (this.state.loaded && imgDetailsData && imgDetailsData.length > 0) {
+            console.log('PressItem')
+            this.setState({ modalVisible : true })
+        }
+    }
     render() {
         const {
             placeholderColor,
             placeholderSource,
             style,
             source,
-            isYoutubeIcon
+            isYoutubeIcon,
+            imgDetailsData,
+            isNeedShowFull
         } = this.props
-       // let sourceData = formatLinkImg(source)
         const {
             imageOpacity,
             loaded,
             placeholderOpacity,
-            placeholderScale
+            placeholderScale,
+            modalVisible
         } = this.state
 
         return ( 
-            <View style = {[style,{backgroundColor : 'transparent' ,alignItems:'center', justifyContent: 'center' , borderRadius : 0 }]} >
-                <Animated.Image source={source }
-            index= {Math.random(100).toString()}
-            resizeMode = {
-                'cover'
-            }
-            style = {
-                [
-                    style,
-                    {
-                        opacity: imageOpacity,
-                        position: 'absolute',
-                        resizeMode: 'cover',
-                        overflow: 'hidden',
-                       
-                    }
-                ]
-            }
-            onLoad = {
-                this._onLoad
-            } />
+            <View style={[style, { backgroundColor: 'transparent', alignItems: 'center', justifyContent: 'center', borderRadius: 0 }]} >
+             <View style={[style, { backgroundColor: 'transparent', alignItems: 'center', justifyContent: 'center', borderRadius: 0 }]} >
+                {isNeedShowFull ? 
+                    <TouchableWithoutFeedback onPress={this.pressItem}>
+                        <Animated.Image source={source}
+                            index={Math.random(100).toString()}
+                            resizeMode={
+                                'cover'
+                            }
+                            style={
+                                [
+                                    style,
+                                    {
+                                        opacity: imageOpacity,
+                                        position: 'absolute',
+                                        resizeMode: 'cover',
+                                        overflow: 'hidden',
+
+                                    }
+                                ]
+                            }
+                            onLoad={
+                                this._onLoad
+                            } />
+                    </TouchableWithoutFeedback>
+                
+                : 
+                    
+                    <Animated.Image source={source}
+                        index={Math.random(100).toString()}
+                        resizeMode={
+                            'cover'
+                        }
+                        style={
+                            [
+                                style,
+                                {
+                                    opacity: imageOpacity,
+                                    position: 'absolute',
+                                    resizeMode: 'cover',
+                                    overflow: 'hidden',
+
+                                }
+                            ]
+                        }
+                        onLoad={
+                            this._onLoad
+                        } />
+                   
+                
+                } 
             {
             isYoutubeIcon && < Icon
                                 name='youtube-play'
@@ -116,6 +160,9 @@ export default class AsyncImage extends Component {
                                 [ {
                                     position: 'absolute',
                                     alignSelf: 'center',
+                                    paddingVertical: height(20),
+                                    alignContent: 'center',
+                                    justifyContent: 'center',
                                     zIndex: 999,
                                     elevation: 2
                                 }]
@@ -130,7 +177,9 @@ export default class AsyncImage extends Component {
                     [style,
                         {
                             opacity: placeholderOpacity,
-                            position: 'absolute'
+                            position: 'absolute',
+                            resizeMode: 'cover',
+                            overflow: 'hidden'
                         }
                     ]
                 }
@@ -153,7 +202,9 @@ export default class AsyncImage extends Component {
                 }
                 />
             }
-
+               
+            </View>
+            <ZoomView data={imgDetailsData} modalVisible={modalVisible} />
             </View>
         )
     }

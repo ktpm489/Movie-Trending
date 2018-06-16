@@ -1,7 +1,10 @@
 import React, { Component } from 'react'
 import ZoomHeader from './subHeader'
 import ZoomPage from './page'
-import { Alert} from 'react-native'
+import { Alert ,Platform} from 'react-native'
+const ISIOS = Platform.OS === 'ios'
+const RNFS = require('react-native-fs')
+const progressDivider = 1
 export default class Main extends Component {
   constructor (props) {
     super(props)
@@ -68,16 +71,33 @@ export default class Main extends Component {
     console.log('DownLoad Destination', downloadDest)
     let response = RNFS.downloadFile({ fromUrl: url, toFile: downloadDest, begin, progressDownload, backgroundFlag, progressDivider })
     response.promise.then(res => {
+      this.onShowDownloadFunction()
       console.log('DownloadSuccess', res)
     }).catch(err => {
       console.log('Show Error', err)
     })
   }
 
+  onShowDownloadFunction = () => {
+    this.notification && this.notification.show({
+      title: 'Download Files !!!',
+      message: 'Download Files Successfully !!!',
+    })
+  }
+ setNotificatioRefs = (ref) => {
+   this.notification = ref
+ }
+
+  onClickDownload = (index) => {
+    const { data } = this.props
+    console.log('index Click', index, data[index])
+    this.onSaveImage(data[index].url)
+    // this.onShowDownloadFunction()
+  }
   renderHeader = () => {
     const { data } = this.props
     const { showHeader, index } = this.state
-    const { onCloseHeader, onCloseImageView } = this
+    const { onCloseHeader, onCloseImageView, onClickDownload, setNotificatioRefs } = this
     return (
       <ZoomHeader
         data={data}
@@ -85,6 +105,8 @@ export default class Main extends Component {
         showHeader={showHeader}
         animationEnd={onCloseHeader}
         onClickBack={onCloseImageView}
+        onClickDownload={onClickDownload}
+        setNotificatioRefs={setNotificatioRefs}
       />
     )
   }

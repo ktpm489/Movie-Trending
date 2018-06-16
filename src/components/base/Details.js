@@ -148,6 +148,7 @@ class Details extends Component {
 
             <HorizontalImageList
               title="Photos"
+              isNeedShowFull={true}
               images={images || []}
               style={backdropSize}
             />

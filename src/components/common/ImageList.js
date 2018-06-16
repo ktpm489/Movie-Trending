@@ -29,6 +29,7 @@ const HorizontalImageList = (props) => {
   // custom isNeedSliced , isNeedShowFull
   let images = props.isNeedSliced ? ( props.images.length > 10 ?  props.images.slice(5) : props.images) : props.images
   let imgDetailsData = props.isNeedShowFull ? imageData(images) : []
+  console.log('imgDetailsData', imgDetailsData)
   return (
   <View style={style.container}>
     <Title {...props} />
@@ -62,6 +63,7 @@ const HorizontalImageList = (props) => {
           //   }}
           //  />
           < CustomImage 
+             isNeedShowFull={props.isNeedShowFull}
             key = {
               index
             }
@@ -73,6 +75,7 @@ const HorizontalImageList = (props) => {
               uri: _.isString(image) ? image : image.uri
             }
           }
+              imgDetailsData={imgDetailsData}
           />
           // : <CustomCachedImage
           //   key={index}

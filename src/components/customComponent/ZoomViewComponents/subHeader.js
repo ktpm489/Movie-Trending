@@ -1,11 +1,14 @@
 import React from 'react'
 import { View, TouchableOpacity } from 'react-native'
 import * as Animatable from 'react-native-animatable'
-import { icCustomBack } from 'common/globalIcon'
+import Ionicons from 'react-native-vector-icons/Ionicons'
 import styles from './styles'
-import I18n from 'assets/Lang'
+import Notification from 'react-native-in-app-notification';
+const icCustomBack = <Ionicons name='ios-arrow-back' size={30} color={'#FEFEFE'} />
+const icDownload = <Ionicons name='ios-download-outline' size={30} color={'#FEFEFE'} />
 const zoomHeader = (props) => {
-  const { showHeader, index, data, animationEnd, onClickBack } = props
+  const { showHeader, index, data, animationEnd, onClickBack, onClickDownload, setNotificatioRefs } = props
+  const clickDownloadItem = () => {onClickDownload(index)}
   const showData = (
     <Animatable.View onAnimationEnd={animationEnd} animation='fadeOut'
       duration={1000} delay={3000}
@@ -14,11 +17,19 @@ const zoomHeader = (props) => {
         {icCustomBack}
       </TouchableOpacity>
       <Animatable.Text animation='fadeOut' delay={3000} duration={1000}
-        style={styles.txtTitle}>{(index + 1) + space + I18n.t('Initial.of') + space + data.length}</Animatable.Text>
-      <View style={styles.rightView}></View>
+        style={styles.txtTitle}>{(index + 1) + ' ' + 'of' + ' ' + data.length}</Animatable.Text>
+      <View style={styles.rightView}>
+        <TouchableOpacity onPress={clickDownloadItem} activeOpacity={1} style={styles.backBtn}>
+          {icDownload}
+      </TouchableOpacity>
+      </View>
+      <Notification ref={setNotificatioRefs} backgroundColour={'yellow'} closeInterval={1000} />
     </Animatable.View>
   )
-  const hideData = (<View style={styles.mainHeaderContainer} />)
+  const hideData = (<View style={styles.mainHeaderContainer}> 
+    <Notification ref={setNotificatioRefs} backgroundColour={'yellow'} closeInterval={1000} />
+    </View>
+  )
   return (
     showHeader ? showData : hideData
   )
