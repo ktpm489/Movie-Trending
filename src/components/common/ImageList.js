@@ -15,8 +15,20 @@ import * as  Progress from 'react-native-progress';
 
 import style from '../../styles/light-theme'
 
+export const imageData = (data) => {
+   let imgList = []
+  data && data.map((image, index) => {
+    let obj = {}
+    obj['url'] = _.isString(image) ? image : image.uri
+    imgList.push(obj)
+  })
+   return imgList
+}
+
 const HorizontalImageList = (props) => {
-  let images = props.images.slice(4)
+  // custom isNeedSliced , isNeedShowFull
+  let images = props.isNeedSliced ? ( props.images.length > 10 ?  props.images.slice(5) : props.images) : props.images
+  let imgDetailsData = props.isNeedShowFull ? imageData(images) : []
   return (
   <View style={style.container}>
     <Title {...props} />
@@ -29,7 +41,7 @@ const HorizontalImageList = (props) => {
             key={index}
             style={[style.imagePlaceholder, props.style]}
             onPress={() => props.onPress(image)}
-            uri={image.uri}
+              uri={_.isString(image) ? image : image.uri}
           />
           : 
           // <Image

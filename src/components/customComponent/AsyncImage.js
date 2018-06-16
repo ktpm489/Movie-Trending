@@ -8,7 +8,6 @@ import {
     Animated,
     View
 } from 'react-native'
-// import { formatLinkImg } from '../.././utilities/globalFunction'
 
 export default class AsyncImage extends Component {
 

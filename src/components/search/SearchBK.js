@@ -22,19 +22,12 @@ class Search extends Component {
     super(props);
     this.state = {
       value: '',
-      currentPage : 1,
-      data: props.results || [],
+      indexPage : 1,
+      data : [],
       totalPage: 2
     }
   }
-  componentDidMount() {
-    // this.setState({
-    //   value: '',
-    //   currentPage: 1,
-    //   data: [],
-    //   totalPage: 2
-    // })
-  }
+
   onTextChange = (e) => {
     // Set value
     this.setState({ value: e });
@@ -50,15 +43,9 @@ class Search extends Component {
     if (value) {
       const url = `${api_base_url}${searchUrl}?${api_key}${lan_region}&query=${encodeURIComponent(value)}`;
       this.props.onSearchingForMoviesEtc();
-  
+
       axios.get(url)
         .then(({data}) => {
-          console.log('data',data)
-          if (data.total_pages !== this.state.totalPage) {
-            this.setState({ totalPage: data.total_pages })
-          }
-          this.setState({ data: data.results})
-
           this.props.onDoneSearchingMoviesEtc(data.results)
         }, (err) => {
           console.error(err.response);
@@ -69,45 +56,10 @@ class Search extends Component {
   onClearText = () => {
     this.setState({
       value: '',
-      currentPage: 1,
+      indexPage: 1,
       data: [],
       totalPage: 2
     })
-  }
-
-  retrieveNextPage = async (flagIsFirstLoad = false) => {
-    const { value , data } = this.state
-    console.log( 'retrieve next page',this.state.currentPage , this.state.totalPage, value)
-    if ((this.state.currentPage < this.state.totalPage) && value)  {
-    //   let page = this.state.currentPage + 1
-    // //  this.props.onSearchingForMoviesEtc();
-   
-
-      this.setState({
-        currentPage: this.state.currentPage + 1
-      });
-
-      let page;
-      if (this.state.currentPage === 1) {
-        page = 2;
-        this.setState({ currentPage: 2 });
-      } else {
-        page = this.state.currentPage + 1;
-      }
-      axios.get(`${'https://api.themoviedb.org/3'}/search/multi?api_key=${'87dfa1c669eea853da609d4968d294be'}&language=en-US&query=${encodeURIComponent(value)}&page=${page}`)
-        .then((res) => {
-          
-          const newData = res.data.results;
-          if (res.data.total_pages !== this.state.totalPage) {
-            this.setState({ totalPage: res.data.total_pages })
-          }
-          let currencyData = data
-          newData.map((item, index) => currencyData.push(item))
-          this.setState({ data: currencyData })
-        //  this.props.onDoneSearchingMoviesEtc(data)
-        })
-        .catch(error => console.error(error.response))
-    }
   }
 
   /**
@@ -122,9 +74,8 @@ class Search extends Component {
   render() {
     const {results, isSearching, onFilterChanged, onSearchResultSelected,
       selectedIndex, config, popular} = this.props;
-      const { data } = this.state 
-    const filteredResults = this.filterSearchResults(data, selectedIndex);
-    console.log('Render Search', data)
+    const filteredResults = this.filterSearchResults(results, selectedIndex);
+
     return (
       <View>
         <SearchBar
@@ -152,7 +103,6 @@ class Search extends Component {
             config={config} 
             items={filteredResults} 
             popular={popular}
-            retrieveNextPage={this.retrieveNextPage}
             onSelectPopular={this.onTextChange}
             onSelect={onSearchResultSelected}/>}
         </View>

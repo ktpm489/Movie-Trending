@@ -56,9 +56,9 @@ export default class Main extends Component {
     )
   }
 
-  onSaveImage = (link = 'https://avatars2.githubusercontent.com/u/7970947?v=3&s=460') => {
+  onSaveImage = (link) => {
    // console.log('link', link)
-    this.downloadFile(false, link)
+    link && this.downloadFile(false, link)
   }
 
   downloadFile = (backgroundFlag, url) => {

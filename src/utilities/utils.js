@@ -3,32 +3,20 @@ const imageLoading = require('../Assets/Image/Loading.gif')
 export const getUriPopulated = (shows, config, key) => {
   const {image} = config
   // decipher imageType from key
-  // ex: posterSizeForImageList, extract poster from string
   const imageType = key.substring(0, key.indexOf('S'))
 
   return shows.map((show) => {
-    const path = show['file_path'] || show[`${imageType}_path`]
-    //show['uri'] = `${image.secureBaseUrl}${image[key]}${path}`
-    // to do check here 
-   
+    //const path = show['file_path'] || show[`${imageType}_path`] || show['backdrop_path'] || show['poster_path']
+   // const path = show['poster_path'] || show['backdrop_path'] || show['file_path'] || show[`${imageType}_path`]
+    const path = show['file_path'] || show[`${imageType}_path`] || show['poster_path'] || show['backdrop_path'] 
+    // console.log('show',  show, imageType,  show['file_path'] , show[`${imageType}_path`])
      if (path === ' null ' || path === '' || path === null) {
-       console.log('path', path)
+      // console.log('path', path)
        show['uri'] = 'https://image.tmdb.org/t/p/w185/kqjL17yufvn9OVLyXYpvtyrFfak.jpg'
       return show
       }
-    // } else {
-    //   //let key= 'w185'
-    //if (!image.secureBaseUrl){
-    console.log('AA', image.secureBaseUrl)
-    // let object = ' ' + null
-   // console.log(object)
-
-  //  console.log(object === ' null')
     let imageLink = image.secureBaseUrl ? image.secureBaseUrl : 'https://image.tmdb.org/t/p/'
-   // show['uri'] = `${imageLink}${'w300'}${path}` 
    show['uri'] = `${imageLink}${'w185'}${path}`
-    // }
-    console.log('SHow', show['uri'])
     return show
   })
 }

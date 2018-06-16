@@ -1,4 +1,7 @@
-
+// use https://github.com/magicismight/react-native-root-toast
+// https://github.com/archriss/react-native-snap-carousel
+// https://github.com/robcalcroft/react-native-in-app-notification
+// dung thang nay https://github.com/prscX/react-native-spruce
 var React = require('react-native');
 var {
     AppRegistry,

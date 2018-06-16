@@ -10,7 +10,8 @@ const APP_CONSTANT = {
   lan_region: '&language=IN-hi&region=IN&page=1',
   goldenRatio: 1.618,
   width,
-  height: height - (tabBarHeight * 2)
+  height: height - (tabBarHeight * 2),
+  api_img_url: Config.TMDB_IMG_URL
 }
 
 export default APP_CONSTANT

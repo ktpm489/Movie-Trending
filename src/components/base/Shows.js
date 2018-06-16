@@ -61,6 +61,7 @@ class Shows extends Component {
             <HorizontalImageList
               isTouchableImage
               hasSeeAllOption
+              isNeedSliced={true}
               key={index}
               title={category.toTitle()}
               style={config.style.posterSize}

@@ -72,44 +72,28 @@ class Carousel extends Component {
   }
 }
 
-const ImageWithTitle = (props) => (
+const ImageWithTitle = (props) => {
+  let url= props.image.uri.toString().replace('w185', 'w500')
+  return(
   <View>
-     {/* <Image
-      style={props.style}
-      source={{uri: props.image.uri}}
-    />  */}
-    {/* <Image
-      style={props.style}
-      source={{ uri: props.image.uri }}
-      indicator={Progress.Pie}
-      indicatorProps={{
-        size: 10,
-        borderWidth: 0,
-        color: 'rgba(150, 150, 150, 1)',
-        unfilledColor: 'rgba(200, 200, 200, 0.2)'
-      }} /> */}
 
       < CustomImage styles = {
         props.style
       }
       linkSource = {
         {
-          uri: props.image.uri
+          uri: url
         }
       }
       />
-    {/* <CustomCachedImage
-      component={Image}
-      indicator={ProgressBar}
-      style={props.style}
-      source={{ uri: props.image.uri }} /> */}
+  
     <View style={styles.absoluteTitle}>
       <Text style={[style.titleText, styles.titleText]}>
         {props.image.original_title || props.image.original_name}
       </Text>
     </View>
-  </View>
-)
+  </View>)
+}
 
 const styles = StyleSheet.create({
   absoluteTitle: {

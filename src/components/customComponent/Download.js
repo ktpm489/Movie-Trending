@@ -92,31 +92,6 @@ export default class Main extends Component {
     // 
 
     onShowConfimDialog = () => {
-        // alert('OK')
-        // alert('OK')
-        // Alert.alert('OK',   [
-        //  { text : 'Cancel', onPress : () => console.log('Cancel Press') , style :'cancel' },
-        //    { text: 'OK', onPress : () => console.log('OK Pressed')}
-        //   ])
-        // Alert.alert(
-        //   'Do you want to download it?',
-        //   [
-        //   { text : 'Cancel', onPress : () => console.log('Cancel Press') , style :'cancel' },
-        //   { text: 'OK', onPress : () => console.log('OK Pressed')},
-        //   ]
-        // )
-        // return (
-        //   <View>
-        //     <Dialog>
-        //       <Dialog.Title>Account delete</Dialog.Title>
-        //       <Dialog.Description>
-        //         Do you want to delete this account? You cannot undo this action.
-        //       </Dialog.Description>
-        //       <Dialog.Button label="Cancel" />
-        //       <Dialog.Button label="Delete" />
-        //     </Dialog>
-        //   </View>
-        // )
         // Works on both iOS and Android
         Alert.alert(
             'Downloading...',

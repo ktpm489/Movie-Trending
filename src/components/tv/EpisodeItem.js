@@ -14,16 +14,16 @@ const EpisodeItem = ({data, config}) => {
   return (
     <View style={style.episodeItem}>
       <View style={style.episodePosterContainer}>
-        {/* <Image
+         {/* <Image
           style={style.episodePoster}
           source={{uri: episodeImg}}
-        /> */}
+        />  */}
         {/* <CustomCachedImage
           component={Image}
           indicator={ProgressBar}
           style={style.episodePoster}
           source={{ uri: episodeImg }} /> */}
-          < CustomImage styles = {
+           < CustomImage styles = {
            style.episodePoster
           }
           linkSource = {
@@ -31,7 +31,7 @@ const EpisodeItem = ({data, config}) => {
              uri: episodeImg
             }
           }
-          />
+          /> 
       </View>
       <View style={style.episodeDesc}>
         <Text style={[style.text, style.subHeadingText]}>{name}</Text>
