@@ -3,22 +3,25 @@ import { Image, Text, TouchableOpacity, View } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
 import Constant from '../../../utilities/constants'
 import styles from './styles' 
-const iconStar = <Icon name="md-star" size={16} color="#F5B642" />;
-
+const iconStar = <Icon name="md-star" size={16} color="#F5B642" />
+import {CachedImage} from "react-native-img-cache";
 class CardItem extends Component {
 
     constructor(props) {
         super(props);
     }
     render() {
-        const { info, onShowDetails } = this.props
-   // console.log('info', info)
+        const { info, onShowDetails, isCustom } = this.props
+    console.log('info', info)
         const pressItem =  ()=> onShowDetails(info.item)
-    return (
-        <View style={styles.cardContainer}>
+        let stylesCustomCard = isCustom ? [{ backgroundColor: 'transparent' }, styles.card] : [styles.card]
+        let stylesCustomCardContainer = isCustom ? [{backgroundColor : 'transparent'}, styles.cardContainer] : [styles.cardContainer]
+        return (
+            <View style={stylesCustomCardContainer}>
             <TouchableOpacity activeOpacity={0.9} onPress={pressItem} >
-                <View style={styles.card}>
-                    <Image source={{ uri: `${Constant.api_img_url}/w185/${info.item.poster_path}` }} style={styles.cardImage} />
+                <View style={stylesCustomCard}>
+                   {/* <Image source={{ uri: `${Constant.api_img_url}/w185/${info.item.poster_path}`}} style={styles.cardImage} />  */}
+                     <CachedImage source={{ uri: `${Constant.api_img_url}/w185/${info.item.poster_path}` }} style={styles.cardImage} mutable/> 
                     <View style={styles.cardDetails}>
                         <Text
                             style={styles.cardTitle}

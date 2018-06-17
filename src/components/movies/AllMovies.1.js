@@ -1,16 +1,15 @@
 import React, { Component } from 'react'
-import { Dimensions, StyleSheet, View, FlatList } from 'react-native'
+import { Dimensions, StyleSheet,View, FlatList } from 'react-native'
 import { connect } from 'react-redux'
 import { selectedMovie } from '../../Actions'
 import { NavigationActions } from 'react-navigation'
+import { TouchableImage } from '../common/Touchable'
 import style from '../../styles/light-theme'
 import styles from '../../styles/MovieList'
 import ProgressBar from '../customComponent/ProgressBar'
 import axios from 'axios'
-import CardItem from '../customComponent/CardItem/CardItem'
-import *  as moviesAction from '../../Actions/MovieNewActions'
-import { bindActionCreators } from 'redux'
 import Constant from '../../utilities/constants'
+import CardItem from '../customComponent/CardItem/CardItem'
 // return device width and height
 const { height, width } = Dimensions.get('window')
 const numColumns = parseInt(width / (92 + (5 * 2)))
@@ -23,13 +22,19 @@ class AllMovies extends Component {
       isLoading: true,
       isRefreshing: false,
       currentPage: 1,
-      list: {
-        results: []
-      },
-      dataSource: []
-
+      data: [],
+      totalPage: 2
     }
     this.type = this.getTypeParam(this.props.navigation.state.params.category.toCategory())
+  }
+
+  componentWillMount = () => {
+    // firstLoad
+  // await  this.retrieveNextPage(true)
+    const { categories } = this.props
+    const { category } = this.props.navigation.state.params
+    this.setState({ data: categories[category.toCategory()] , isLoading : false})
+
   }
 
   getTypeParam = (strParams) => {
@@ -48,11 +53,6 @@ class AllMovies extends Component {
         return 'popular'
     }
   }
-
-  componentWillMount = () => {
-    this._retrieveMoviesList()
-  }
-
 
   shallowEqual = (objA, objB) => {
     if (objA === objB) {
@@ -81,7 +81,7 @@ class AllMovies extends Component {
 
     return true;
   }
-
+  
   shallowCompare = (instance, nextProps, nextState) => {
     return (
       !this.shallowEqual(instance.props, nextProps) ||
@@ -90,46 +90,40 @@ class AllMovies extends Component {
   }
 
   shouldComponentUpdate = (nextProps, nextState) => {
-    return this.shallowCompare(this, nextProps, nextState)
+    return this.shallowCompare(this,nextProps ,nextState)
   }
 
-  _retrieveMoviesList(isRefreshed) {
-    this.props.actions.retrieveMoviesList(this.type, this.state.currentPage).then(() => {
-      console.log('RetriveMoviesList')
-      this.setState({
-        list: this.props.list,
-        dataSource: this.props.list.results,
-        isLoading: false
-      })
-    }).catch(error => {console.log('RetrieveMoviesList', error)})
-  }
-
-  retrieveNextPage = () => {
-    if (this.state.currentPage !== this.props.list.total_pages) {
+  retrieveNextPage = async (flagIsFirstLoad = false) => {
+    if (this.state.currentPage < this.state.totalPage) {
+        this.setState({ currentPage : page})
       this.setState({
         currentPage: this.state.currentPage + 1
-      })
+      });
+
       let page;
       if (this.state.currentPage === 1) {
-        page = 2
-        this.setState({ currentPage: 2 })
+        page = 2;
+        this.setState({ currentPage: 2 });
       } else {
-        page = this.state.currentPage + 1
+        page = this.state.currentPage + 1;
       }
-      axios.get(`${Constant.TMDB_URL}/movie/${this.type}?api_key=${Constant.TMDB_API_KEY}&page=${page}`).then(
-        res => {
-          const data = this.state.list.results
-          const newData = res.data.results
-          newData.map((item, index) => data.push(item))
-          this.setState({
-            dataSource: this.state.list.results
-          })
-        }
-      ).catch((err) => { console.log('nextpage', error) })
+      console.log('Retrieve render All Movie', page)
+      console.log('Data', this.state.data)
+        axios.get(`${'https://api.themoviedb.org/3'}/movie/${this.type}?api_key=${'87dfa1c669eea853da609d4968d294be'}&language=en-US&page=${page}`)
+        .then(  async (res) => {
+          const data = this.state.data
+          const newData = res.data.results;
+          if (res.data.total_pages !== this.state.totalPage) {
+            this.setState({ totalPage: res.data.total_pages })
+          }
+         await newData.map((item, index) => data.push(item))
+          console.log('current All Movie', res.data.page)
+          this.setState({ data: data })
+        })
+        .catch(error => console.error(error.response))
     }
+    this.setState({ isLoading: false })
   }
-
-
 
   renderItem = (item, index) => {
     const { onShowDetails } = this.props
@@ -152,12 +146,12 @@ class AllMovies extends Component {
     <View style={styles.seperator} />
   )
   render() {
-
-    const { dataSource, isLoading } = this.state
-    console.log('updated', dataSource)
+    
+    const { data, isLoading } = this.state
+    console.log('updated', data)
     return (
       isLoading ?
-        <View style={styles.progressBar}><ProgressBar /></View>
+        <View style={styles.progresssBar}><ProgressBar /></View>
         :
         <FlatList
           key={'dummy_key_' + numColumns}
@@ -166,15 +160,14 @@ class AllMovies extends Component {
             marginTop: 2,
           }}
           numColumns={1}
-          data={dataSource}
+          data={data}
           renderItem={this.renderItem}
           ItemSeparatorComponent={this.renderSeparator}
           ListFooterComponent={this.renderFooter}
           onEndReached={this.retrieveNextPage}
-          removeClippedSubviews={false}
-          //initialNumToRender={100}
+          initialNumToRender={50}
           onEndReachedThreshold={1200}
-         // maxToRenderPerBatch={100}
+          maxToRenderPerBatch={100}
           keyExtractor={(item, index) => index}
         />
     )
@@ -183,8 +176,7 @@ class AllMovies extends Component {
 
 const mapStateToProps = state => ({
   ...state.movies,
-  config: state.configuration,
-  list: state.moviesNew.list
+  config: state.configuration
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -197,8 +189,7 @@ const mapDispatchToProps = dispatch => ({
         id: movie.id
       }
     }))
-  },
-  actions: bindActionCreators(moviesAction, dispatch)
+  }
 })
 
 

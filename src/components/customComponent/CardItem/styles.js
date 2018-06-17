@@ -3,10 +3,10 @@ const styles = StyleSheet.create({
     cardContainer: {
         flex: 1, 
         marginHorizontal: 6,
-        backgroundColor :'gray'
+       backgroundColor :'gray'
     },
     card : {
-        backgroundColor : 'white',
+       backgroundColor : 'white',
         borderRadius: 3,
         minHeight:  148,
         flexDirection: 'row',
@@ -18,6 +18,8 @@ const styles = StyleSheet.create({
         width : 120,
         borderTopLeftRadius:  3,
         borderBottomLeftRadius:  3,
+        overflow :'hidden',
+        resizeMode: 'contain'
     },
     cardDetails: {
         paddingLeft: 10,

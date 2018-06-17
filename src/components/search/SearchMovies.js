@@ -80,41 +80,39 @@ class Search extends Component {
       axios.get(`${'https://api.themoviedb.org/3'}/search/movie?api_key=${'87dfa1c669eea853da609d4968d294be'}&language=en-US&query=${encodeURIComponent(this.state.query)}&page=${page}`)
         // axios.get(`${TMDB_URL}/search/movie/?api_key=${TMDB_API_KEY}&query=${this.state.query}&page=${page}`)
         .then(res => {
-          const data = this.state.searchResults.results;
-          const newData = res.data.results;
+           const data = this.state.searchResults.results;
+           const newData = res.data.results;
 
-          newData.map((item, index) => data.push(item));
+           newData.map((item, index) => data.push(item));
 
-          this.setState({
+           this.setState({
             dataSource: this.state.searchResults.results
-          });
+       });
         }).catch(err => {
           console.log('next page', err); // eslint-disable-line
         });
     }
   }
   renderSeparator = () => (
-    <View style={{ marginTop: 10}}/>
+    <View style={styles.seperator} />
   )
 
   renderSearchView = () => {
-    let searchView
+    let searchView 
     const { isSearching, onFilterChanged,
       selectedIndex, config, popular } = this.props;
-    const { dataSource } = this.state
-    if (this.state.query && !this.state.isLoading) {
+    const { dataSource } = this.state 
+    if (this.state.query && !this.state.isLoading ) {
       searchView = (
-
+        
         <FlatList
           keyExtractor={(item, index) => index}
           key={'dummy_key_' + 2}
-          removeClippedSubviews={false}
-           ItemSeparatorComponent={this.renderSeparator}
+          ItemSeparatorComponent={this.renderSeparator}
           onEndReached={this.retrieveNextPage}
           onEndReachedThreshold={1200}
           data={dataSource}
-          style={{ marginBottom: 6}}
-          renderItem={(item, index) => <CardItem info={item} isCustom={true} />}
+          renderItem={(item,index) => <CardItem info={item} />}
         />)
     } else {
       searchView = (
@@ -131,18 +129,18 @@ class Search extends Component {
 
   render() {
     const { isSearching, onFilterChanged,
-      selectedIndex, config, popular, onSearchResultSelected } = this.props;
-    const { dataSource, isLoading } = this.state
+      selectedIndex, config, popular,onSearchResultSelected } = this.props;
+    const { dataSource, isLoading} = this.state
     //const filteredResults = this.filterSearchResults(data, selectedIndex);
     //console.log('Render Search', data)
     return (
 
-
+      
       <View style={styles.container}>
         <View style={styles.searchbox}>
           <View style={styles.searchboxBorder}>
             <TextInput
-              style={[styles.textInput]}
+              style={[styles.textInput,{ width: 100 }]}
               autoFocus
               returnKeyType={'search'}
               value={this.state.query}
@@ -155,10 +153,10 @@ class Search extends Component {
             // onPress={onFilterChanged.bind(this)}
             // selectedIndex={selectedIndex}
             buttons={buttons}
-            containerStyle={[{ height: 30, backgroundColor: '#e1e1e1' }]}
+            containerStyle={[{ height: 30, backgroundColor: '#e1e1e1'}]}
           />
         </View>
-
+        
         {this.renderSearchView()}
       </View>
     );

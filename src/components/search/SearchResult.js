@@ -24,7 +24,8 @@ const SearchResult = ({ items, popular, config, onSelect, onSelectPopular, retri
   
   return (
     <View>
-      {items.length ?   <FlatList
+      {items.length > 0 ?  
+       <FlatList
         key={'dummy_key_' + items.length}
         style={[
           style.searchResult,
@@ -33,10 +34,13 @@ const SearchResult = ({ items, popular, config, onSelect, onSelectPopular, retri
         numColumns={1}
         data={items}
         renderItem={renderItem}
+       // removeClippedSubviews={false}
+       // initialNumToRender={50}
         // ItemSeparatorComponent={this.renderSeparator}
        // ListFooterComponent={renderFooter}
         onEndReached={retrieveNextPage}
-        onEndReachedThreshold={1300}
+       // maxToRenderPerBatch={50}
+        onEndReachedThreshold={1200}
         keyExtractor={(item, index) => index}
       /> : 
         <ScrollView style={style.searchResult}>

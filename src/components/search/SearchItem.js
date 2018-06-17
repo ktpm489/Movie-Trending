@@ -9,6 +9,7 @@ class SearchItem extends Component {
 
   render() {
     const { item, config } = this.props
+   // console.log('itemRender', item)
     const { secureBaseUrl, profileSize, posterSizeForImageList } = config.image
     const { name, title, media_type, profile_path, poster_path } = item
     let size = posterSizeForImageList
@@ -17,7 +18,7 @@ class SearchItem extends Component {
       size = profileSize
       path = profile_path
     }
-   const mediaType = media_type.toUpperCase()
+  // const mediaType = media_type.toUpperCase()
     const uri = `${secureBaseUrl}${size}${path}`
     // console.log('uri ', uri)
 
@@ -42,7 +43,7 @@ class SearchItem extends Component {
         </View>
         <View style={style.searchItemData}>
           <Text style={[style.text, style.headingText]}>{name || title}</Text>
-          <Text style={[style.text, style.normalText]}>{mediaType}</Text>
+          {/* <Text style={[style.text, style.normalText]}>{mediaType}</Text> */}
         </View>
       </View>
     )

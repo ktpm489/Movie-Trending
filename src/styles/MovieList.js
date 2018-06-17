@@ -8,9 +8,9 @@ const styles = StyleSheet.create({
     progresssBar : {
          backgroundColor : '#0a0a0a',
          flex: 1,
-         alignSelf: 'center',
          justifyContent: 'center',
          alignItems: 'center',
+         paddingBottom: 20,
     },
     seperator : {
         marginTop : 10,

@@ -7,8 +7,8 @@ import navigation from './navigation'
 import search from './search'
 import tabNavHelper from './tabNavHelper'
 import CastsReducer from './casts'
-import SeasonReducer from './seasons';
-
+import SeasonReducer from './seasons'
+import moviesNew from './moviesNew'
 const laLune = combineReducers({
   movies,
   tvShows,
@@ -18,7 +18,8 @@ const laLune = combineReducers({
   search,
   tabNavHelper,
   cast: CastsReducer,
-  season: SeasonReducer
+  season: SeasonReducer,
+  moviesNew
 })
 
 export default laLune

@@ -9,7 +9,7 @@ import AppNavigation from './components/AppNavigation'
 import SplashScreen from './components/SplashScreen'
 import MovieDB from './reducers/root'
 import {layoutChanged} from './Actions'
-
+import thunk from 'redux-thunk';
 class Screen extends Component {
   render () {
     const {isFetching, onLayoutChange} = this.props
@@ -34,11 +34,12 @@ const mapDispatchToProps = dispatch => ({
 })
 
 const AppRoot = connect(mapStateToProps, mapDispatchToProps)(Screen)
-const middleWare = [promise]
+const middleWare = [promise,thunk]
 
 if (process.env['NODE_ENV'] === 'development') {
   middleWare.push(logger)
 }
+
 export default class App extends Component {
   // Component did mount event
   componentDidMount () {
