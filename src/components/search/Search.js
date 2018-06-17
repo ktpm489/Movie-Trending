@@ -162,7 +162,7 @@ class Search extends Component {
           <ButtonGroup
             lightTheme={false}
             // onPress={onFilterChanged.bind(this)}
-            // selectedIndex={selectedIndex}
+            selectedIndex={0}
             buttons={buttons}
             containerStyle={[{ height: 30, backgroundColor: '#e1e1e1' }]}
           />
