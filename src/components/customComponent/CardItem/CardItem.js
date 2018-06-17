@@ -21,7 +21,7 @@ class CardItem extends Component {
             <TouchableOpacity activeOpacity={0.9} onPress={pressItem} >
                 <View style={stylesCustomCard}>
                    {/* <Image source={{ uri: `${Constant.api_img_url}/w185/${info.item.poster_path}`}} style={styles.cardImage} />  */}
-                     <CachedImage source={{ uri: `${Constant.api_img_url}/w185/${info.item.poster_path}` }} style={styles.cardImage} mutable/> 
+                        <CachedImage source={{ uri: `${Constant.api_img_url}/w185/${(info.item.poster_path || info.item.backdrop_path)}` }} style={styles.cardImage} mutable/> 
                     <View style={styles.cardDetails}>
                         <Text
                             style={styles.cardTitle}

@@ -19,7 +19,7 @@ export const imageData = (data) => {
    let imgList = []
   data && data.map((image, index) => {
     let obj = {}
-    obj['url'] = _.isString(image) ? image : image.uri
+    obj['url'] = _.isString(image) ? image.replace('/w185/', '/w500/') : image.uri.replace('/w185/', '/w500/')
     imgList.push(obj)
   })
    return imgList
@@ -72,7 +72,7 @@ const HorizontalImageList = (props) => {
             }
           linkSource = {
             {
-              uri: _.isString(image) ? image : image.uri
+              uri: props.isNeedShowFull ? (_.isString(image) ? image.replace('/w185/', '/w500/') : image.uri.replace('/w185/', '/w500/')) : (_.isString(image) ? image : image.uri)
             }
           }
               imgDetailsData={imgDetailsData}
