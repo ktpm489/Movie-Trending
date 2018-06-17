@@ -161,7 +161,7 @@ const style = StyleSheet.create({
     paddingLeft: 25
   },
   searchResult: {
-    marginBottom: 200
+    marginBottom: 80
   },
   rightArrow: {
     flexGrow: 1,

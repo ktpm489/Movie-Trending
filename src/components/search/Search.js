@@ -37,7 +37,8 @@ class Search extends Component {
       searchResults: {
         results: []
       },
-      dataSource: []
+      dataSource: [],
+      selectedIndex : 0,
     }
   }
 
@@ -138,10 +139,13 @@ class Search extends Component {
     return searchView;
   }
 
+  onFilterChanged = (index) => {
+    this.setState({ selectedIndex : index })
+  }
   render() {
     const { isSearching, onFilterChanged,
-      selectedIndex, config, popular, onSearchResultSelected } = this.props;
-    const { dataSource, isLoading } = this.state
+       config, popular, onSearchResultSelected } = this.props;
+    const { dataSource, isLoading, selectedIndex } = this.state
     //const filteredResults = this.filterSearchResults(data, selectedIndex);
     //console.log('Render Search', data)
     return (
@@ -154,6 +158,7 @@ class Search extends Component {
               style={[styles.textInput]}
               autoFocus
               returnKeyType={'search'}
+              placeholder="Enter Keyword Search" placeholderTextColor="white"
               value={this.state.query}
               onChange={this._handleTextInput}
               underlineColorAndroid="transparent"
@@ -161,8 +166,8 @@ class Search extends Component {
           </View>
           <ButtonGroup
             lightTheme={false}
-            // onPress={onFilterChanged.bind(this)}
-            selectedIndex={0}
+            onPress={this.onFilterChanged}
+            selectedIndex={selectedIndex}
             buttons={buttons}
             containerStyle={[{ height: 30, backgroundColor: '#e1e1e1' }]}
           />

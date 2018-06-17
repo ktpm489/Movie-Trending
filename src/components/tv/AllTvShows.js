@@ -163,7 +163,7 @@ class AllTvShows extends Component {
           data={data}
           renderItem={this.renderItem}
           ItemSeparatorComponent={this.renderSeparator}
-          ListFooterComponent={this.renderFooter}
+         // ListFooterComponent={this.renderFooter}
           onEndReached={this.retrieveNextPage}
           onEndReachedThreshold={1200}
           keyExtractor={(item, index) => index}
