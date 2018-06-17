@@ -23,11 +23,11 @@ const zoomHeader = (props) => {
           {icDownload}
       </TouchableOpacity>
       </View>
-      <Notification ref={setNotificatioRefs} backgroundColour={'yellow'} closeInterval={1000} />
+      <Notification ref={setNotificatioRefs}  closeInterval={1000} />
     </Animatable.View>
   )
   const hideData = (<View style={styles.mainHeaderContainer}> 
-    <Notification ref={setNotificatioRefs} backgroundColour={'yellow'} closeInterval={1000} />
+    <Notification ref={setNotificatioRefs}  closeInterval={1000} />
     </View>
   )
   return (

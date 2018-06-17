@@ -44,7 +44,16 @@ class Search extends Component {
   _handleTextInput = (event) => {
     const query = event.nativeEvent.text;
     this.setState({ query });
-    if (!query) this.setState({ query: '' });
+    if (!query) 
+    {
+      this.setState({
+        query: '', currentPage: 1,
+        searchResults: {
+          results: []
+        },
+        dataSource: []
+      })
+   }
 
     setTimeout(() => {
       if (query.length) {
