@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Dimensions, StyleSheet, View, FlatList } from 'react-native'
+import { Dimensions, StyleSheet, View, FlatList, Button, TouchableOpacity, Text } from 'react-native'
 import { connect } from 'react-redux'
 import { selectedMovie } from '../../Actions'
 import { NavigationActions } from 'react-navigation'
@@ -11,11 +11,32 @@ import CardItem from '../customComponent/CardItem/CardItem'
 import *  as moviesAction from '../../Actions/MovieNewActions'
 import { bindActionCreators } from 'redux'
 import Constant from '../../utilities/constants'
+import Icon from 'react-native-vector-icons/Ionicons'
+import { FlatImageList } from '../common/ImageList'
 // return device width and height
 const { height, width } = Dimensions.get('window')
 const numColumns = parseInt(width / (92 + (5 * 2)))
-
+const iconShuffle = <Icon name="ios-shuffle" size={40} color="#3CCB3E" style= { {marginRight: 10}} />
 class AllMovies extends Component {
+ 
+  static navigationOptions = ({ navigation }) => {
+
+    const { params = {} } = navigation.state;
+    return {
+      headerRight: (
+        <TouchableOpacity
+          onPress={() => params.handleSave  && params.handleSave()}>
+          {iconShuffle}
+          </TouchableOpacity>
+      )
+    }
+  }
+
+
+  
+
+  
+ 
 
   constructor(props) {
     super(props)
@@ -26,11 +47,13 @@ class AllMovies extends Component {
       list: {
         results: []
       },
+      isGridView : false,
       dataSource: []
 
     }
     this.type = this.getTypeParam(this.props.navigation.state.params.category.toCategory())
   }
+  
 
   getTypeParam = (strParams) => {
     switch (strParams) {
@@ -53,7 +76,15 @@ class AllMovies extends Component {
     this._retrieveMoviesList()
   }
 
+  componentDidMount() {
+    this.props.navigation.setParams({ handleSave: this.saveDetails });
 
+  }
+  saveDetails = () => {
+    console.log('Save Details');
+    this.setState({ isGridView: !this.state.isGridView })
+  }
+ 
   shallowEqual = (objA, objB) => {
     if (objA === objB) {
       return true;
@@ -130,7 +161,6 @@ class AllMovies extends Component {
   }
 
 
-
   renderItem = (item, index) => {
     const { onShowDetails } = this.props
     return (
@@ -154,11 +184,13 @@ class AllMovies extends Component {
   render() {
 
     const { dataSource, isLoading } = this.state
-    console.log('updated', dataSource)
+    const { onShowDetails, categories, config } = this.props
+    console.log('numberColumn', this.props.config.image.numColumns)
     return (
       isLoading ?
         <View style={styles.progressBar}><ProgressBar /></View>
         :
+        !this.state.isGridView ?  
         <FlatList
           key={'dummy_key_' + numColumns}
           style={{
@@ -172,10 +204,19 @@ class AllMovies extends Component {
           ListFooterComponent={this.renderFooter}
           onEndReached={this.retrieveNextPage}
           removeClippedSubviews={false}
-          //initialNumToRender={100}
           onEndReachedThreshold={1200}
-         // maxToRenderPerBatch={100}
           keyExtractor={(item, index) => index}
+        /> 
+        : <FlatImageList
+          numColumns={config.image.numColumns}
+          style={{
+            bgColor: style.screenBackgroundColor,
+            imageStyle: config.style.posterSize
+          }}
+          onEndReached={this.retrieveNextPage}
+          onEndReachedThreshold={1200}
+          images={dataSource}
+          onPress={onShowDetails.bind(this)}
         />
     )
   }

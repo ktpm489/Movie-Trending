@@ -29,6 +29,7 @@ export default class Main extends Component {
 
   onCloseImageView = () => {
     this.setState({ modalVisible: false })
+    this.props.onCloseImageView && this.props.onCloseImageView()
   }
 
   onChangeImage = (index) => {

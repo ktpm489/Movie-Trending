@@ -10,7 +10,7 @@ import {
 } from 'react-native'
 import ZoomView from './ZoomViewComponents'
 import { height } from './ZoomViewComponents/globalStyles';
-export default class AsyncImage extends Component {
+class AsyncImage extends Component {
 
     constructor(props) {
         super(props)
@@ -70,12 +70,17 @@ export default class AsyncImage extends Component {
             }))
         })
     }
+   
 
+
+    onCloseImageView  = () => {
+        this.setState({ modalVisible: false })
+    }
 
     pressItem = () => {
         const { isNeedShowFull, imgDetailsData } = this.props
         console.log("Press Item", this.state.loaded , imgDetailsData , imgDetailsData.length > 0)
-        if (this.state.loaded && imgDetailsData && imgDetailsData.length > 0) {
+        if (this.state.loaded && imgDetailsData && imgDetailsData.length > 0 && isNeedShowFull) {
             console.log('PressItem')
             this.setState({ modalVisible : true })
         }
@@ -88,7 +93,7 @@ export default class AsyncImage extends Component {
             source,
             isYoutubeIcon,
             imgDetailsData,
-            isNeedShowFull
+            isNeedShowFull,
         } = this.props
         const {
             imageOpacity,
@@ -97,7 +102,7 @@ export default class AsyncImage extends Component {
             placeholderScale,
             modalVisible
         } = this.state
-
+        console.log('isNeedShowFull', isNeedShowFull)
         return ( 
             <View style={[style, { backgroundColor: 'transparent', alignItems: 'center', justifyContent: 'center', borderRadius: 0 }]} >
              <View style={[style, { backgroundColor: 'transparent', alignItems: 'center', justifyContent: 'center', borderRadius: 0 }]} >
@@ -204,10 +209,14 @@ export default class AsyncImage extends Component {
             }
                
             </View>
-            <ZoomView data={imgDetailsData} modalVisible={modalVisible} />
+                {isNeedShowFull && <ZoomView data={imgDetailsData} modalVisible={modalVisible} onCloseImageView={this.onCloseImageView} /> }
             </View>
         )
     }
-
-    
 }
+AsyncImage.defaultProps = {
+    isNeedShowFull :false,
+    imgDetailsData : []
+}
+
+export default AsyncImage

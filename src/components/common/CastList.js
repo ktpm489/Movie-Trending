@@ -55,6 +55,7 @@ const CastList = (props) => {
                 < CustomImage styles = {
                   style.avatarSize
                 }
+                isNeedShowFull={false}
                 linkSource = {
                   {
                    uri: item.uri

@@ -12,7 +12,7 @@ import * as _ from 'lodash'
 import { CustomCachedImage } from "react-native-img-cache";
 import Image from 'react-native-image-progress';
 import * as  Progress from 'react-native-progress';
-
+import Constant from '../../utilities/constants'
 import style from '../../styles/light-theme'
 
 export const imageData = (data) => {
@@ -134,17 +134,25 @@ Title.propTypes = HorizontalImageList.propTypes = {
 const FlatImageList = (props) => (
   <FlatList
     key={'dummy_key_' + props.numColumns}
-    style={props.style.bgColor}
+    style={[props.style.bgColor]}
     numColumns={props.numColumns}
     data={props.images}
     renderItem={({item}) =>
+    {
+      
+      return(
       <TouchableImage
         key={item.id}
         onPress={() => props.onPress(item)}
         style={[props.style.imageStyle, styles.flatList]}
-        uri={item.uri}
-      />
+        uri={`${Constant.api_img_url}/w185/${(item.poster_path || item.backdrop_path)}`}
+      />)
     }
+    }
+    onEndReached={props.onEndReached}
+    removeClippedSubviews={false}
+    //initialNumToRender={100}
+    onEndReachedThreshold={1200}
     keyExtractor={(item, index) => index}
   />
 )
@@ -171,7 +179,10 @@ const styles = StyleSheet.create({
     marginLeft: 5
   },
   flatList: {
-    justifyContent: 'space-between'
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    overflow: 'hidden',
+
   }
 })
 

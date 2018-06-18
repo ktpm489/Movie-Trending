@@ -110,7 +110,7 @@ class CastDetails extends Component {
                /> */}
 
                < CustomImage styles ={[style.avatarSize, style.avatarBigSize]}
-               linkSource = {
+                  linkSource = {
                  {
                    uri: details.imageSrc
                  }
@@ -139,6 +139,7 @@ class CastDetails extends Component {
 
             <HorizontalImageList
               isTouchableImage
+              isNeedShowFull={false}
               title='Known For'
               style={config.style.posterSize}
               onPress={this.showDetails.bind(this)}

@@ -6,5 +6,13 @@ export default {
         nowPlayingMovies: {},
         popularMovies: {},
         searchResults: {}
-    }
+    },
+    tv: {
+        details: {},
+        genres: [],
+        list: {},
+        nowPlayingMovies: {},
+        popularMovies: {},
+        searchResults: {}
+    },
 };

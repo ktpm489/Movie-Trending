@@ -3,14 +3,14 @@ import PropTypes from 'prop-types'
 import {
   Text, TouchableOpacity
 } from 'react-native'
-
-import { CustomCachedImage } from "react-native-img-cache";
+import {Image} from 'react-native'
+import { CachedImage, CustomCachedImage } from "react-native-img-cache";
 import CustomImage from '../../utilities/globalView'
-import Image from 'react-native-image-progress';
+// import Image from 'react-native-image-progress';
 import * as Progress from 'react-native-progress';
-
+import ProgressBar from 'react-native-progress/Bar';
 import style from '../../styles/light-theme'
-
+import { width, height } from '../../components/customComponent/ZoomViewComponents/globalStyles'
 export const TouchableImage = (props) => (
   <TouchableOpacity
     onPress={() => props.onPress()}>
@@ -28,7 +28,7 @@ export const TouchableImage = (props) => (
         color: 'rgba(150, 150, 150, 1)',
         unfilledColor: 'rgba(200, 200, 200, 0.2)'
       }} /> */}
-      < CustomImage styles = {
+      {/* < CustomImage styles = {
         props.style
       }
       linkSource = {
@@ -36,13 +36,21 @@ export const TouchableImage = (props) => (
           uri: props.uri
         }
       }
-      />
+      /> */}
 
+    <CachedImage
+      style={[props.style, { width: width(30) }]}
+      source={{ uri: props.uri }} mutable/>  
     {/* <CustomCachedImage
       component={Image}
+      style={[props.style, { width: width(30) }]}
+      source={{ uri: props.uri }} mutable/>  */}
+    {/* <CustomCachedImage
+      component={Image}
+      source={{ uri: props.uri }}
       indicator={ProgressBar}
-      style={props.style}
-      source={{ uri: props.uri }} /> */}
+      style={props.style} 
+       mutable/> */}
   </TouchableOpacity>
 )
 
