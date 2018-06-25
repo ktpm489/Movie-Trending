@@ -203,12 +203,12 @@ class AllMovies extends Component {
           ItemSeparatorComponent={this.renderSeparator}
           ListFooterComponent={this.renderFooter}
           onEndReached={this.retrieveNextPage}
-          removeClippedSubviews={false}
-          onEndReachedThreshold={1200}
+         // removeClippedSubviews={false}
+          onEndReachedThreshold={120}
           keyExtractor={(item, index) => index}
         /> 
         : <FlatImageList
-          numColumns={config.image.numColumns}
+          numColumns={3}
           style={{
             bgColor: style.screenBackgroundColor,
             imageStyle: config.style.posterSize

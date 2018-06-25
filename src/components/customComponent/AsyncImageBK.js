@@ -10,7 +10,11 @@ import {
 } from 'react-native'
 import ZoomView from './ZoomViewComponents'
 import { height } from './ZoomViewComponents/globalStyles';
+import { createImageProgress } from 'react-native-image-progress';
 import FastImage from 'react-native-fast-image';
+
+const Image = createImageProgress(FastImage);
+
 class AsyncImage extends Component {
 
     constructor(props) {
@@ -25,51 +29,8 @@ class AsyncImage extends Component {
             modalVisible : false
         }
     }
-    _onLoad = () => {
-        const {
-            placeholderScale,
-            placeholderOpacity,
-            imageOpacity
-        } = this.state
-
-        Animated.sequence([
-            Animated.parallel([
-                Animated.timing(placeholderScale, {
-                    toValue: 0.7,
-                    duration: 100,
-                    useNativeDriver: true
-                }),
-                Animated.timing(placeholderOpacity, {
-                    toValue: 0.66,
-                    duration: 100,
-                    useNativeDriver: true
-                }),
-            ]),
-            Animated.parallel([
-                Animated.parallel([
-                    Animated.timing(placeholderOpacity, {
-                        toValue: 0,
-                        duration: 200,
-                        useNativeDriver: true
-                    }),
-                    Animated.timing(placeholderScale, {
-                        toValue: 1.2,
-                        duration: 200,
-                        useNativeDriver: true
-                    }),
-                ]),
-                Animated.timing(imageOpacity, {
-                    toValue: 1.0,
-                    delay: 200,
-                    duration: 300,
-                    useNativeDriver: true
-                })
-            ])
-        ]).start(() => {
-            this.setState(() => ({
-                loaded: true
-            }))
-        })
+    _onError = () => {
+        console.log('Error Image')
     }
    
 
@@ -85,10 +46,6 @@ class AsyncImage extends Component {
             console.log('PressItem')
             this.setState({ modalVisible : true })
         }
-    }
-
-    onError = (e) => {
-        console.log('Error Img', e)
     }
     render() {
         const {
@@ -107,60 +64,65 @@ class AsyncImage extends Component {
             placeholderScale,
             modalVisible
         } = this.state
-        // console.log('isNeedShowFull', isNeedShowFull)
+        console.log('isNeedShowFull', isNeedShowFull)
         return ( 
             <View style={[style, { backgroundColor: 'transparent', alignItems: 'center', justifyContent: 'center', borderRadius: 0 }]} >
              <View style={[style, { backgroundColor: 'transparent', alignItems: 'center', justifyContent: 'center', borderRadius: 0 }]} >
                 {isNeedShowFull ? 
                     <TouchableWithoutFeedback onPress={this.pressItem}>
-                            < FastImage source={source}
-                                index={Math.random(100).toString()}
-                                resizeMode={FastImage.resizeMode.cover}
+                            <Image
+                                source={source}
+                                indicator={Progress.Pie}
+                                indicatorProps={{
+                                    size: 80,
+                                    borderWidth: 0,
+                                    color: 'rgba(150, 150, 150, 1)',
+                                    unfilledColor: 'rgba(200, 200, 200, 0.2)'
+                                }}
                                 style={
                                     [
                                         style,
                                         {
-
+                                            opacity: imageOpacity,
                                             position: 'absolute',
-
+                                            resizeMode: 'cover',
                                             overflow: 'hidden',
 
                                         }
                                     ]
                                 }
-                            onLoad={
-                                this._onLoad
-                            } 
-                            onError = {
-                                this._onError
-                            } />
+                                onError={
+                                    this._onError
+                                }
+                                 />
                     </TouchableWithoutFeedback>
                 
                 : 
                     
-                        < FastImage source={source}
-                            index={Math.random(100).toString()}
-                            resizeMode={FastImage.resizeMode.cover}
+                        <Image
+                            source={source}
+                            indicator={Progress.Pie}
+                            indicatorProps={{
+                                size: 80,
+                                borderWidth: 0,
+                                color: 'rgba(150, 150, 150, 1)',
+                                unfilledColor: 'rgba(200, 200, 200, 0.2)'
+                            }}
                             style={
                                 [
                                     style,
                                     {
-
+                                        opacity: imageOpacity,
                                         position: 'absolute',
-
+                                        resizeMode: 'cover',
                                         overflow: 'hidden',
 
                                     }
                                 ]
                             }
-                        onLoad={
-                            this._onLoad
-                        }
-                        
-                         onError={
-                                this._onError
-                            } 
-                            />
+                            onError={
+                            this._onError
+                        } />
                    
                 
                 } 
@@ -182,7 +144,7 @@ class AsyncImage extends Component {
                                 }]
                              }/>
             }
-            {
+            {/* {
                 (placeholderSource && !loaded) &&
                 < Animated.Image
                 index={Math.random(100).toString()}
@@ -208,8 +170,6 @@ class AsyncImage extends Component {
                             backgroundColor: placeholderColor || '#90a4ae',
                             opacity: placeholderOpacity,
                             position: 'absolute',
-                            resizeMode: 'cover',
-                            overflow: 'hidden',
                             transform: [{
                                 scale: placeholderScale
                             }]
@@ -217,7 +177,7 @@ class AsyncImage extends Component {
                     ]
                 }
                 />
-            }
+            } */}
                
             </View>
                 {isNeedShowFull && <ZoomView data={imgDetailsData} modalVisible={modalVisible} onCloseImageView={this.onCloseImageView} /> }

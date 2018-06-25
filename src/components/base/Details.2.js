@@ -120,7 +120,7 @@ class Details extends Component {
       }
     } = this.props;
     const bgImage = `${secureBaseUrl}${posterSizeForBackground}/${poster_path}`;
-    console.log('detail', this.props)
+
     return (
       <View style={[{ flex: 1 }, style.screenBackgroundColor]}>
         <BackgroundImage 
@@ -165,7 +165,6 @@ class Details extends Component {
               items={casts || []}
               onPress={this.showCastDetails.bind(this)}
             />
-            
           </View>
         </ScrollView>
       </View>

@@ -13,23 +13,22 @@ import Constant from '../utilities/constants'
 import style, {primaryColor} from '../styles/light-theme'
 
 class SplashScreen extends Component {
-  componentDidMount =  () => {
+  componentDidMount = async () => {
     const apiKey = Constant.api_key
     let uri = `${Constant.api_base_url}/configuration?${apiKey}`
     const {onFetchCompleted, onConfigFetched, config, settings: {
         language
       }} = this.props
- setTimeout( () => {
-  console.log('Uri', uri)
-    axios.get(uri)
-     .then( ({ data }) => {
+ setTimeout(async () => {
+
+   await axios.get(uri)
+     .then(async ({ data }) => {
        onConfigFetched(data)
       let uri = `${Constant.api_base_url}/movie/now_playing?${apiKey}&language=${language}&page=1`
       let  uriMoviePopular = `${Constant.api_base_url}/movie/popular?${apiKey}&language=${language}&page=1`
       let  uriMovieCommingSoon = `${Constant.api_base_url}/movie/comingSoon?${apiKey}&language=${language}&page=1`
-      console.log('Movie Link', uri)
-        axios.get(uri).
-         then( ({ data }) => {
+       await axios.get(uri).
+         then(async ({ data }) => {
            onFetchCompleted('nowShowing', getUriPopulated(data.results, config, 'posterSizeForImageList'))
         //   onFetchCompleted('comingSoon', getUriPopulated(data.results, config, 'posterSizeForImageList'))
           //  onFetchCompleted('popular', getUriPopulated(data.results, config, 'posterSizeForImageList'))

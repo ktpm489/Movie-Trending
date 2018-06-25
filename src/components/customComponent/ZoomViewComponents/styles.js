@@ -14,6 +14,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     zIndex: 9998,
     opacity: 1,
+    backgroundColor: 'transparent',
     paddingTop: topNavBarIOS,
     height: heightNavBar
   },

@@ -16,9 +16,26 @@ const style = StyleSheet.create({
     marginTop,
     paddingTop: 20,
     paddingBottom: 30,
-    paddingLeft: 10,
+     paddingLeft: 10,
     paddingRight: 10,
     backgroundColor: backgroundColor
+  },
+  detailsContainerScrollEdit: {
+    marginTop
+  },
+  detailsContainerEdit: {
+   // marginTop,
+    //  paddingTop: 20,
+    // flex: 1,
+    //  alignItems: 'center',
+    //  justifyContent:'center',
+    //  alignSelf: 'center',
+    // marginHorizontal: 10,
+   // paddingBottom: 30,
+    // paddingLeft: 10,
+    // paddingRight: 10,
+    backgroundColor :'white'
+  //   backgroundColor: backgroundColor
   },
   flatListContainer: {
     flex: 1,
@@ -98,7 +115,7 @@ const style = StyleSheet.create({
     //backgroundColor : 'red'
   },
   imagePlaceholder: {
-    backgroundColor: '#C4C4C4'
+    backgroundColor: 'transparent'
   },
   screenBackgroundColor: {
     // backgroundColor: 'rgba(4, 4, 4, 0.75)'

@@ -1,17 +1,14 @@
-import React , {Component}  from 'react'
+import React , { PureComponent }  from 'react'
 import { Image, Text, TouchableOpacity, View } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
 import Constant from '../../../utilities/constants'
 import styles from './styles' 
 const iconStar = <Icon name="md-star" size={16} color="#F5B642" />
 import {CachedImage} from "react-native-img-cache";
-class CardItem extends Component {
+const CardItem = (props) => {
 
-    constructor(props) {
-        super(props);
-    }
-    render() {
-        const { info, onShowDetails, isCustom } = this.props
+ 
+        const { info, onShowDetails, isCustom } = props
    // console.log('info', info)
         const pressItem =  ()=> onShowDetails(info.item)
         let stylesCustomCard = isCustom ? [{ backgroundColor: 'transparent' }, styles.card] : [styles.card]
@@ -34,18 +31,17 @@ class CardItem extends Component {
                         <View style={styles.cardNumbers}>
                             <View style={styles.cardStar}>
                                 {iconStar}
-                                <Text style={styles.cardStarRatings}>{info.item.vote_average.toFixed(1)}</Text>
+                                <Text style={styles.cardStarRatings}>{info.item.vote_average}</Text>
                             </View>
                             <Text style={styles.cardRunningHours} />
                         </View>
-                        <Text style={styles.cardDescription} numberOfLines={3}>
+                        {/* <Text style={styles.cardDescription} numberOfLines={3}>
                             {info.item.overview}
-                        </Text>
+                        </Text> */}
                     </View>
                 </View>
             </TouchableOpacity>
         </View>
     )
-}
 }
 export default CardItem

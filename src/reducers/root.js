@@ -9,6 +9,7 @@ import tabNavHelper from './tabNavHelper'
 import CastsReducer from './casts'
 import SeasonReducer from './seasons'
 import moviesNew from './moviesNew'
+import tv from './tvNews'
 const laLune = combineReducers({
   movies,
   tvShows,
@@ -19,7 +20,8 @@ const laLune = combineReducers({
   tabNavHelper,
   cast: CastsReducer,
   season: SeasonReducer,
-  moviesNew
+  moviesNew,
+  tv
 })
 
 export default laLune

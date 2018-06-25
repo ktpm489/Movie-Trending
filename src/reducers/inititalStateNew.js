@@ -5,7 +5,9 @@ export default {
         list: {},
         nowPlayingMovies: {},
         popularMovies: {},
-        searchResults: {}
+        searchResults: {},
+        similarmovies : {},
+        reviewmovies : {},   
     },
     tv: {
         details: {},
@@ -13,6 +15,7 @@ export default {
         list: {},
         nowPlayingMovies: {},
         popularMovies: {},
-        searchResults: {}
+        searchResults: {},
+        similartv : {}
     },
 };

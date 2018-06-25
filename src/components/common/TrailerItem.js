@@ -7,10 +7,10 @@ import styles from '../../styles/light-theme'
 import CustomImage from '../../utilities/globalView'
 const TrailerItem = ({style, video, onPlay}) => {
   let imageLink = getLinkImgYoutube(video.url)
-  console.log('Return ImageLink', imageLink)
-  console.log(' style.backdropSize', JSON.stringify(style.backdropSize))
+ // console.log('Return ImageLink', imageLink)
+ // console.log(' style.backdropSize', JSON.stringify(style.backdropSize))
   const dataSize = style.backdropSize
-  console.log(dataSize.margin , dataSize.width)
+  // console.log(dataSize.margin , dataSize.width)
   return (
     <View>
       <Text style={[styles.text, styles.normalText, styles.trailerTitle , {width : dataSize.width}]} numberOfLines={1}>

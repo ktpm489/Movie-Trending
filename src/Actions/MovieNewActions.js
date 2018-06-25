@@ -123,3 +123,47 @@ export function retrieveMovieDetails(movieId) {
             });
     };
 }
+
+
+
+// MOVIE REVIEW
+export function retrieveMovieReviewSuccess(res) {
+    return {
+        type: types.RETRIEVE_MOVIE_DETAILS_REVIEW_SUCCESS,
+        reviewmovies: res.data
+    };
+}
+
+export function retrieveMovieReviewDetails(movieId,page) {
+    return function (dispatch) {
+        return axios.get(`${Constant.TMDB_URL}/movie/${movieId}/reviews?api_key=${Constant.TMDB_API_KEY}&language=en-US&page=${page}`)
+            .then(res => {
+                dispatch(retrieveMovieReviewSuccess(res));
+            })
+            .catch(error => {
+                console.log('Movie  Review Details', error); //eslint-disable-line
+            });
+    };
+}
+
+// MOVIE SIMILAR
+
+export function retrieveMovieSimilarSuccess(res) {
+    return {
+        type: types.RETRIEVE_MOVIE_DETAILS_SIMILAR_SUCCESS,
+        similarmovies: res.data
+    };
+}
+
+export function retrieveMovieSimilarDetails(movieId, page) {
+    return function (dispatch) {
+        console.log('Link Similar', `${Constant.TMDB_URL}/movie/${movieId}/similar?api_key=${Constant.TMDB_API_KEY}&language=en-US&page=${page}`)
+        return axios.get(`${Constant.TMDB_URL}/movie/${movieId}/similar?api_key=${Constant.TMDB_API_KEY}&language=en-US&page=${page}`)
+            .then(res => {
+                dispatch(retrieveMovieSimilarSuccess(res));
+            })
+            .catch(error => {
+                console.log('Movie  Similar Details', error); //eslint-disable-line
+            });
+    };
+}

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Dimensions, StyleSheet, View, FlatList } from 'react-native'
+import { Dimensions, StyleSheet, View, FlatList, Button, TouchableOpacity, Text } from 'react-native'
 import { FlatImageList } from '../common/ImageList'
 import { connect } from 'react-redux'
 import { selectedTvShow } from '../../Actions'
@@ -10,11 +10,28 @@ import ProgressBar from '../customComponent/ProgressBar'
 import axios from 'axios'
 import Constant from '../../utilities/constants'
 import CardItem from '../customComponent/CardItem/CardItem'
+import Icon from 'react-native-vector-icons/Ionicons'
 // return device width and height
 const {height, width} = Dimensions.get('window')
 const numColumns = parseInt(width / (92 + (5 * 2)))
-
+const iconShuffle = <Icon name="ios-shuffle" size={40} color="#3CCB3E" style={{ marginRight: 10 }} />
 class AllTvShows extends Component {
+
+
+  static navigationOptions = ({ navigation }) => {
+
+    const { params = {} } = navigation.state;
+    return {
+      headerRight: (
+        <TouchableOpacity
+          onPress={() => params.handleSave && params.handleSave()}>
+          {iconShuffle}
+        </TouchableOpacity>
+      )
+    }
+  }
+
+
   constructor(props) {
     super(props)
     this.state = {
@@ -22,7 +39,8 @@ class AllTvShows extends Component {
       isRefreshing: false,
       currentPage: 1,
       data: [],
-      totalPage: 2
+      totalPage: 2,
+      isGridView: false,
     }
     this.type = this.getTypeParam(this.props.navigation.state.params.category.toCategory())
   }
@@ -34,6 +52,16 @@ class AllTvShows extends Component {
     const { category } = this.props.navigation.state.params
     this.setState({ data: categories[category.toCategory()], isLoading: false })
 
+  }
+
+  componentDidMount() {
+    this.props.navigation.setParams({ handleSave: this.saveDetails });
+
+  }
+
+  saveDetails = () => {
+    console.log('Save Details');
+    this.setState({ isGridView: !this.state.isGridView })
   }
 
   getTypeParam = (strParams) => {
@@ -148,26 +176,41 @@ class AllTvShows extends Component {
   render() {
 
     const { data, isLoading } = this.state
+  //  / const { dataSource, isLoading } = this.state
+    const { onShowDetails, categories, config } = this.props
     //console.log('data',data)
     return (
       isLoading ?
         <View style={styles.progresssBar}><ProgressBar /></View>
         :
-        <FlatList
-          key={'dummy_key_' + numColumns}
-          style={{
-            backgroundColor: style.screenBackgroundColor,
-            marginTop: 2,
-          }}
-          numColumns={1}
-          data={data}
-          renderItem={this.renderItem}
-          ItemSeparatorComponent={this.renderSeparator}
-         // ListFooterComponent={this.renderFooter}
-          onEndReached={this.retrieveNextPage}
-          onEndReachedThreshold={1200}
-          keyExtractor={(item, index) => index}
-        />
+        !this.state.isGridView ?
+          <FlatList
+            key={'dummy_key_' + numColumns}
+            style={{
+              backgroundColor: style.screenBackgroundColor,
+              marginTop: 2,
+            }}
+            numColumns={1}
+            data={data}
+            renderItem={this.renderItem}
+            ItemSeparatorComponent={this.renderSeparator}
+            ListFooterComponent={this.renderFooter}
+            onEndReached={this.retrieveNextPage}
+            // removeClippedSubviews={false}
+            onEndReachedThreshold={120}
+            keyExtractor={(item, index) => index}
+          />
+          : <FlatImageList
+            numColumns={3}
+            style={{
+              bgColor: style.screenBackgroundColor,
+              imageStyle: config.style.posterSize
+            }}
+            onEndReached={this.retrieveNextPage}
+            onEndReachedThreshold={1200}
+            images={data}
+            onPress={onShowDetails.bind(this)}
+          />
     )
   }
 }

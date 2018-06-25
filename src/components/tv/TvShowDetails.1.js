@@ -1,10 +1,8 @@
 import React, {Component} from 'react'
-import Details from '../base/DetailsTvCustom'
+import Details from '../base/Details'
 import Constant from '../../utilities/constants'
 import HorizontalImageList from '../common/ImageList'
 import style from '../../styles/light-theme'
-import *  as tvAction from '../../Actions/TvNewActions'
-import { selectedTvShow } from '../../Actions'
 import * as _ from 'lodash'
 import { getUriPopulated } from '../../utilities/utils'
 import { connect } from 'react-redux'
@@ -14,10 +12,9 @@ import {
   tvShowDetailsFetched
 } from '../../Actions'
 import { NavigationActions } from 'react-navigation'
-import { bindActionCreators } from 'redux'
 
 class TvShowDetails extends Details {
-  componentDidMount = async () => {
+  componentDidMount () {
     const baseUrl = Constant.api_base_url
     const apiKey = Constant.api_key
     const tvShow_url = '/tv/'
@@ -27,7 +24,7 @@ class TvShowDetails extends Details {
     const tvShowUrl = `${baseUrl}${tvShow_url}${tvShowId}?${apiKey}&${appendResponse}`
     const tvShowCreditsUrl = `${baseUrl}${tvShow_url}${tvShowId}/credits?${apiKey}`
 
-     await this.fetchDetails(tvShowUrl, tvShowCreditsUrl)
+    this.fetchDetails(tvShowUrl, tvShowCreditsUrl)
   }
 
   showSeasonDetails (season) {
@@ -51,12 +48,10 @@ class TvShowDetails extends Details {
   }
 }
 
-const mapStateToProps = (state) => ({
-  // { tabNavHelper, search, tvShows, configuration } = state
-  details: state.tabNavHelper.currentTab === 'Search' ? state.search.details : state.tvShows.details,
-  currentTab: state.tabNavHelper.currentTab,
-  config: state.configuration,
-  similartv: state.tv.similartv,
+const mapStateToProps = ({tabNavHelper, search, tvShows, configuration}) => ({
+  details: tabNavHelper.currentTab === 'Search' ? search.details : tvShows.details,
+  currentTab: tabNavHelper.currentTab,
+  config: configuration
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -74,20 +69,7 @@ const mapDispatchToProps = dispatch => ({
         name: cast.name,
         id: cast.id
       }}))
-  },
-  onShowDetails: (tvShow) => {
-    dispatch(selectedTvShow(tvShow))
-    dispatch(NavigationActions.navigate({
-      routeName: 'TvShowDetails',
-      params: {
-        name: tvShow.name,
-        id: tvShow.id
-      }
-    }))
-  },
-  actions: bindActionCreators(tvAction, dispatch)
+  }
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(TvShowDetails)
-
-// TODO sua lai similarmovies to similartv

@@ -33,6 +33,16 @@ export default function (state = inititalStateNew.movies , action) {
                 ...state,
                 searchResults: action.searchResults
             }
+        case types.RETRIEVE_MOVIE_DETAILS_SIMILAR_SUCCESS:
+        return {
+            ...state,
+            similarmovies: action.similarmovies
+        }
+        case types.RETRIEVE_MOVIE_DETAILS_REVIEW_SUCCESS:
+        return {
+            ...state,
+            reviewmovies: action.reviewmovies
+        }    
         default:
         return state    
     

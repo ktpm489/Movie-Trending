@@ -118,10 +118,10 @@ class Search extends Component {
         <FlatList
           keyExtractor={(item, index) => index}
           key={'dummy_key_' + 2}
-          removeClippedSubviews={false}
+         // removeClippedSubviews={false}
            ItemSeparatorComponent={this.renderSeparator}
           onEndReached={this.retrieveNextPage}
-          onEndReachedThreshold={1200}
+          onEndReachedThreshold={120}
           data={dataSource}
           style={{ marginBottom: 6}}
           renderItem={(item, index) => <CardItem info={item} isCustom={true} />}

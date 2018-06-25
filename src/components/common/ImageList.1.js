@@ -12,10 +12,9 @@ import * as _ from 'lodash'
 import { CustomCachedImage } from "react-native-img-cache";
 import Image from 'react-native-image-progress';
 import * as  Progress from 'react-native-progress';
-import FastImage from 'react-native-fast-image';
 import Constant from '../../utilities/constants'
 import style from '../../styles/light-theme'
-
+import FastImage from 'react-native-fast-image';
 export const imageData = (data) => {
    let imgList = []
   data && data.map((image, index) => {
@@ -30,7 +29,7 @@ const HorizontalImageList = (props) => {
   // custom isNeedSliced , isNeedShowFull
   let images = props.isNeedSliced ? ( props.images.length > 10 ?  props.images.slice(5) : props.images) : props.images
   let imgDetailsData = props.isNeedShowFull ? imageData(images) : []
-  //console.log('imgDetailsData', imgDetailsData)
+  console.log('imgDetailsData', imgDetailsData)
   return (
   <View style={style.container}>
     <Title {...props} />
@@ -51,6 +50,16 @@ const HorizontalImageList = (props) => {
           //   style={[style.imagePlaceholder, props.style]}
           //   source={{uri: _.isString(image) ? image : image.uri}}
           // />
+
+            <FastImage
+              source={{uri: props.isNeedShowFull ? (_.isString(image) ? image.replace('/w185/', '/w500/') : image.uri.replace('/w185/', '/w500/')) : (_.isString(image) ? image : image.uri)}}
+              key={index}
+              style={
+                [style.imagePlaceholder, props.style]
+              }
+              resizeMode={FastImage.resizeMode.cover}
+            />
+
           // <Image
           //      key={index}
           //   style={[style.imagePlaceholder, props.style]}
@@ -63,27 +72,25 @@ const HorizontalImageList = (props) => {
           //     unfilledColor: 'rgba(200, 200, 200, 0.2)'
           //   }}
           //  />
-          < CustomImage 
-             isNeedShowFull={props.isNeedShowFull}
-            key = {
-              index
-            }
-            styles = {
-              [style.imagePlaceholder, props.style]
-            }
-          linkSource = {
-            {
-              uri: props.isNeedShowFull ? (_.isString(image) ? image.replace('/w185/', '/w500/') : image.uri.replace('/w185/', '/w500/')) : (_.isString(image) ? image : image.uri)
-            }
-          }
-              imgDetailsData={imgDetailsData}
-          />
-          // : <CustomCachedImage
-          //   key={index}
-          //   component={Image}
-          //   source={{ uri: _.isString(image) ? image : image.uri }}
-          //   indicator={ProgressBar}
-          //   style={[style.imagePlaceholder, props.style]} />
+          // < CustomImage 
+          //    isNeedShowFull={props.isNeedShowFull}
+          //   key = {
+          //     index
+          //   }
+          //   styles = {
+          //     [style.imagePlaceholder, props.style]
+          //   }
+          // linkSource = {
+          //   {
+          //     uri: props.isNeedShowFull ? (_.isString(image) ? image.replace('/w185/', '/w500/') : image.uri.replace('/w185/', '/w500/')) : (_.isString(image) ? image : image.uri)
+          //   }
+          // }
+          //     imgDetailsData={imgDetailsData}
+          // />
+
+
+
+          
       ))}
     </ScrollView>
   </View>)
@@ -151,9 +158,9 @@ const FlatImageList = (props) => (
     }
     }
     onEndReached={props.onEndReached}
-   // removeClippedSubviews={false}
+    //removeClippedSubviews={false}
     //initialNumToRender={100}
-    onEndReachedThreshold={120}
+    onEndReachedThreshold={1200}
     keyExtractor={(item, index) => index}
   />
 )

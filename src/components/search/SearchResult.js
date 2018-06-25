@@ -40,7 +40,7 @@ const SearchResult = ({ items, popular, config, onSelect, onSelectPopular, retri
        // ListFooterComponent={renderFooter}
         onEndReached={retrieveNextPage}
        // maxToRenderPerBatch={50}
-        onEndReachedThreshold={1200}
+        onEndReachedThreshold={120}
         keyExtractor={(item, index) => index}
       /> : 
         <ScrollView style={style.searchResult}>

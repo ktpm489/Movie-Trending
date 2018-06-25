@@ -1,13 +1,13 @@
 import { StyleSheet } from 'react-native'
 const styles = StyleSheet.create({
     cardContainer: {
-        flex: 1, 
-        marginHorizontal: 6,
+       // flex: 1, 
+       // marginHorizontal: 6,
        backgroundColor :'gray'
     },
     card : {
        backgroundColor : 'white',
-        borderRadius: 3,
+      //  borderRadius: 3,
         minHeight:  148,
         flexDirection: 'row',
         paddingRight:  16,
