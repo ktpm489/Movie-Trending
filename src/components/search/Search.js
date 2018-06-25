@@ -110,7 +110,7 @@ class Search extends Component {
   renderSearchView = () => {
     let searchView
     const { isSearching, onFilterChanged,
-      selectedIndex, config, popular } = this.props;
+      selectedIndex, config, popular, onSearchResultSelected } = this.props;
     const { dataSource } = this.state
     if (this.state.query && !this.state.isLoading) {
       searchView = (
@@ -118,13 +118,13 @@ class Search extends Component {
         <FlatList
           keyExtractor={(item, index) => index}
           key={'dummy_key_' + 2}
-         // removeClippedSubviews={false}
+           removeClippedSubviews={false}
            ItemSeparatorComponent={this.renderSeparator}
           onEndReached={this.retrieveNextPage}
           onEndReachedThreshold={120}
           data={dataSource}
           style={{ marginBottom: 6}}
-          renderItem={(item, index) => <CardItem info={item} isCustom={true} />}
+          renderItem={(item, index) => <CardItem info={item} isCustom={true} onShowDetails={onSearchResultSelected}/>}
         />)
     } else {
       searchView = (
@@ -132,6 +132,7 @@ class Search extends Component {
           config={config}
           items={[]}
           popular={popular}
+          onSelect={onSearchResultSelected}
         />
       )
     }
@@ -196,28 +197,30 @@ const mapDispatchToProps = dispatch => ({
   // onDoneSearchingMoviesEtc: (results) => {
   //   dispatch(doneSearchingMoviesEtc(results));
   // },
-  // onSearchResultSelected: (result) => {
-  //   const params = {
-  //     name: result.name || result.title,
-  //     id: result.id
-  //   }
-
-  //   dispatch(searchResultSelected(result, result.media_type));
-  //   switch (result.media_type) {
-  //     case 'movie':
-  //       dispatch(NavigationActions.navigate({ routeName: 'MovieDetails', params }));
-  //       break;
-  //     case 'tv':
-  //       dispatch(NavigationActions.navigate({ routeName: 'TvShowDetails', params }));
-  //       break;
-  //     case 'person':
-  //       dispatch(NavigationActions.navigate({ routeName: 'CastDetails', params }));
-  //       break;
-  //     default:
-  //       console.log('Unrecognised media type');
-  //       break;
-  //   }
-  // },
+  onSearchResultSelected: (result) => {
+    const params = {
+      name: result.name || result.title,
+      id: result.id
+    }
+    console.log('param',params)
+    dispatch(searchResultSelected(result, 'movie'));
+    dispatch(NavigationActions.navigate({ routeName: 'MovieDetails', params }));
+  //  dispatch(searchResultSelected(result, result.media_type));
+  //  switch (result.media_type) {
+    //  case 'movie':
+    // dispatch(NavigationActions.navigate({ routeName: 'MovieDetails', params }));
+    //     break;
+    //   case 'tv':
+    //     dispatch(NavigationActions.navigate({ routeName: 'TvShowDetails', params }));
+    //     break;
+    //   case 'person':
+    //     dispatch(NavigationActions.navigate({ routeName: 'CastDetails', params }));
+    //     break;
+    //   default:
+    //     console.log('Unrecognised media type');
+    //     break;
+    // }
+  },
   actions: bindActionCreators(moviesActions, dispatch)
 });
 

@@ -23,7 +23,7 @@ class MovieDetails extends Details {
     const movie_url = '/movie/'
     const appendResponse = 'append_to_response=videos,images'
     const movieId = this.props.details.id
-
+    console.log('moviedID', movieId)
     const movieUrl = `${baseUrl}${movie_url}${movieId}?${apiKey}&${appendResponse}`
     const movieCreditsUrl = `${baseUrl}${movie_url}${movieId}/credits?${apiKey}`
 
