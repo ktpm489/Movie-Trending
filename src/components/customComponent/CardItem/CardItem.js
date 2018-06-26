@@ -11,9 +11,9 @@ class CardItem extends Component {
         super(props);
     }
     render() {
-        const { info, onShowDetails, isCustom } = this.props
-   // console.log('info', info)
-        const pressItem =  ()=> onShowDetails(info.item)
+        const { info, onShowDetails, isCustom , selectedIndex } = this.props
+        console.log('selectedIndex', selectedIndex)
+        const pressItem = isCustom ? () => onShowDetails(info.item, selectedIndex ) :  ()=> onShowDetails(info.item)
         let stylesCustomCard = isCustom ? [{ backgroundColor: 'transparent' }, styles.card] : [styles.card]
         let stylesCustomCardContainer = isCustom ? [{backgroundColor : 'transparent'}, styles.cardContainer] : [styles.cardContainer]
         return (

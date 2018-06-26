@@ -18,6 +18,8 @@ import CardItem from '../customComponent/CardItem/CardItem'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as moviesActions from '../../Actions/MovieNewActions'
+import * as tvActions from '../../Actions/TvNewActions'
+import * as personActions from '../../Actions/PersonNewActions'
 import { YellowBox } from 'react-native'
 YellowBox.ignoreWarnings([
   'Encountered an error loading page',    // WebView uri: result.url and url failing to load - "bloomberg suneq" https://github.com/facebook/react-native/issues/7839#issuecomment-224111608
@@ -38,7 +40,22 @@ class Search extends Component {
         results: []
       },
       dataSource: [],
+      // index data
       selectedIndex : 0,
+      // tv data
+      isLoadingTv : true,
+      currentTvPage: 1,
+      searchTvResults : {
+        results: []
+      },
+      dataTvSource: [],
+      // person data
+      isLoadingPerson: true,
+      currentPersonPage: 1,
+      searchPersonResults: {
+        results: []
+      },
+      dataPersonSource: [] 
     }
   }
 
@@ -58,18 +75,102 @@ class Search extends Component {
 
     setTimeout(() => {
       if (query.length) {
+        // TODO search for movie, tv,person
         this.props.actions.retrieveMoviesSearchResults(this.state.query, 1)
           .then(() => {
             this.setState({
               dataSource: this.props.searchResults.results,
               searchResults: this.props.searchResults,
+              currentPage: 1,
               isLoading: false
+            });
+          });
+        // search tv
+        this.props.tvActions.retrieveTVSearchResults(this.state.query, 1)
+          .then(() => {
+            this.setState({
+              dataTvSource: this.props.searchTvResults.results,
+              searchTvResults: this.props.searchTvResults,
+              currentTvPage: 1,
+              isLoadingTv: false
+            });
+          });
+        // search person  
+        this.props.personActions.retrievePersonSearchResults(this.state.query, 1)
+          .then(() => {
+            this.setState({
+              dataPersonSource: this.props.searchPersonResults.results,
+              searchPersonResults: this.props.searchPersonResults,
+              currentPersonPage: 1,
+              isLoadingPerson: false
             });
           });
       }
     }, 500);
   }
 
+  resetData = () =>{
+    this.setState({
+        isLoading: true,
+        query: '',
+        currentPage: 1,
+        searchResults: {
+          results: []
+        },
+        dataSource: [],
+        // index data
+        selectedIndex: 0,
+        // tv data
+        isLoadingTv: true,
+        currentTvPage: 1,
+        searchTvResults: {
+          results: []
+        },
+        dataTvSource: [],
+        // person data
+        isLoadingPerson: true,
+        currentPersonPage: 1,
+        searchPersonResults: {
+          results: []
+        },
+        dataPersonSource: []
+    })
+  }
+
+  searchPopular = (query) => {
+    this.props.actions.retrieveMoviesSearchResults(query, 1)
+      .then(() => {
+        this.setState({
+          dataSource: this.props.searchResults.results,
+          searchResults: this.props.searchResults,
+          currentPage: 1,
+          query : query,
+          isLoading: false,
+          selectedIndex: 0,
+        });
+      });
+      // todo search for tv, person
+    // search tv
+    this.props.tvActions.retrieveTVSearchResults(query, 1)
+      .then(() => {
+        this.setState({
+          dataTvSource: this.props.searchTvResults.results,
+          searchTvResults: this.props.searchTvResults,
+          currentTvPage: 1,
+          isLoadingTv: false
+        });
+      });
+    // search person  
+    this.props.personActions.retrievePersonSearchResults(query, 1)
+      .then(() => {
+        this.setState({
+          dataPersonSource: this.props.searchPersonResults.results,
+          searchPersonResults: this.props.searchPersonResults,
+          currentPersonPage: 1,
+          isLoadingPerson: false
+        });
+      });
+  }
 
   retrieveNextPage = () => {
     if (this.state.currentPage !== this.props.searchResults.total_pages) {
@@ -89,20 +190,97 @@ class Search extends Component {
 
       axios.get(`${'https://api.themoviedb.org/3'}/search/movie?api_key=${'87dfa1c669eea853da609d4968d294be'}&language=en-US&query=${encodeURIComponent(this.state.query)}&page=${page}`)
         // axios.get(`${TMDB_URL}/search/movie/?api_key=${TMDB_API_KEY}&query=${this.state.query}&page=${page}`)
+        // https://api.themoviedb.org/3/search/tv?api_key=<<api_key>>&language=en-US&page=1
+        //https://api.themoviedb.org/3/search/person?api_key=<<api_key>>&language=en-US&page=1&include_adult=false 
         .then(res => {
-          const data = this.state.searchResults.results;
+          const data = this.state.dataSource;
           const newData = res.data.results;
 
           newData.map((item, index) => data.push(item));
 
           this.setState({
-            dataSource: this.state.searchResults.results
+            dataSource: data
           });
         }).catch(err => {
           console.log('next page', err); // eslint-disable-line
         });
     }
   }
+
+
+  // TODO retrieveTvNextPage
+
+  retrieveTvNextPage = () => {
+    if (this.state.currentTvPage !== this.props.searchTvResults.total_pages) {
+      this.setState({
+        currentTvPage: this.state.currentTvPage + 1
+      });
+
+      let page;
+      if (this.state.currentTvPage === 1) {
+        page = 2;
+        this.setState({ currentTvPage: 2 });
+        console.log('paga', page);
+      } else {
+        page = this.state.currentTvPage + 1;
+        console.log('paga', page);
+      }
+
+      axios.get(`${'https://api.themoviedb.org/3'}/search/tv?api_key=${'87dfa1c669eea853da609d4968d294be'}&language=en-US&query=${encodeURIComponent(this.state.query)}&page=${page}`)
+        // axios.get(`${TMDB_URL}/search/movie/?api_key=${TMDB_API_KEY}&query=${this.state.query}&page=${page}`)
+        // https://api.themoviedb.org/3/search/tv?api_key=<<api_key>>&language=en-US&page=1
+        //https://api.themoviedb.org/3/search/person?api_key=<<api_key>>&language=en-US&page=1&include_adult=false 
+        .then(res => {
+          const data = this.state.dataTvSource;
+          const newData = res.data.results;
+
+          newData.map((item, index) => data.push(item));
+
+          this.setState({
+            dataTvSource: data
+          });
+        }).catch(err => {
+          console.log('next page', err); // eslint-disable-line
+        });
+    }
+  }
+  // TODO retrievePersonNextPage
+
+  retrievePersonNextPage = () => {
+    if (this.state.currentPersonPage !== this.props.searchPersonResults.total_pages) {
+      this.setState({
+        currentPersonPage: this.state.currentPersonPage + 1
+      });
+
+      let page;
+      if (this.state.currentPersonPage === 1) {
+        page = 2;
+        this.setState({ currentPersonPage: 2 });
+        console.log('paga', page);
+      } else {
+        page = this.state.currentPersonPage + 1;
+        console.log('paga', page);
+      }
+
+      axios.get(`${'https://api.themoviedb.org/3'}/search/person?api_key=${'87dfa1c669eea853da609d4968d294be'}&language=en-US&query=${encodeURIComponent(this.state.query)}&page=${page}`)
+        // axios.get(`${TMDB_URL}/search/movie/?api_key=${TMDB_API_KEY}&query=${this.state.query}&page=${page}`)
+        // https://api.themoviedb.org/3/search/tv?api_key=<<api_key>>&language=en-US&page=1
+        //https://api.themoviedb.org/3/search/person?api_key=<<api_key>>&language=en-US&page=1&include_adult=false 
+        .then(res => {
+          const data = this.state.dataPersonSource;
+          const newData = res.data.results;
+
+          newData.map((item, index) => data.push(item));
+
+          this.setState({
+            dataPersonSource: data
+          });
+        }).catch(err => {
+          console.log('next page', err); // eslint-disable-line
+        });
+    }
+  }
+
   renderSeparator = () => (
     <View style={{ marginTop: 10}}/>
   )
@@ -124,7 +302,7 @@ class Search extends Component {
           onEndReachedThreshold={120}
           data={dataSource}
           style={{ marginBottom: 6}}
-          renderItem={(item, index) => <CardItem info={item} isCustom={true} onShowDetails={onSearchResultSelected}/>}
+          renderItem={(item, index) => <CardItem info={item} isCustom={true} onShowDetails={onSearchResultSelected} selectedIndex={selectedIndex}/>}
         />)
     } else {
       searchView = (
@@ -132,7 +310,8 @@ class Search extends Component {
           config={config}
           items={[]}
           popular={popular}
-          onSelect={onSearchResultSelected}
+          onSelectPopular={this.searchPopular}
+        //  onSelect={onSearchResultSelected}
         />
       )
     }
@@ -143,6 +322,76 @@ class Search extends Component {
   onFilterChanged = (index) => {
     this.setState({ selectedIndex : index })
   }
+
+  // TODO renderSearchView for tv, person
+  renderTVSearchView = () => {
+    let searchView
+    const { isSearching, onFilterChanged,
+      selectedIndex, config, popular, onSearchResultSelected } = this.props;
+    const { dataTvSource } = this.state
+    if (this.state.query && !this.state.isLoadingTv) {
+      searchView = (
+
+        <FlatList
+          keyExtractor={(item, index) => index}
+          key={'dummy_key_' + 2}
+          removeClippedSubviews={false}
+          ItemSeparatorComponent={this.renderSeparator}
+          onEndReached={this.retrieveTvNextPage}
+          onEndReachedThreshold={120}
+          data={dataTvSource}
+          style={{ marginBottom: 6 }}
+          renderItem={(item, index) => <CardItem info={item} isCustom={true} onShowDetails={onSearchResultSelected} selectedIndex={selectedIndex} />}
+        />)
+    } else {
+      searchView = (
+        <SearchResult
+          config={config}
+          items={[]}
+          popular={popular}
+          onSelectPopular={this.searchPopular}
+        //  onSelect={onSearchResultSelected}
+        />
+      )
+    }
+
+    return searchView;
+  }
+
+  renderPersonSearchView = () => {
+    let searchView
+    const { isSearching, onFilterChanged,
+      selectedIndex, config, popular, onSearchResultSelected } = this.props;
+    const { dataPersonSource } = this.state
+    if (this.state.query && !this.state.isLoadingPerson) {
+      searchView = (
+
+        <FlatList
+          keyExtractor={(item, index) => index}
+          key={'dummy_key_' + 2}
+          removeClippedSubviews={false}
+          ItemSeparatorComponent={this.renderSeparator}
+          onEndReached={this.retrievePersonNextPage}
+          onEndReachedThreshold={120}
+          data={dataPersonSource}
+          style={{ marginBottom: 6 }}
+          renderItem={(item, index) => <CardItem info={item} isCustom={true} onShowDetails={onSearchResultSelected} selectedIndex={selectedIndex} />}
+        />)
+    } else {
+      searchView = (
+        <SearchResult
+          config={config}
+          items={[]}
+          popular={popular}
+          onSelectPopular={this.searchPopular}
+        //  onSelect={onSearchResultSelected}
+        />
+      )
+    }
+
+    return searchView;
+  }
+
   render() {
     const { isSearching, onFilterChanged,
        config, popular, onSearchResultSelected } = this.props;
@@ -184,7 +433,9 @@ const mapStateToProps = state => ({
   config: state.configuration,
   popular: state.movies.categories.popular,
   ...state.search,
-  searchResults: state.moviesNew.searchResults
+  searchResults: state.moviesNew.searchResults,
+  searchTvResults: state.tv.searchResults,
+  searchPersonResults: state.person.searchResults
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -197,31 +448,34 @@ const mapDispatchToProps = dispatch => ({
   // onDoneSearchingMoviesEtc: (results) => {
   //   dispatch(doneSearchingMoviesEtc(results));
   // },
-  onSearchResultSelected: (result) => {
+  onSearchResultSelected: (result , index = 0 ) => {
     const params = {
       name: result.name || result.title,
       id: result.id
     }
-    console.log('param',params)
-    dispatch(searchResultSelected(result, 'movie'));
-    dispatch(NavigationActions.navigate({ routeName: 'MovieDetails', params }));
+   // console.log('param',params)
+    console.log(buttons[index].toLowerCase())
+    dispatch(searchResultSelected(result, buttons[index].toLowerCase()));
+   // dispatch(NavigationActions.navigate({ routeName: 'MovieDetails', params }));
   //  dispatch(searchResultSelected(result, result.media_type));
-  //  switch (result.media_type) {
-    //  case 'movie':
-    // dispatch(NavigationActions.navigate({ routeName: 'MovieDetails', params }));
-    //     break;
-    //   case 'tv':
-    //     dispatch(NavigationActions.navigate({ routeName: 'TvShowDetails', params }));
-    //     break;
-    //   case 'person':
-    //     dispatch(NavigationActions.navigate({ routeName: 'CastDetails', params }));
-    //     break;
-    //   default:
-    //     console.log('Unrecognised media type');
-    //     break;
-    // }
+    switch (buttons[index].toLowerCase()) {
+     case 'movie':
+    dispatch(NavigationActions.navigate({ routeName: 'MovieDetails', params }));
+        break;
+      case 'tv':
+        dispatch(NavigationActions.navigate({ routeName: 'TvShowDetails', params }));
+        break;
+      case 'person':
+        dispatch(NavigationActions.navigate({ routeName: 'CastDetails', params }));
+        break;
+      default:
+        console.log('Unrecognised media type');
+        break;
+    }
   },
-  actions: bindActionCreators(moviesActions, dispatch)
+  actions: bindActionCreators(moviesActions, dispatch),
+  tvActions :bindActionCreators(tvActions, dispatch),
+  personActions : bindActionCreators(personActions, dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Search);

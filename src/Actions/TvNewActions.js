@@ -24,5 +24,23 @@ export function retrieveTVSimilarDetails(tvId, page) {
     };
 }
 
+// SEARCH RESULTS
+export function retrieveTVSearchResultsSuccess(res) {
+    return {
+        type: types.RETRIEVE_TV_SEARCH_RESULT_SUCCESS,
+        searchResults: res.data
+    };
+}
 
+export function retrieveTVSearchResults(query, page) {
+    return function (dispatch) {
+        return axios.get(`${Constant.TMDB_URL}/search/tv?api_key=${Constant.TMDB_API_KEY}&query=${query}&page=${page}`)
+            .then(res => {
+                dispatch(retrieveTVSearchResultsSuccess(res));
+            })
+            .catch(error => {
+                console.log('TV Search Results', error); //eslint-disable-line
+            });
+    };
+}
 
