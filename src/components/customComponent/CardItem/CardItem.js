@@ -34,7 +34,7 @@ class CardItem extends Component {
                         <View style={styles.cardNumbers}>
                             <View style={styles.cardStar}>
                                 {iconStar}
-                                <Text style={styles.cardStarRatings}>{info.item.vote_average.toFixed(1)}</Text>
+                                <Text style={styles.cardStarRatings}>{info.item.vote_average}</Text>
                             </View>
                             <Text style={styles.cardRunningHours} />
                         </View>
