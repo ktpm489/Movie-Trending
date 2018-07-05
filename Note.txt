@@ -2,3 +2,81 @@
 2. Sua lai share library
 3.Sua  query language
 4.Sua image
+5. RSS link
+
+
+// https://stackoverflow.com/questions/46994262/how-to-update-a-single-item-in-flatlist-in-react-native
+
+
+This is how you update a single item in FlatList, basically, the steps are:
+
+Write a custom component for rendering each item in "FlatList"
+
+Override the "componentWillReceiveProps" function
+
+Override the "shouldComponentUpdate" function to tell the component when to update
+
+Handle the change function in parent component and pass down to each child
+
+
+class Post extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            postId: '',
+            date: new Date(),
+            message: '',
+            uid: '',
+            liked: false,
+            likeCount: 0,
+            commentCount: 0
+        }
+    }
+
+    // Initialize the states
+    componentWillMount() {
+        const { postId, date, message, uid, liked,
+            likeCount, commentCount } = this.props
+
+        this.setState({ postId, date, message,
+            uid, liked, likeCount, commentCount })
+    }
+
+    componentWillReceiveProps(nextProps) {
+        const { postId, date, message, uid, liked,
+            likeCount, commentCount } = nextProps
+
+        this.setState({ postId, date, message,
+            uid, liked, likeCount, commentCount })
+    }
+
+    // This determines whether a rendered post should get updated
+    // Look at the states here, what could be changing as time goes by?
+    // Only 2 properties: "liked" and "likeCount", if the person seeing
+    // this post ever presses the "like" button
+    shouldComponentUpdate(nextProps, nextState) {
+        const { liked, likeCount } = nextState
+        const { liked: oldLiked, likeCount: oldLikeCount } = this.state
+
+        // If "liked" or "likeCount" is different, then update
+        return liked !== oldLiked || likeCount !== oldLikeCount
+    }
+
+    render() {
+        return(
+            <View>
+                ...    // render other properties
+                // render the "like" button
+                // "onLikePost" is a function passed down to this component
+                <TouchableOpacity
+                    onPress={() => this.props.onLikePost({ postId: this.state.postId })}
+                >
+                    <Icon
+                        name='heart'
+                        color={this.state.liked ? "gray" : "red"}
+                    />
+                </TouchableOpacity>
+            </View>
+        )
+    }
+}
