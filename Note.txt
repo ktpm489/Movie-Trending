@@ -4,7 +4,7 @@
 4.Sua image
 5. RSS link
 6. Sua lai location save image to document react native cameraroll
-
+7. Nhung Youtube Website
 // https://stackoverflow.com/questions/46994262/how-to-update-a-single-item-in-flatlist-in-react-native
 
 
