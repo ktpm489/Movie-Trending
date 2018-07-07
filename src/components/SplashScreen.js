@@ -11,7 +11,7 @@ import Constant from '../utilities/constants'
 
 // import style, {primaryColor} from '../styles/light-theme'
 import style, {primaryColor} from '../styles/light-theme'
-
+//SAVESTORE
 class SplashScreen extends Component {
   componentDidMount =  () => {
     const apiKey = Constant.api_key
@@ -25,33 +25,12 @@ class SplashScreen extends Component {
      .then( ({ data }) => {
        onConfigFetched(data)
       let uri = `${Constant.api_base_url}/movie/now_playing?${apiKey}&language=${language}&page=1`
-      let  uriMoviePopular = `${Constant.api_base_url}/movie/popular?${apiKey}&language=${language}&page=1`
-      let  uriMovieCommingSoon = `${Constant.api_base_url}/movie/comingSoon?${apiKey}&language=${language}&page=1`
       console.log('Movie Link', uri)
         axios.get(uri).
          then( ({ data }) => {
            onFetchCompleted('nowShowing', getUriPopulated(data.results, config, 'posterSizeForImageList'))
-        //   onFetchCompleted('comingSoon', getUriPopulated(data.results, config, 'posterSizeForImageList'))
-          //  onFetchCompleted('popular', getUriPopulated(data.results, config, 'posterSizeForImageList'))
-          // await this.fetch('comingSoon', '/movie/upcoming')
-         //  await this.fetch('popular', '/movie/popular')
+
          }).catch(error => console.log(error.response))
-      //  await axios.get(uriMoviePopular).
-      //    then(async ({ data }) => {
-      //      onFetchCompleted('popular', getUriPopulated(data.results, config, 'posterSizeForImageList'))
-      //      //   onFetchCompleted('comingSoon', getUriPopulated(data.results, config, 'posterSizeForImageList'))
-      //      //  onFetchCompleted('popular', getUriPopulated(data.results, config, 'posterSizeForImageList'))
-      //      // await this.fetch('comingSoon', '/movie/upcoming')
-      //      //  await this.fetch('popular', '/movie/popular')
-      //    }).catch(error => console.log(error.response))
-      //  await axios.get(uriMovieCommingSoon).
-      //    then(async ({ data }) => {
-      //      onFetchCompleted('comingSoon', getUriPopulated(data.results, config, 'posterSizeForImageList'))
-      //      //   onFetchCompleted('comingSoon', getUriPopulated(data.results, config, 'posterSizeForImageList'))
-      //      //  onFetchCompleted('popular', getUriPopulated(data.results, config, 'posterSizeForImageList'))
-      //      // await this.fetch('comingSoon', '/movie/upcoming')
-      //      //  await this.fetch('popular', '/movie/popular')
-      //    }).catch(error => console.log(error.response))
      }).catch(error => console.log(error.response))
 
  }, 1000)

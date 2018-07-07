@@ -27,6 +27,7 @@ import { getUriPopulated } from '../../utilities/utils';
 // import MovieSimilar from './movieDetailComponent/tvFlatlist'
 import ScrollableTabView, { DefaultTabBar, } from 'react-native-scrollable-tab-view'
 const heightScreen = Dimensions.get('window').height
+//SAVESTORE
 class Details extends Component {
     constructor(props) {
         super(props);

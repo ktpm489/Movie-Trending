@@ -182,7 +182,8 @@ class AsyncImage extends Component {
                                 }]
                              }/>
             }
-            {
+            {/* No use custom image */}
+            {/* {
                 (placeholderSource && !loaded) &&
                 < Animated.Image
                 index={Math.random(100).toString()}
@@ -198,7 +199,7 @@ class AsyncImage extends Component {
                     ]
                 }
                 />
-            }
+            } */}
 
             {
                 (!placeholderSource && !loaded) &&

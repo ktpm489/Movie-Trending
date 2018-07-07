@@ -46,6 +46,13 @@ export const saveItemToStorage = (keyword, object) => {
     })
 }
 
+export const resetItem = (keyword) => {
+    AsyncStorage.setItem(keyword, JSON.stringify([]))
+}
+ //clear all data
+ export const cleartItem = async () => {
+     await AsyncStorage.clear()
+ }
 export const getItemFromStorage = (keyword, object) => {
     AsyncStorage.getItem(keyword).then((response) => {
         let data = JSON.parse(response) || []

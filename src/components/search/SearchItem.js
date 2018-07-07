@@ -6,9 +6,35 @@ import CustomImage from '../../utilities/globalView'
 import ProgressBar from 'react-native-progress/Bar';
 import style from '../../styles/light-theme'
 class SearchItem extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      item : null
+    }
+  }
+  componentWillMount() {
+    const { item } = this.props
+    this.setState({item : item })
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { item } = nextProps
+
+    this.setState({ item })
+  }
+
+  // todo component check component update
+  shouldComponentUpdate(nextProps, nextState) {
+    const { item } = nextState
+    const { item : oldItem  } = this.state
+
+    // If "item.id"  is different, then update
+    return item.id !== oldItem.id
+  }
 
   render() {
-    const { item, config } = this.props
+    const { config } = this.props
+    const { item} = this.state
    // console.log('itemRender', item)
     const { secureBaseUrl, profileSize, posterSizeForImageList } = config.image
     const { name, title, media_type, profile_path, poster_path } = item

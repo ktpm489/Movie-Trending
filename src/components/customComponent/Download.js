@@ -109,7 +109,8 @@ export default class Main extends Component {
         console.log('link', link)
         this.downloadFile(false, link)
     }
-
+    // TODO save image to camera roll react native
+    
     downloadFile = (backgroundFlag, url) => {
         let dir = ISIOS ? RNFS.DocumentDirectoryPath : RNFS.PicturesDirectoryPath
         let downloadDest = `${dir}/${(Math.random() * 1000) | 0 + '-' + Date.now()}.jpg`

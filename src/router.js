@@ -40,6 +40,21 @@ const MainScreen = TabNavigator({
       tabBarIcon: ({tintColor}) => <Icon name='settings' size={30} color={tintColor} />
     }
   }
+  // ,
+  // SettingsDemo: {
+  //   screen: SettingsStack,
+  //   navigationOptions: {
+  //     tabBarLabel: 'SettingsDemo',
+  //     tabBarIcon: ({ tintColor }) => <Icon name='settings' size={30} color={tintColor} />
+  //   }
+  // },
+  // SettingsDemo1: {
+  //   screen: SettingsStack,
+  //   navigationOptions: {
+  //     tabBarLabel: 'SettingsDemo1',
+  //     tabBarIcon: ({ tintColor }) => <Icon name='settings' size={30} color={tintColor} />
+  //   }
+  // }
 },
 {
   initialRouteName: 'Movies',
