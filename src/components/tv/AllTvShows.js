@@ -136,6 +136,7 @@ class AllTvShows extends Component {
       }
       console.log('Retrieve render TV Movie', page)
       console.log('Data', this.state.data)
+      // SAVE STORE
       axios.get(`${'https://api.themoviedb.org/3'}/tv/${this.type}?api_key=${'87dfa1c669eea853da609d4968d294be'}&language=en-US&page=${page}`)
         .then(async (res) => {
           const data = this.state.data

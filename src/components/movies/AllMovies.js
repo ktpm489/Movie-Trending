@@ -147,6 +147,7 @@ class AllMovies extends Component {
       } else {
         page = this.state.currentPage + 1
       }
+      // SAVE STORE
       axios.get(`${Constant.TMDB_URL}/movie/${this.type}?api_key=${Constant.TMDB_API_KEY}&page=${page}`).then(
         res => {
           const data = this.state.list.results

@@ -49,7 +49,18 @@ class Details extends Component {
 
   // https://stackoverflow.com/questions/47910127/flatlist-calls-enendreached-when-its-rendered?rq=1
   componentDidMount() {
-    console.error("Override!!");
+    this.setState({
+      opacity: 1,
+      blur: 0,
+      currentReviewPage: 1,
+      reviewPageResults: [],
+      isLoadingInfo: true,
+      isLoadingReview: true,
+      isLoadingSimilar: true,
+      currentSimilarPage: 1,
+      similarPageResults: [],
+      onEndReachedCalledDuringMomentum: true
+    })
   }
 
   getSpecialComponent() {

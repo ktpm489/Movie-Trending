@@ -24,8 +24,8 @@ export const formatLinkImg = (linkImg) => {
 }
 
 
-export const getAllItemFromStorage = (keyword) => {
-    AsyncStorage.getItem(keyword).then((response) => {
+export const getAllItemFromStorage =   async (keyword) => {
+   return  await AsyncStorage.getItem(keyword).then((response) => {
         const data = JSON.parse(response) || []
         console.log('dataFromStorage', data)
         return data
@@ -45,6 +45,15 @@ export const saveItemToStorage = (keyword, object) => {
         }
     })
 }
+
+
+export const saveItemToStorageNoCheck = (keyword, data) => {
+   let newData = { data: data , date: new Date()}
+    console.log('Save New Data', newData)
+    AsyncStorage.setItem(keyword, JSON.stringify(newData))
+}
+
+
 
 export const resetItem = (keyword) => {
     AsyncStorage.setItem(keyword, JSON.stringify([]))
@@ -82,7 +91,10 @@ export const drawImageScaled = (img) => {
 }
 
 export const usedLocalData = (item) => {
-    return new Date() - item.date < 400000
+  //  console.log('item current Data', item, item.date)
+  // let result = item && new Date() - item.date < 400000
+    console.log('usedLocal Data', (new Date() - new Date(item.date))< 800000)
+    return (new Date() - new Date(item.date) < 800000)
 }
 
 
@@ -93,6 +105,7 @@ module.exports = {
     getItemFromStorage,
     getAllItemFromStorage,
     saveItemToStorage,
+    saveItemToStorageNoCheck,
     mapToJson,
     jsonToMap,
     usedLocalData,

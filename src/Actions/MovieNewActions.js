@@ -1,7 +1,7 @@
 import axios from 'axios'
 import * as types from '../constants/actionTypes'
 import Constant from '../utilities/constants'
-
+import { saveItemToStorageNoCheck, getAllItemFromStorage, usedLocalData } from '../utilities/globalFunction'
  // SAVESTORE
 // GENRES
 export function retrieveMoviesGenresSuccess(res) {
@@ -15,6 +15,7 @@ export function retrieveMoviesGenres() {
     return function (dispatch) {
         return axios.get(`${Constant.TMDB_URL}/genre/movie/list?api_key=${Constant.TMDB_API_KEY}`)
             .then(res => {
+
                 dispatch(retrieveMoviesGenresSuccess(res));
             })
             .catch(error => {
@@ -156,14 +157,23 @@ export function retrieveMovieSimilarSuccess(res) {
 }
 
 export function retrieveMovieSimilarDetails(movieId, page) {
-    return function (dispatch) {
-        console.log('Link Similar', `${Constant.TMDB_URL}/movie/${movieId}/similar?api_key=${Constant.TMDB_API_KEY}&language=en-US&page=${page}`)
-        return axios.get(`${Constant.TMDB_URL}/movie/${movieId}/similar?api_key=${Constant.TMDB_API_KEY}&language=en-US&page=${page}`)
-            .then(res => {
-                dispatch(retrieveMovieSimilarSuccess(res));
-            })
-            .catch(error => {
-                console.log('Movie  Similar Details', error); //eslint-disable-line
-            });
+    return   async function (dispatch) {
+        let linkData = `${Constant.TMDB_URL}/movie/${movieId}/similar?api_key=${Constant.TMDB_API_KEY}&language=en-US&page=${page}`
+        console.log('Link Similar', linkData)
+        let currentData =   await getAllItemFromStorage(linkData)
+        if (currentData &&  usedLocalData(currentData)) {
+            console.log('Use current Data', currentData)
+            return dispatch(retrieveMovieSimilarSuccess(currentData));
+        } else {
+            return axios.get(linkData)
+                .then(res => {
+                    saveItemToStorageNoCheck(linkData, res.data)
+                    dispatch(retrieveMovieSimilarSuccess(res));
+                })
+                .catch(error => {
+                    console.log('Movie  Similar Details', error); //eslint-disable-line
+                });
+        }
+        
     };
 }

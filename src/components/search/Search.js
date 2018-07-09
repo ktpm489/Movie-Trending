@@ -187,7 +187,7 @@ class Search extends Component {
         page = this.state.currentPage + 1;
         console.log('paga', page);
       }
-
+    //SAVE STORAGE
     await  axios.get(`${'https://api.themoviedb.org/3'}/search/movie?api_key=${'87dfa1c669eea853da609d4968d294be'}&language=en-US&query=${encodeURIComponent(this.state.query)}&page=${page}`)
         // axios.get(`${TMDB_URL}/search/movie/?api_key=${TMDB_API_KEY}&query=${this.state.query}&page=${page}`)
         // https://api.themoviedb.org/3/search/tv?api_key=<<api_key>>&language=en-US&page=1
