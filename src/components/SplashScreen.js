@@ -8,30 +8,69 @@ import {configFetched, movieFetched} from '../Actions'
 import {Avatar} from 'react-native-elements'
 import {getUriPopulated} from '../utilities/utils'
 import Constant from '../utilities/constants'
-
+import { checkLocationSaveDataNoDispatch, saveItemToStorageNoCheck, usedLocalData, getAllItemFromStorage } from '../utilities/globalFunction'
 // import style, {primaryColor} from '../styles/light-theme'
 import style, {primaryColor} from '../styles/light-theme'
 //SAVESTORE
 class SplashScreen extends Component {
-  componentDidMount =  () => {
+  componentDidMount = async () => {
     const apiKey = Constant.api_key
     let uri = `${Constant.api_base_url}/configuration?${apiKey}`
     const {onFetchCompleted, onConfigFetched, config, settings: {
         language
       }} = this.props
- setTimeout( () => {
+ setTimeout( async () => {
   console.log('Uri', uri)
-    axios.get(uri)
-     .then( ({ data }) => {
-       onConfigFetched(data)
-      let uri = `${Constant.api_base_url}/movie/now_playing?${apiKey}&language=${language}&page=1`
-      console.log('Movie Link', uri)
-        axios.get(uri).
+
+   let currentData = await getAllItemFromStorage(uri)
+   let movieLink = `${Constant.api_base_url}/movie/now_playing?${apiKey}&language=${language}&page=1`
+   if (currentData && usedLocalData(currentData)) {
+     console.log('Use current Data', currentData)
+     onConfigFetched(currentData.data)
+     console.log('Movie Link', movieLink)
+     let currentMoveLinkData = await getAllItemFromStorage(movieLink)
+     if (currentMoveLinkData && usedLocalData(currentMoveLinkData)) {
+       onFetchCompleted('nowShowing', getUriPopulated(currentMoveLinkData.data.results, config, 'posterSizeForImageList'))
+     } else {
+       axios.get(movieLink).
          then( ({ data }) => {
+           saveItemToStorageNoCheck(movieLink,data)
            onFetchCompleted('nowShowing', getUriPopulated(data.results, config, 'posterSizeForImageList'))
 
          }).catch(error => console.log(error.response))
+     }
+    
+   } else {
+    
+    axios.get(uri)
+     .then( async ({ data }) => {
+       saveItemToStorageNoCheck(uri,data)
+       onConfigFetched(data)
+       console.log('Movie Link', movieLink)
+       let currentMoveLinkData = await getAllItemFromStorage(movieLink)
+       if (currentMoveLinkData && usedLocalData(currentMoveLinkData)) {
+         onFetchCompleted('nowShowing', getUriPopulated(currentMoveLinkData.data.results, config, 'posterSizeForImageList'))
+       } else {
+         axios.get(movieLink).
+           then(({ data }) => {
+             saveItemToStorageNoCheck(movieLink, data)
+             onFetchCompleted('nowShowing', getUriPopulated(data.results, config, 'posterSizeForImageList'))
+
+           }).catch(error => console.log(error.response))
+       }
      }).catch(error => console.log(error.response))
+  }
+    // axios.get(uri)
+    //  .then( ({ data }) => {
+    //    onConfigFetched(data)
+    //   let uri = `${Constant.api_base_url}/movie/now_playing?${apiKey}&language=${language}&page=1`
+    //   console.log('Movie Link', uri)
+    //     axios.get(uri).
+    //      then( ({ data }) => {
+    //        onFetchCompleted('nowShowing', getUriPopulated(data.results, config, 'posterSizeForImageList'))
+
+    //      }).catch(error => console.log(error.response))
+    //  }).catch(error => console.log(error.response))
 
  }, 1000)
    

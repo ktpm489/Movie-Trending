@@ -11,7 +11,7 @@ import Constant from '../../utilities/constants'
 import { getUriPopulated } from '../../utilities/utils'
 
 import style, { primaryColor } from '../../styles/light-theme'
-
+import {  saveItemToStorageNoCheck, usedLocalData, getAllItemFromStorage } from '../../utilities/globalFunction'
 String.prototype.toTitle = function () {
   return this.replace(/([A-Z])/g, ' $1').replace(/(.)/, c => c.toUpperCase())
 }
@@ -21,18 +21,34 @@ class Shows extends Component {
     console.error('Need to override this in base class')
   }
 
-  fetch =   (category, route) =>  {
+  fetch =  async (category, route) =>  {
     const baseUrl = Constant.api_base_url
     const apiKey = Constant.api_key
     const { onFetchCompleted, config } = this.props
     const { language, region } = this.props.settings
     const uri = `${baseUrl}${route}?${apiKey}&language=${language}&region=${region}&page=1`
-    axios.get(uri)
+
+
+    let currentData = await getAllItemFromStorage(uri)
+    if (currentData && usedLocalData(currentData)) {
+      console.log('Show use local data')
+      onFetchCompleted(category, getUriPopulated(currentData.data.results, config, 'posterSizeForImageList'))
+    } else {
+      axios.get(uri)
      .then( ({ data }) => {
+       saveItemToStorageNoCheck(uri, data)
        onFetchCompleted(category,
          getUriPopulated(data.results, config, 'posterSizeForImageList'))
      })
      .catch(error => console.error(error.response))
+    }
+    // axios.get(uri)
+    //  .then( ({ data }) => {
+    //    saveItemToStorageNoCheck(uri, data)
+    //    onFetchCompleted(category,
+    //      getUriPopulated(data.results, config, 'posterSizeForImageList'))
+    //  })
+    //  .catch(error => console.error(error.response))
   
   }
 

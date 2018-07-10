@@ -13,6 +13,7 @@ import { bindActionCreators } from 'redux'
 import Constant from '../../utilities/constants'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { FlatImageList } from '../common/ImageList'
+import { checkLocationSaveData, saveItemToStorageNoCheck, usedLocalData, getAllItemFromStorage } from '../../utilities/globalFunction'
 // return device width and height
 const { height, width } = Dimensions.get('window')
 const numColumns = parseInt(width / (92 + (5 * 2)))
@@ -135,7 +136,7 @@ class AllMovies extends Component {
     }).catch(error => {console.log('RetrieveMoviesList', error)})
   }
 
-  retrieveNextPage = () => {
+  retrieveNextPage = async () => {
     if (this.state.currentPage !== this.props.list.total_pages) {
       this.setState({
         currentPage: this.state.currentPage + 1
@@ -147,9 +148,33 @@ class AllMovies extends Component {
       } else {
         page = this.state.currentPage + 1
       }
-      // SAVE STORE
-      axios.get(`${Constant.TMDB_URL}/movie/${this.type}?api_key=${Constant.TMDB_API_KEY}&page=${page}`).then(
+
+     let link = `${Constant.TMDB_URL}/movie/${this.type}?api_key=${Constant.TMDB_API_KEY}&page=${page}`
+      // // SAVE STORE
+      // axios.get(`${Constant.TMDB_URL}/movie/${this.type}?api_key=${Constant.TMDB_API_KEY}&page=${page}`).then(
+      //   res => {
+      //     const data = this.state.list.results
+      //     const newData = res.data.results
+      //     newData.map((item, index) => data.push(item))
+      //     this.setState({
+      //       dataSource: this.state.list.results
+      //     })
+      //   }
+      // ).catch((err) => { console.log('nextpage', error) })
+
+      let currentData = await getAllItemFromStorage(link)
+      if (currentData && usedLocalData(currentData)) {
+        console.log('Use current  Movie show Data', currentData)
+        const newData = currentData.data.results;
+        const data = this.state.list.results
+        newData.map((item, index) => data.push(item))
+        this.setState({
+          dataSource: this.state.list.results
+        })
+      } else {
+        axios.get(link).then(
         res => {
+          saveItemToStorageNoCheck(link, res.data)
           const data = this.state.list.results
           const newData = res.data.results
           newData.map((item, index) => data.push(item))
@@ -158,8 +183,11 @@ class AllMovies extends Component {
           })
         }
       ).catch((err) => { console.log('nextpage', error) })
+     
     }
+      this.setState({ isLoading: false })
   }
+}
 
 
   renderItem = (item, index) => {

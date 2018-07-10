@@ -11,6 +11,7 @@ import axios from 'axios'
 import Constant from '../../utilities/constants'
 import CardItem from '../customComponent/CardItem/CardItem'
 import Icon from 'react-native-vector-icons/Ionicons'
+import { checkLocationSaveData, saveItemToStorageNoCheck, usedLocalData, getAllItemFromStorage } from '../../utilities/globalFunction'
 // return device width and height
 const {height, width} = Dimensions.get('window')
 const numColumns = parseInt(width / (92 + (5 * 2)))
@@ -122,7 +123,7 @@ class AllTvShows extends Component {
 
   retrieveNextPage = async (flagIsFirstLoad = false) => {
     if (this.state.currentPage < this.state.totalPage) {
-      this.setState({ currentPage: page })
+     //  this.setState({ currentPage: page })
       this.setState({
         currentPage: this.state.currentPage + 1
       });
@@ -137,8 +138,39 @@ class AllTvShows extends Component {
       console.log('Retrieve render TV Movie', page)
       console.log('Data', this.state.data)
       // SAVE STORE
-      axios.get(`${'https://api.themoviedb.org/3'}/tv/${this.type}?api_key=${'87dfa1c669eea853da609d4968d294be'}&language=en-US&page=${page}`)
+      let link = `${'https://api.themoviedb.org/3'}/tv/${this.type}?api_key=${'87dfa1c669eea853da609d4968d294be'}&language=en-US&page=${page}`
+
+      // axios.get(link)
+      //   .then(async (res) => {
+      //     const data = this.state.data
+      //     const newData = res.data.results;
+      //     console.log('res.data.total_pages', res.data.total_pages)
+      //     if (res.data.total_pages !== this.state.totalPage) {
+      //       this.setState({ totalPage: res.data.total_pages })
+      //     }
+      //     await newData.map((item, index) => data.push(item))
+      //     console.log('current TV Movie', res.data.page)
+      //     this.setState({ data: data })
+      //   })
+      //   .catch(error => console.error(error.response))
+
+
+      let currentData = await getAllItemFromStorage(link)
+      if (currentData && usedLocalData(currentData)) {
+        console.log('Use current  TV show Data', currentData)
+             const data = this.state.data
+        const newData = currentData.data.results;
+        console.log('res.data.total_pages', currentData.data.total_pages)
+          if (res.data.total_pages !== this.state.totalPage) {
+            this.setState({ totalPage: currentData.data.total_pages })
+          }
+          await newData.map((item, index) => data.push(item))
+        console.log('current TV Movie', currentData.data.page)
+          this.setState({ data: data })
+      } else {
+          axios.get(link)
         .then(async (res) => {
+          saveItemToStorageNoCheck(link, res.data)
           const data = this.state.data
           const newData = res.data.results;
           console.log('res.data.total_pages', res.data.total_pages)
@@ -153,6 +185,7 @@ class AllTvShows extends Component {
     }
     this.setState({ isLoading: false })
   }
+}
 
   renderItem = (item, index) => {
     const { onShowDetails } = this.props

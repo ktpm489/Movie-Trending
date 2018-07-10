@@ -1,4 +1,5 @@
 import React from 'react'
+import axios from 'axios'
 import { AsyncStorage, Dimensions } from 'react-native'
 import _ from 'underscore'
 const patternParseYoutube = /^.*(?:(?:youtu\.be\/|v\/|vi\/|u\/\w\/|embed\/)|(?:(?:watch)?\?v(?:i)?=|\&v(?:i)?=))([^#\&\?]*).*/
@@ -48,7 +49,7 @@ export const saveItemToStorage = (keyword, object) => {
 
 
 export const saveItemToStorageNoCheck = (keyword, data) => {
-   let newData = { data: data , date: new Date()}
+   let newData = { data: data , date: new Date().getTime()}
     console.log('Save New Data', newData)
     AsyncStorage.setItem(keyword, JSON.stringify(newData))
 }
@@ -93,8 +94,42 @@ export const drawImageScaled = (img) => {
 export const usedLocalData = (item) => {
   //  console.log('item current Data', item, item.date)
   // let result = item && new Date() - item.date < 400000
-    console.log('usedLocal Data', (new Date() - new Date(item.date))< 800000)
-    return (new Date() - new Date(item.date) < 800000)
+    console.log('usedLocal Data', (new Date().getTime() - new Date(item.date).getTime() < 300000))
+    return (new Date().getTime() - item.date) < 300000
+}
+
+export const checkLocationSaveData =  async (link, functionData, dispatchFunction) => {
+        let currentData = await getAllItemFromStorage(link)
+        if (currentData && usedLocalData(currentData)) {
+            console.log('Use current Data', currentData)
+            return dispatchFunction(functionData(currentData));
+        } else {
+            return axios.get(link)
+                .then(res => {
+                    saveItemToStorageNoCheck(link, res.data)
+                    dispatchFunction(functionData(res));
+                })
+                .catch(error => {
+                    console.log('Error Save', error); //eslint-disable-line
+                });
+    }
+}
+
+export const checkLocationSaveDataNoDispatch = async (link, functionData) => {
+    let currentData = await getAllItemFromStorage(link)
+    if (currentData && usedLocalData(currentData)) {
+        console.log('Use current Data', currentData)
+        return functionData(currentData)
+    } else {
+        return axios.get(link)
+            .then(res => {
+                saveItemToStorageNoCheck(link, res.data)
+                functionData(res)
+            })
+            .catch(error => {
+                console.log('Error Save', error); //eslint-disable-line
+            });
+    }
 }
 
 
@@ -106,8 +141,10 @@ module.exports = {
     getAllItemFromStorage,
     saveItemToStorage,
     saveItemToStorageNoCheck,
+    checkLocationSaveDataNoDispatch,
     mapToJson,
     jsonToMap,
     usedLocalData,
-    drawImageScaled
+    drawImageScaled,
+    checkLocationSaveData
 }

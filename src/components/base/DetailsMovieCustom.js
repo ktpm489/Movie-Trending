@@ -26,6 +26,7 @@ import Constant from '../../utilities/constants'
 import { getUriPopulated } from '../../utilities/utils';
 // import MovieSimilar from './movieDetailComponent/movieFlatList'
 import ScrollableTabView, { DefaultTabBar, } from 'react-native-scrollable-tab-view'
+import { checkLocationSaveData, saveItemToStorageNoCheck, usedLocalData, getAllItemFromStorage } from '../../utilities/globalFunction'
 const heightScreen = Dimensions.get('window').height
 //SAVESTORE
 class Details extends Component {
@@ -82,16 +83,49 @@ class Details extends Component {
   fetchDetails = async (imagesUri, peopleUri, movieId) => {
     const { onDetailsFetched, currentTab, config } = this.props;
 
-    await axios.get(imagesUri)
+    // await axios.get(imagesUri)
+    //   .then(  ({data}) => {
+    //     const {images, videos} = data;
+    //     data.images = getUriPopulated(images.backdrops, config, 'backdropSize');
+    //     data.videos = this.formVideoUrls(videos.results) 
+    //     onDetailsFetched(data, 'imagesAndVideos', currentTab);
+    //   }).catch((error) => { console.error(error.response); });
+
+    let imgCurrentData = await getAllItemFromStorage(imagesUri)
+    if (imgCurrentData && usedLocalData(imgCurrentData)) {
+      console.log('Use img current Data', imgCurrentData)
+      let imgData = imgCurrentData.data
+      const { images, videos } = imgData;
+      imgData.images = getUriPopulated(images.backdrops, config, 'backdropSize');
+      imgData.videos = this.formVideoUrls(videos.results) 
+      onDetailsFetched(imgData, 'imagesAndVideos', currentTab);
+    } else {
+      await axios.get(imagesUri)
       .then(  ({data}) => {
+        saveItemToStorageNoCheck(imagesUri,data)
         const {images, videos} = data;
         data.images = getUriPopulated(images.backdrops, config, 'backdropSize');
         data.videos = this.formVideoUrls(videos.results) 
         onDetailsFetched(data, 'imagesAndVideos', currentTab);
       }).catch((error) => { console.error(error.response); });
+      }
 
-   await axios.get(peopleUri)
+
+
+    let peopleCurrentData = await getAllItemFromStorage(peopleUri)
+    if (peopleCurrentData && usedLocalData(peopleCurrentData)) {
+      console.log('Use peopel current Data', peopleCurrentData)
+      const { crew, cast } = peopleCurrentData.data;
+        const people = {
+          'directors': getUriPopulated(crew.filter((member) => 
+            member.job === 'Director'), config, 'profileSize'),
+          'casts': getUriPopulated(cast.sort((a, b) => a.order - b.order), config, 'profileSize')
+        }
+        onDetailsFetched(people, 'directorsAndCast', currentTab);
+    } else {
+      await axios.get(peopleUri)
       .then( ({data}) => {
+        saveItemToStorageNoCheck(peopleUri, data)
         const {crew, cast} = data;
         const people = {
           'directors': getUriPopulated(crew.filter((member) => 
@@ -99,7 +133,23 @@ class Details extends Component {
           'casts': getUriPopulated(cast.sort((a, b) => a.order - b.order), config, 'profileSize')
         }
         onDetailsFetched(people, 'directorsAndCast', currentTab);
-      }).catch((error) => { console.error(error.response); });
+    }).catch((error) => { console.error(error.response); });
+    }
+
+
+  //  await axios.get(peopleUri)
+  //     .then( ({data}) => {
+  //       const {crew, cast} = data;
+  //       const people = {
+  //         'directors': getUriPopulated(crew.filter((member) => 
+  //           member.job === 'Director'), config, 'profileSize'),
+  //         'casts': getUriPopulated(cast.sort((a, b) => a.order - b.order), config, 'profileSize')
+  //       }
+  //       onDetailsFetched(people, 'directorsAndCast', currentTab);
+  //   }).catch((error) => { console.error(error.response); });
+
+
+      
     await this.retrieveSimilarMovieList()
   }
 
