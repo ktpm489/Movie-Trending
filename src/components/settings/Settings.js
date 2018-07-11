@@ -7,7 +7,8 @@ import { saveSettingsAction } from './../../Actions'
 import { MovieDBListItem, TouchableListItem } from './../common/ListItem';
 // import style from './../../styles/styles';
 import style from './../../styles/light-theme';
-
+import language from '../../Config/languagues'
+import region from '../../Config/region'
 const appInfo = [
   {
     name: 'App Name',
@@ -18,16 +19,27 @@ const appInfo = [
   }
 ];
 
+// const settings = [
+//   {
+//     name: 'Language',
+//     values: ['IN-hi', 'US-en', 'UK-en']
+//   }, {
+//     name: 'Region',
+//     values: ['IN', 'US', 'UK']
+//   }, {
+//     name: 'Theme',
+//     values: ['Light', 'Dark']
+//   }
+// ]
+
+
 const settings = [
   {
     name: 'Language',
-    values: ['IN-hi', 'US-en', 'UK-en']
+    values: language
   }, {
     name: 'Region',
-    values: ['IN', 'US', 'UK']
-  }, {
-    name: 'Theme',
-    values: ['Light', 'Dark']
+    values: region
   }
 ]
 

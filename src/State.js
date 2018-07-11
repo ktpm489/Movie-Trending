@@ -53,8 +53,8 @@ export default {
     }
   },
   'settings': {
-    'language': 'IN-hi',
-    'region': 'IN',
+    'language': 'en-US',
+    'region': 'US',
     'theme': 'Dark'
   },
   // TODO: We should not be using the following. Study the right way of doing this

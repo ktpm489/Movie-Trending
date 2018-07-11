@@ -30,32 +30,6 @@ const ListItem = ({name, value, selected}) => {
   )
 }
 
-
-const ListItemCustom = ({ name, value, selected }) => {
-  return (
-    <View style={style.listContainer}>
-      <View style={style.listTitle}>
-        <Text style={[style.text, style.subHeadingText]}>
-          {name}{ value && ' - ' + value}
-        </Text>
-      </View>
-      {/* <View style={style.listValue}>
-        <Text style={[style.text, style.normalText]}>
-          {value}
-        </Text>
-      </View> */}
-
-      {value && (value === selected) &&
-        <View>
-          <Icon
-            name='check'
-            color='#00aced'
-          />
-        </View>}
-    </View>
-  )
-}
-
 const MovieDBListItem = (props) => {
   const {name, value} = props
   return (
@@ -69,7 +43,7 @@ const TouchableListItem = ({name, value, selected, onPress}) => {
   console.log(name, value,selected)
   return (
     <TouchableOpacity style={style.listContainer} onPress={onPress}>
-      <ListItemCustom name={name} value={value} selected={selected} />
+      <ListItem name={name} value={value} selected={selected} />
     </TouchableOpacity>
   )
 }

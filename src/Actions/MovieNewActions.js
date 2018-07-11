@@ -13,7 +13,7 @@ export function retrieveMoviesGenresSuccess(res) {
 
 export function retrieveMoviesGenres() {
     return function (dispatch) {
-        let linkData = `${ Constant.TMDB_URL }/genre/movie / list ? api_key = ${ Constant.TMDB_API_KEY }`
+        let linkData = `${ Constant.TMDB_URL }/genre/movie/list?api_key=${ Constant.TMDB_API_KEY }`
         // return axios.get(`${Constant.TMDB_URL}/genre/movie/list?api_key=${Constant.TMDB_API_KEY}`)
         //     .then(res => {
 
