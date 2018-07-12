@@ -34,7 +34,7 @@ export function retrievePopularMoviesSuccess(res) {
     };
 }
 
-export function retrievePopularMovies(page) {
+export function  retrievePopularMovies(page) {
     return function (dispatch) {
         // return axios.get(`${Constant.TMDB_URL}/movie/popular?api_key=${Constant.TMDB_API_KEY}&page=${page}`)
         //     .then(res => {

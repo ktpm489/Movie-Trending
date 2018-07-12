@@ -66,7 +66,7 @@ const MovieDBListItem = (props) => {
 }
 
 const TouchableListItem = ({name, value, selected, onPress}) => {
-  console.log(name, value,selected)
+ // console.log(name, value,selected)
   return (
     <TouchableOpacity style={style.listContainer} onPress={onPress}>
       <ListItemCustom name={name} value={value} selected={selected} />

@@ -19,4 +19,7 @@ const APP_CONSTANT = {
 
 }
 
+export const LANGUAGE_KEY = 'language'
+export const REGION_KEY ='region'
+
 export default APP_CONSTANT

@@ -2,6 +2,7 @@ import React from 'react'
 import axios from 'axios'
 import { AsyncStorage, Dimensions } from 'react-native'
 import _ from 'underscore'
+import initialState from '../State'
 const patternParseYoutube = /^.*(?:(?:youtu\.be\/|v\/|vi\/|u\/\w\/|embed\/)|(?:(?:watch)?\?v(?:i)?=|\&v(?:i)?=))([^#\&\?]*).*/
 export function getLinkImgYoutube(linkYoutube) {
     let arrMatched = linkYoutube.match(patternParseYoutube)
@@ -132,6 +133,18 @@ export const checkLocationSaveDataNoDispatch = async (link, functionData) => {
     }
 }
 
+export const getSettings = async(keyword = null ) => {
+    //  'language': 'en-US',
+   //  'region': 'US',
+    const data = JSON.parse(await AsyncStorage.getItem('Settings') ||   initialState['settings'])
+    if (keyword !== null) {
+        return data[keyword]
+    }
+    console.log('Settings Data', data)
+    return data
+}
+
+
 
 module.exports = {
     getLinkImgYoutube,
@@ -146,5 +159,6 @@ module.exports = {
     jsonToMap,
     usedLocalData,
     drawImageScaled,
-    checkLocationSaveData
+    checkLocationSaveData,
+    getSettings
 }
