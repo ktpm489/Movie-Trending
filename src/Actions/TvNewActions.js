@@ -1,7 +1,8 @@
 import axios from 'axios'
 import * as types from '../constants/actionTypes'
 import Constant from '../utilities/constants'
-import { checkLocationSaveData } from '../utilities/globalFunction'
+import { checkLocationSaveData, getSettings } from '../utilities/globalFunction'
+import { LANGUAGE_KEY } from '../utilities/constants'
 //SAVESTORE
 // TV SIMILAR
 
@@ -13,7 +14,7 @@ export function retrieveTVSimilarSuccess(res) {
 }
 
 export function retrieveTVSimilarDetails(tvId, page) {
-    return function (dispatch) {
+    return async function (dispatch) {
         // console.log('Link Similar', `${Constant.TMDB_URL}/tv/${tvId}/similar?api_key=${Constant.TMDB_API_KEY}&language=en-US&page=${page}`)
         // return axios.get(`${Constant.TMDB_URL}/tv/${tvId}/similar?api_key=${Constant.TMDB_API_KEY}&language=en-US&page=${page}`)
         //     .then(res => {
@@ -22,7 +23,8 @@ export function retrieveTVSimilarDetails(tvId, page) {
         //     .catch(error => {
         //         console.log('TV  Similar Details', error); //eslint-disable-line
         //     });
-        return checkLocationSaveData(`${Constant.TMDB_URL}/tv/${tvId}/similar?api_key=${Constant.TMDB_API_KEY}&language=en-US&page=${page}`, retrieveTVSimilarSuccess, dispatch)
+        let settings = await getSettings(LANGUAGE_KEY);
+        return checkLocationSaveData(`${Constant.TMDB_URL}/tv/${tvId}/similar?api_key=${Constant.TMDB_API_KEY}&language=${settings}&page=${page}`, retrieveTVSimilarSuccess, dispatch)
     };
 }
 
@@ -35,7 +37,7 @@ export function retrieveTVSearchResultsSuccess(res) {
 }
 
 export function retrieveTVSearchResults(query, page) {
-    return function (dispatch) {
+    return  async function (dispatch) {
         // return axios.get(`${Constant.TMDB_URL}/search/tv?api_key=${Constant.TMDB_API_KEY}&query=${query}&page=${page}`)
         //     .then(res => {
         //         dispatch(retrieveTVSearchResultsSuccess(res));
@@ -43,7 +45,9 @@ export function retrieveTVSearchResults(query, page) {
         //     .catch(error => {
         //         console.log('TV Search Results', error); //eslint-disable-line
         //     });
-        return checkLocationSaveData(`${Constant.TMDB_URL}/search/tv?api_key=${Constant.TMDB_API_KEY}&query=${query}&page=${page}`, retrieveTVSearchResultsSuccess, dispatch)
+        let settings = await getSettings(LANGUAGE_KEY);
+
+        return checkLocationSaveData(`${Constant.TMDB_URL}/search/tv?api_key=${Constant.TMDB_API_KEY}&query=${query}&language=${settings}&page=${page}`, retrieveTVSearchResultsSuccess, dispatch)
     };
 }
 

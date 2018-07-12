@@ -53,7 +53,7 @@ export default {
     }
   },
   'settings': {
-    'language': 'en-US',
+    'language': 'en',
     'region': 'US',
     'theme': 'Dark'
   },

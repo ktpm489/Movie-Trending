@@ -11,7 +11,8 @@ import axios from 'axios'
 import Constant from '../../utilities/constants'
 import CardItem from '../customComponent/CardItem/CardItem'
 import Icon from 'react-native-vector-icons/Ionicons'
-import { checkLocationSaveData, saveItemToStorageNoCheck, usedLocalData, getAllItemFromStorage } from '../../utilities/globalFunction'
+import { checkLocationSaveData, saveItemToStorageNoCheck, usedLocalData, getAllItemFromStorage, getSettings  } from '../../utilities/globalFunction'
+import { LANGUAGE_KEY } from '../../utilities/constants'
 // return device width and height
 const {height, width} = Dimensions.get('window')
 const numColumns = parseInt(width / (92 + (5 * 2)))
@@ -138,7 +139,8 @@ class AllTvShows extends Component {
       console.log('Retrieve render TV Movie', page)
       console.log('Data', this.state.data)
       // SAVE STORE
-      let link = `${'https://api.themoviedb.org/3'}/tv/${this.type}?api_key=${'87dfa1c669eea853da609d4968d294be'}&language=en-US&page=${page}`
+      let settings = await getSettings(LANGUAGE_KEY);
+      let link = `${'https://api.themoviedb.org/3'}/tv/${this.type}?api_key=${'87dfa1c669eea853da609d4968d294be'}&language=${settings}&page=${page}`
 
       // axios.get(link)
       //   .then(async (res) => {

@@ -20,9 +20,9 @@ class SeasonDetails extends Component {
     }
   }
 
-  componentDidMount () {
+  componentDidMount= async () => {
     const {tvShowId, season: {season_number}} = this.props.navigation.state.params
-    this.props.fetchSeasonDetails(tvShowId, season_number, null, (err) => {
+    await this.props.fetchSeasonDetails(tvShowId, season_number, null, (err) => {
       this.setState({
         error: err.response.data.message
       })

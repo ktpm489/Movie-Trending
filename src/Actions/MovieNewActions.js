@@ -1,7 +1,8 @@
 import axios from 'axios'
 import * as types from '../constants/actionTypes'
 import Constant from '../utilities/constants'
-import { checkLocationSaveData } from '../utilities/globalFunction'
+import { checkLocationSaveData, getSettings } from '../utilities/globalFunction'
+import { LANGUAGE_KEY } from '../utilities/constants'
  // SAVESTORE
 // GENRES
 export function retrieveMoviesGenresSuccess(res) {
@@ -13,7 +14,7 @@ export function retrieveMoviesGenresSuccess(res) {
 
 export function retrieveMoviesGenres() {
     return function (dispatch) {
-        let linkData = `${ Constant.TMDB_URL }/genre/movie/list?api_key=${ Constant.TMDB_API_KEY }`
+        let linkData = `${ Constant.TMDB_URL }/genre/movie/list?api_key=${Constant.TMDB_API_KEY}`
         // return axios.get(`${Constant.TMDB_URL}/genre/movie/list?api_key=${Constant.TMDB_API_KEY}`)
         //     .then(res => {
 
@@ -35,7 +36,7 @@ export function retrievePopularMoviesSuccess(res) {
 }
 
 export function  retrievePopularMovies(page) {
-    return function (dispatch) {
+    return  async function (dispatch) {
         // return axios.get(`${Constant.TMDB_URL}/movie/popular?api_key=${Constant.TMDB_API_KEY}&page=${page}`)
         //     .then(res => {
         //         dispatch(retrievePopularMoviesSuccess(res));
@@ -43,8 +44,8 @@ export function  retrievePopularMovies(page) {
         //     .catch(error => {
         //         console.log('Popular', error); //eslint-disable-line
         //     });
-
-        return checkLocationSaveData(`${Constant.TMDB_URL}/movie/popular?api_key=${Constant.TMDB_API_KEY}&page=${page}`, retrievePopularMoviesSuccess, dispatch)
+        let settings = await getSettings(LANGUAGE_KEY);
+        return checkLocationSaveData(`${Constant.TMDB_URL}/movie/popular?api_key=${Constant.TMDB_API_KEY}&language=${settings}&page=${page}`, retrievePopularMoviesSuccess, dispatch)
     };
 }
 
@@ -57,7 +58,7 @@ export function retrieveNowPlayingMoviesSuccess(res) {
 }
 
 export function retrieveNowPlayingMovies(page) {
-    return function (dispatch) {
+    return  async function (dispatch) {
         // return axios.get(`${Constant.TMDB_URL}/movie/now_playing?api_key=${Constant.TMDB_API_KEY}&page=${page}`)
         //     .then(res => {
         //         dispatch(retrieveNowPlayingMoviesSuccess(res));
@@ -65,7 +66,8 @@ export function retrieveNowPlayingMovies(page) {
         //     .catch(error => {
         //         console.log('Now Playing', error); //eslint-disable-line
         //     });
-        return checkLocationSaveData(`${Constant.TMDB_URL}/movie/now_playing?api_key=${Constant.TMDB_API_KEY}&page=${page}`, retrieveNowPlayingMoviesSuccess, dispatch)
+        let settings = await getSettings(LANGUAGE_KEY);
+        return checkLocationSaveData(`${Constant.TMDB_URL}/movie/now_playing?api_key=${Constant.TMDB_API_KEY}&language=${settings}&page=${page}`, retrieveNowPlayingMoviesSuccess, dispatch)
     };
 }
 
@@ -78,7 +80,7 @@ export function retrieveMoviesListSuccess(res) {
 }
 
 export function retrieveMoviesList(type, page) {
-    return function (dispatch) {
+    return async function (dispatch) {
         console.log('Link RetriveMoviesList', Constant.TMDB_URL)
         // return axios.get(`${Constant.TMDB_URL}/movie/${type}?api_key=${Constant.TMDB_API_KEY}&page=${page}`)
         //     .then(res => {
@@ -87,7 +89,8 @@ export function retrieveMoviesList(type, page) {
         //     .catch(error => {
         //         console.log('Movies List', error); //eslint-disable-line
         //     });
-        return checkLocationSaveData(`${Constant.TMDB_URL}/movie/${type}?api_key=${Constant.TMDB_API_KEY}&page=${page}`, retrieveMoviesListSuccess, dispatch)
+        let settings = await getSettings(LANGUAGE_KEY);
+        return checkLocationSaveData(`${Constant.TMDB_URL}/movie/${type}?api_key=${Constant.TMDB_API_KEY}&language=${settings}&page=${page}`, retrieveMoviesListSuccess, dispatch)
     };
 }
 
@@ -100,7 +103,7 @@ export function retrieveMoviesSearchResultsSuccess(res) {
 }
 
 export function retrieveMoviesSearchResults(query, page) {
-    return function (dispatch) {
+    return async function (dispatch) {
         // return axios.get(`${Constant.TMDB_URL}/search/movie?api_key=${Constant.TMDB_API_KEY}&query=${query}&page=${page}`)
         //     .then(res => {
         //         dispatch(retrieveMoviesSearchResultsSuccess(res));
@@ -108,7 +111,8 @@ export function retrieveMoviesSearchResults(query, page) {
         //     .catch(error => {
         //         console.log('Movies Search Results', error); //eslint-disable-line
         //     });
-        return checkLocationSaveData(`${Constant.TMDB_URL}/search/movie?api_key=${Constant.TMDB_API_KEY}&query=${query}&page=${page}`, retrieveMoviesSearchResultsSuccess, dispatch)
+        let settings = await getSettings(LANGUAGE_KEY);
+        return checkLocationSaveData(`${Constant.TMDB_URL}/search/movie?api_key=${Constant.TMDB_API_KEY}&query=${query}&language=${settings}&page=${page}`, retrieveMoviesSearchResultsSuccess, dispatch)
     };
 }
 
@@ -121,7 +125,7 @@ export function retrieveMovieDetailsSuccess(res) {
 }
 
 export function retrieveMovieDetails(movieId) {
-    return function (dispatch) {
+    return async function (dispatch) {
         // return axios.get(`${Constant.TMDB_URL}/movie/${movieId}?api_key=${Constant.TMDB_API_KEY}&append_to_response=casts,images,videos`)
         //     .then(res => {
         //         dispatch(retrieveMovieDetailsSuccess(res));
@@ -129,6 +133,8 @@ export function retrieveMovieDetails(movieId) {
         //     .catch(error => {
         //         console.log('Movie Details', error); //eslint-disable-line
         //     });
+        let settings = await getSettings(LANGUAGE_KEY);
+        //console.log('settings', settings)
         return checkLocationSaveData(`${Constant.TMDB_URL}/movie/${movieId}?api_key=${Constant.TMDB_API_KEY}&append_to_response=casts,images,videos`, retrieveMovieDetailsSuccess, dispatch)
     };
 }
@@ -144,7 +150,7 @@ export function retrieveMovieReviewSuccess(res) {
 }
 
 export function retrieveMovieReviewDetails(movieId,page) {
-    return function (dispatch) {
+    return async function (dispatch) {
         // return axios.get(`${Constant.TMDB_URL}/movie/${movieId}/reviews?api_key=${Constant.TMDB_API_KEY}&language=en-US&page=${page}`)
         //     .then(res => {
         //         dispatch(retrieveMovieReviewSuccess(res));
@@ -152,7 +158,9 @@ export function retrieveMovieReviewDetails(movieId,page) {
         //     .catch(error => {
         //         console.log('Movie  Review Details', error); //eslint-disable-line
         //     });
-        return checkLocationSaveData(`${Constant.TMDB_URL}/movie/${movieId}/reviews?api_key=${Constant.TMDB_API_KEY}&language=en-US&page=${page}`, retrieveMovieReviewSuccess, dispatch)
+        let settings = await getSettings(LANGUAGE_KEY);
+       // console.log('settings', settings)
+        return checkLocationSaveData(`${Constant.TMDB_URL}/movie/${movieId}/reviews?api_key=${Constant.TMDB_API_KEY}&language=${settings}&page=${page}`, retrieveMovieReviewSuccess, dispatch)
     };
 }
 
@@ -167,7 +175,10 @@ export function retrieveMovieSimilarSuccess(res) {
 
 export function retrieveMovieSimilarDetails(movieId, page) {
     return   async function (dispatch) {
-        let linkData = `${Constant.TMDB_URL}/movie/${movieId}/similar?api_key=${Constant.TMDB_API_KEY}&language=en-US&page=${page}`
+        let settings = await getSettings(LANGUAGE_KEY);
+        let settingData = await getSettings()
+       console.log('settings', settingData)
+        let linkData = `${Constant.TMDB_URL}/movie/${movieId}/similar?api_key=${Constant.TMDB_API_KEY}&language=${settings}&page=${page}`
        return checkLocationSaveData(linkData, retrieveMovieSimilarSuccess,dispatch)
     
         // console.log('Link Similar', linkData)

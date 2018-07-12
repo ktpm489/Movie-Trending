@@ -8,6 +8,8 @@ import { selectedTvShow } from '../../Actions'
 import * as _ from 'lodash'
 import { getUriPopulated } from '../../utilities/utils'
 import { connect } from 'react-redux'
+import { checkLocationSaveData, saveItemToStorageNoCheck, usedLocalData, getAllItemFromStorage, getSettings } from '../../utilities/globalFunction'
+import { LANGUAGE_KEY } from '../../utilities/constants'
 import {
   castSelected,
   searchItemDetailsFetched,
@@ -21,11 +23,12 @@ class TvShowDetails extends Details {
     const baseUrl = Constant.api_base_url
     const apiKey = Constant.api_key
     const tvShow_url = '/tv/'
+    let settings = await getSettings(LANGUAGE_KEY);
     const appendResponse = 'append_to_response=videos,images'
     const tvShowId = this.props.details.id
 
     const tvShowUrl = `${baseUrl}${tvShow_url}${tvShowId}?${apiKey}&${appendResponse}`
-    const tvShowCreditsUrl = `${baseUrl}${tvShow_url}${tvShowId}/credits?${apiKey}`
+    const tvShowCreditsUrl = `${baseUrl}${tvShow_url}${tvShowId}/credits?${apiKey}&language=${settings}`
 
      await this.fetchDetails(tvShowUrl, tvShowCreditsUrl)
   }

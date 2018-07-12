@@ -12,6 +12,9 @@ import *  as moviesAction from '../../Actions/MovieNewActions'
 import { bindActionCreators } from 'redux'
 import { NavigationActions } from 'react-navigation'
 import { selectedMovie } from '../../Actions'
+import { LANGUAGE_KEY } from '../../utilities/constants'
+import { checkLocationSaveData, saveItemToStorageNoCheck, usedLocalData, getAllItemFromStorage, getSettings } from '../../utilities/globalFunction'
+
 class MovieDetails extends Details {
 
   componentWillMount = () => {
@@ -24,8 +27,9 @@ class MovieDetails extends Details {
     const appendResponse = 'append_to_response=videos,images'
     const movieId = this.props.details.id
     console.log('moviedID', movieId)
+    let settings = await getSettings(LANGUAGE_KEY);
     const movieUrl = `${baseUrl}${movie_url}${movieId}?${apiKey}&${appendResponse}`
-    const movieCreditsUrl = `${baseUrl}${movie_url}${movieId}/credits?${apiKey}`
+    const movieCreditsUrl = `${baseUrl}${movie_url}${movieId}/credits?${apiKey}&language=${settings}`
 
    await this.fetchDetails(movieUrl, movieCreditsUrl , movieId)
     //  this.retrieveSimilarMovieList()

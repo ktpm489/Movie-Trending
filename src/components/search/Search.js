@@ -20,6 +20,8 @@ import { bindActionCreators } from 'redux';
 import * as moviesActions from '../../Actions/MovieNewActions'
 import * as tvActions from '../../Actions/TvNewActions'
 import * as personActions from '../../Actions/PersonNewActions'
+import { checkLocationSaveData, saveItemToStorageNoCheck, usedLocalData, getAllItemFromStorage, getSettings } from '../../utilities/globalFunction'
+import { LANGUAGE_KEY } from '../../utilities/constants'
 import { YellowBox } from 'react-native'
 YellowBox.ignoreWarnings([
   'Encountered an error loading page',    // WebView uri: result.url and url failing to load - "bloomberg suneq" https://github.com/facebook/react-native/issues/7839#issuecomment-224111608
@@ -188,7 +190,9 @@ class Search extends Component {
         console.log('paga', page);
       }
     //SAVE STORAGE
-    await  axios.get(`${'https://api.themoviedb.org/3'}/search/movie?api_key=${'87dfa1c669eea853da609d4968d294be'}&language=en-US&query=${encodeURIComponent(this.state.query)}&page=${page}`)
+      let settings = await getSettings(LANGUAGE_KEY);
+
+      await axios.get(`${'https://api.themoviedb.org/3'}/search/movie?api_key=${'87dfa1c669eea853da609d4968d294be'}&language=${settings}&query=${encodeURIComponent(this.state.query)}&page=${page}`)
         // axios.get(`${TMDB_URL}/search/movie/?api_key=${TMDB_API_KEY}&query=${this.state.query}&page=${page}`)
         // https://api.themoviedb.org/3/search/tv?api_key=<<api_key>>&language=en-US&page=1
         //https://api.themoviedb.org/3/search/person?api_key=<<api_key>>&language=en-US&page=1&include_adult=false 
@@ -225,8 +229,8 @@ class Search extends Component {
         page = this.state.currentTvPage + 1;
         console.log('paga', page);
       }
-
-    await  axios.get(`${'https://api.themoviedb.org/3'}/search/tv?api_key=${'87dfa1c669eea853da609d4968d294be'}&language=en-US&query=${encodeURIComponent(this.state.query)}&page=${page}`)
+      let settings = await getSettings(LANGUAGE_KEY);
+      await axios.get(`${'https://api.themoviedb.org/3'}/search/tv?api_key=${'87dfa1c669eea853da609d4968d294be'}&language=${settings}&query=${encodeURIComponent(this.state.query)}&page=${page}`)
         // axios.get(`${TMDB_URL}/search/movie/?api_key=${TMDB_API_KEY}&query=${this.state.query}&page=${page}`)
         // https://api.themoviedb.org/3/search/tv?api_key=<<api_key>>&language=en-US&page=1
         //https://api.themoviedb.org/3/search/person?api_key=<<api_key>>&language=en-US&page=1&include_adult=false 
@@ -261,8 +265,8 @@ class Search extends Component {
         page = this.state.currentPersonPage + 1;
         console.log('paga', page);
       }
-
-     await axios.get(`${'https://api.themoviedb.org/3'}/search/person?api_key=${'87dfa1c669eea853da609d4968d294be'}&language=en-US&query=${encodeURIComponent(this.state.query)}&page=${page}`)
+      let settings = await getSettings(LANGUAGE_KEY);
+      await axios.get(`${'https://api.themoviedb.org/3'}/search/person?api_key=${'87dfa1c669eea853da609d4968d294be'}&language=${settings}&query=${encodeURIComponent(this.state.query)}&page=${page}`)
         // axios.get(`${TMDB_URL}/search/movie/?api_key=${TMDB_API_KEY}&query=${this.state.query}&page=${page}`)
         // https://api.themoviedb.org/3/search/tv?api_key=<<api_key>>&language=en-US&page=1
         //https://api.themoviedb.org/3/search/person?api_key=<<api_key>>&language=en-US&page=1&include_adult=false 

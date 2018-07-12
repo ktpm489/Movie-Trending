@@ -26,7 +26,9 @@ import Constant from '../../utilities/constants'
 import { getUriPopulated } from '../../utilities/utils';
 // import MovieSimilar from './movieDetailComponent/tvFlatlist'
 import ScrollableTabView, { DefaultTabBar, } from 'react-native-scrollable-tab-view'
-import { checkLocationSaveData, saveItemToStorageNoCheck, usedLocalData, getAllItemFromStorage } from '../../utilities/globalFunction'
+import { checkLocationSaveData, saveItemToStorageNoCheck, usedLocalData, getAllItemFromStorage, getSettings } from '../../utilities/globalFunction'
+import { LANGUAGE_KEY } from '../../utilities/constants'
+
 const heightScreen = Dimensions.get('window').height
 //SAVESTORE
 class Details extends Component {
@@ -225,13 +227,14 @@ class Details extends Component {
     
         //setTimeout( async () => {
         // if (!this.state.onEndReachedCalledDuringMomentum) {
+        let settings = await getSettings(LANGUAGE_KEY);
          console.log('Read Next Page', this.state.currentSimilarPage, this.props.similartv.total_pages)
         this.setState({ currentSimilarPage: this.state.currentSimilarPage + 1 }, async () => {
 
             if (this.state.currentSimilarPage <= this.props.similartv.total_pages) {
 
 
-                await axios.get(`${Constant.TMDB_URL}/tv/${this.props.details.id}/similar?api_key=${Constant.TMDB_API_KEY}&language=en-US&page=${this.state.currentSimilarPage}`).then(
+                await axios.get(`${Constant.TMDB_URL}/tv/${this.props.details.id}/similar?api_key=${Constant.TMDB_API_KEY}&language=${settings}&page=${this.state.currentSimilarPage}`).then(
                     (res) => {
                         const data = this.state.similarPageResults
                         const newData = res.data.results

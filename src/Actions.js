@@ -129,8 +129,8 @@ export const castDetailsFetched = (details, category, screen) => ({
 
 export const FETCH_CAST_DETAILS = 'FETCH_CAST_DETAILS'
 
-export function fetchCastDetails (castId) {
-  const request = getCastDetails(castId);
+export async  function fetchCastDetails (castId) {
+  const request =  await getCastDetails(castId);
   
   return {
     type: FETCH_CAST_DETAILS,
@@ -180,8 +180,8 @@ export const saveSettingsAction = async (values = initialState['settings']) => {
 // SEASONS
 export const FETCH_SEASON_DETAILS = 'FETCH_SEASON_DETAILS';
 
-export const fetchSeasonDetails = (showId, season_number, success, err) => {
-  const request = getSeasonDetails(showId, season_number);
+export const fetchSeasonDetails =  async (showId, season_number, success, err) => {
+  const request = await getSeasonDetails(showId, season_number);
 
   return {
     type: FETCH_SEASON_DETAILS,

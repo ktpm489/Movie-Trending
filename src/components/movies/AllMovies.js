@@ -13,7 +13,8 @@ import { bindActionCreators } from 'redux'
 import Constant from '../../utilities/constants'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { FlatImageList } from '../common/ImageList'
-import { checkLocationSaveData, saveItemToStorageNoCheck, usedLocalData, getAllItemFromStorage } from '../../utilities/globalFunction'
+import { checkLocationSaveData, saveItemToStorageNoCheck, usedLocalData, getAllItemFromStorage, getSettings } from '../../utilities/globalFunction'
+import { LANGUAGE_KEY } from '../../utilities/constants'
 // return device width and height
 const { height, width } = Dimensions.get('window')
 const numColumns = parseInt(width / (92 + (5 * 2)))
@@ -148,8 +149,8 @@ class AllMovies extends Component {
       } else {
         page = this.state.currentPage + 1
       }
-
-     let link = `${Constant.TMDB_URL}/movie/${this.type}?api_key=${Constant.TMDB_API_KEY}&page=${page}`
+      let settings = await getSettings(LANGUAGE_KEY);
+      let link = `${Constant.TMDB_URL}/movie/${this.type}?api_key=${Constant.TMDB_API_KEY}&page=${page}&language=${settings}`
       // // SAVE STORE
       // axios.get(`${Constant.TMDB_URL}/movie/${this.type}?api_key=${Constant.TMDB_API_KEY}&page=${page}`).then(
       //   res => {

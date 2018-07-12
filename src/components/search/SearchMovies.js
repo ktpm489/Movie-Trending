@@ -19,6 +19,8 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as moviesActions from '../../Actions/MovieNewActions'
 import { YellowBox } from 'react-native'
+import { checkLocationSaveData, saveItemToStorageNoCheck, usedLocalData, getAllItemFromStorage, getSettings } from '../../utilities/globalFunction'
+import { LANGUAGE_KEY } from '../../utilities/constants'
 YellowBox.ignoreWarnings([
   'Encountered an error loading page',    // WebView uri: result.url and url failing to load - "bloomberg suneq" https://github.com/facebook/react-native/issues/7839#issuecomment-224111608
   'Deprecation warning: moment construction falls back to js Date. This is discouraged and will be removed in upcoming major release. Please refer to http://momentjs.com/guides/#/warnings/js-date/ for more info.',
@@ -61,7 +63,7 @@ class Search extends Component {
   }
 
 
-  retrieveNextPage = () => {
+  retrieveNextPage = async () => {
     if (this.state.currentPage !== this.props.searchResults.total_pages) {
       this.setState({
         currentPage: this.state.currentPage + 1
@@ -76,8 +78,9 @@ class Search extends Component {
         page = this.state.currentPage + 1;
         console.log('paga', page);
       }
+      let settings = await getSettings(LANGUAGE_KEY);
 
-      axios.get(`${'https://api.themoviedb.org/3'}/search/movie?api_key=${'87dfa1c669eea853da609d4968d294be'}&language=en-US&query=${encodeURIComponent(this.state.query)}&page=${page}`)
+      axios.get(`${'https://api.themoviedb.org/3'}/search/movie?api_key=${'87dfa1c669eea853da609d4968d294be'}&language=${settings}&query=${encodeURIComponent(this.state.query)}&page=${page}`)
         // axios.get(`${TMDB_URL}/search/movie/?api_key=${TMDB_API_KEY}&query=${this.state.query}&page=${page}`)
         .then(res => {
            const data = this.state.searchResults.results;

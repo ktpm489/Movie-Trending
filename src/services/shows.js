@@ -2,7 +2,8 @@ import axios from 'axios';
 
 import * as index from './index';
 import Constant from './../utilities/constants';
-
+import { checkLocationSaveData, saveItemToStorageNoCheck, usedLocalData, getAllItemFromStorage, getSettings } from './../utilities/globalFunction'
+import { LANGUAGE_KEY } from './../utilities/constants'
 const apiKey = Constant.api_key;
 const appendResponse = 'append_to_response=videos,images';
 
@@ -14,7 +15,7 @@ const appendResponse = 'append_to_response=videos,images';
  * @param {string} reg - region
  * @returns {object | promise}
  */
-const getShows = (route, lan, reg) => {
+const getShows = async (route, lan, reg) => {
   const uri = `${route}?${apiKey}&language=${lan}&region=${reg}&page=1`
   return axios.get(uri);
 }
@@ -27,8 +28,9 @@ const getShows = (route, lan, reg) => {
  * 
  * @return {object | Promise}
  */
-const getShowDetails = (showUrl, showId) => {
-  return axios.get(`${showUrl}${showId}?${apiKey}&${appendResponse}`);
+const getShowDetails = async (showUrl, showId) => {
+  let settings = await getSettings(LANGUAGE_KEY);
+  return axios.get(`${showUrl}${showId}?${apiKey}&${appendResponse}&language=${settings}`);
 }
 
 /**
@@ -39,8 +41,9 @@ const getShowDetails = (showUrl, showId) => {
  * 
  * @return {object | Promise}
  */
-const getShowCredits = (showUrl, showId) => {
-  return axios.get(`${showUrl}${showId}/credits?${apiKey}`);
+const getShowCredits = async (showUrl, showId) => {
+  let settings = await getSettings(LANGUAGE_KEY);
+  return axios.get(`${showUrl}${showId}/credits?${apiKey}&language=${settings}`);
 } 
 
 export {

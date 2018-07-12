@@ -23,8 +23,8 @@ import {
 import style, {primaryColor, StackNavHeaderStyles} from '../../styles/light-theme'
 
 class CastDetails extends Component {
-  componentDidMount () {
-    this.props.fetchCastDetails(this.props.details.id)
+  componentDidMount = async ()  => {
+   await  this.props.fetchCastDetails(this.props.details.id)
 
     const baseUrl = Constant.api_base_url
     const apiKey = Constant.api_key
