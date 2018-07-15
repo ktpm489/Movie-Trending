@@ -10,7 +10,7 @@ import style from './../../styles/light-theme';
 import language from '../../Config/languagues'
 import region from '../../Config/region'
 import { cleartItem } from '../../utilities/globalFunction'
-import email from 'react-native-email'
+//import email from 'react-native-email'
 const appInfo = [
   {
     name: 'App Name',
@@ -75,14 +75,14 @@ class Settings extends Component {
   }
 
   handleEmail = () => {
-    const to = ['tiaan@email.com', 'foo@bar.com'] // string or array of email addresses
-    email(to, {
-      // Optional additional arguments
-      cc: ['bazzy@moo.com', 'doooo@daaa.com'], // string or array of email addresses
-      bcc: 'mee@mee.com', // string or array of email addresses
-      subject: 'Show how to use',
-      body: 'Some body right here'
-    }).catch(console.error)
+    // const to = ['tiaan@email.com', 'foo@bar.com'] // string or array of email addresses
+    // email(to, {
+    //   // Optional additional arguments
+    //   cc: ['bazzy@moo.com', 'doooo@daaa.com'], // string or array of email addresses
+    //   bcc: 'mee@mee.com', // string or array of email addresses
+    //   subject: 'Show how to use',
+    //   body: 'Some body right here'
+    // }).catch(console.error)
   }
 
   render() {

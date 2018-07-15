@@ -28,7 +28,7 @@ const EntryDetail = (props) => {
         let hRatio = screenSize.width / width;
         let vRatio = screenSize.height / height;
         let ratio = Math.min(hRatio, vRatio);
-        return { width: parseInt(img.width * ratio), height: parseInt(height * ratio) };
+        return { width: parseInt(width * ratio), height: parseInt(height * ratio) };
     }
     const renderNode = (node, index, siblings, parent, defaultRenderer) => {
         if (node.name == 'img') {
@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
     //     backgroundColor: '#000000',
     // },
     rightContainer: {
-        flex: 1,
+       // flex: 1,
         marginLeft: 10
     },
     title: {
