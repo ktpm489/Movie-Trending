@@ -62,7 +62,10 @@ export const resetItem = (keyword) => {
 }
  //clear all data
  export const cleartItem = async () => {
-     await AsyncStorage.clear()
+    // await AsyncStorage.clear()
+    await AsyncStorage.getAllKeys().then(AsyncStorage.multiRemove)
+
+
  }
 export const getItemFromStorage = (keyword, object) => {
     AsyncStorage.getItem(keyword).then((response) => {
@@ -162,5 +165,6 @@ module.exports = {
     usedLocalData,
     drawImageScaled,
     checkLocationSaveData,
-    getSettings
+    getSettings,
+    cleartItem
 }

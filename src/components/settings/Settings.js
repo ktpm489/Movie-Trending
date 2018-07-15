@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, ScrollView, Text, Button ,TouchableOpacity } from 'react-native';
+import { View, ScrollView, Text, Alert ,TouchableOpacity } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import { connect } from 'react-redux';
 
@@ -10,13 +10,14 @@ import style from './../../styles/light-theme';
 import language from '../../Config/languagues'
 import region from '../../Config/region'
 import { cleartItem } from '../../utilities/globalFunction'
+import email from 'react-native-email'
 const appInfo = [
   {
     name: 'App Name',
-    value: 'MovieDB'
+    value: 'Movie 24h Trending'
   }, {
     name: 'App Version',
-    value: '0.0.1'
+    value: '1.0.0'
   }
 ];
 
@@ -38,10 +39,11 @@ const settings = [
   {
     name: 'Language',
     values: language
-  }, {
-    name: 'Region',
-    values: region
   }
+    // , {
+    //   name: 'Region',
+    //   values: region
+    // }
 ]
 
 class Settings extends Component {
@@ -55,8 +57,34 @@ class Settings extends Component {
     }))
   }
   onPressResetData  = async () => {
+    console.log('Delete all data')
     await cleartItem()
   }
+
+
+  onShowConfimDialog = async () => {
+    Alert.alert(
+      'Clear Confirm',
+      'Do you want to clear all data?',
+      [
+        { text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
+        { text: 'OK', onPress: () => this.onPressResetData() },
+      ],
+      { cancelable: false }
+    )
+  }
+
+  handleEmail = () => {
+    const to = ['tiaan@email.com', 'foo@bar.com'] // string or array of email addresses
+    email(to, {
+      // Optional additional arguments
+      cc: ['bazzy@moo.com', 'doooo@daaa.com'], // string or array of email addresses
+      bcc: 'mee@mee.com', // string or array of email addresses
+      subject: 'Show how to use',
+      body: 'Some body right here'
+    }).catch(console.error)
+  }
+
   render() {
     return (
       <View>
@@ -70,7 +98,7 @@ class Settings extends Component {
 
           <View style={{marginTop: 20}}>
             <Text style={[style.text, style.headingText]}>
-              Language and Region
+              Language Settings
             </Text>
 
             {settings.map(({name, values}) => (<TouchableListItem
@@ -88,7 +116,7 @@ class Settings extends Component {
             }}/>))}
           </View>
           <TouchableOpacity style={{ backgroundColor: '#D9D9D9', padding :3 }}>
-          <Text style={[style.text, style.headingText]} onPress={this.onPressResetData}>
+            <Text style={[style.text, style.headingText]} onPress={this.onShowConfimDialog}>
               Reset Data
             </Text>
           </TouchableOpacity>

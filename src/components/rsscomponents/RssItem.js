@@ -64,7 +64,7 @@ class RssItem extends Component {
             <View style={[styles.rssContainer, { backgroundColor: this.props.color }]}>
                 {this.state.isLoading ?
                     <ActivityIndicator color={'#FFF'} style={styles.activityIndicator} /> :
-                    <View>
+                    <View style={{ flex: 1}}>
                         <Text style={styles.title} numberOfLines={2} >
                             {this.state.title}
                         </Text>

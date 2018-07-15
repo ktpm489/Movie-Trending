@@ -20,6 +20,7 @@ const EntryDetail = (props) => {
 
     }
 
+ 
     const  drawImageScaled = (img) =>{
         let screenSize = Dimensions.get('window');
         const width = img.width || 300
@@ -132,7 +133,9 @@ const styles = StyleSheet.create({
         flex: 1
     },
     textContainer: {
-        padding: 10
+        padding: 10,
+        flex: 1,
+        width :'100%'
     },
     toolbar: {
         backgroundColor: '#9598A6',

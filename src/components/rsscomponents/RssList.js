@@ -1,5 +1,5 @@
 import React from 'react'
-import { ScrollView, Text, RefreshControl, StyleSheet } from 'react-native'
+import { ScrollView, Text,View, RefreshControl, StyleSheet, TouchableWithoutFeedback , Keyboard} from 'react-native'
 import Colors from '../../constants/Colors'
 import RssItem from '../rsscomponents/RssItem'
 
@@ -20,7 +20,12 @@ const RssList = (props) =>{
             color={colorsOrder[index % colorsOrder.length]}
         />
     ))
+    const pressDismissKeyBoard = () => {
+        Keyboard.dismiss()
+    }
     return (
+        // <TouchableWithoutFeedback onPress={pressDismissKeyBoard}>
+        //     <View onStartShouldSetResponder={() => true}>
         <ScrollView
         style={styles.container}
         refreshControl={
@@ -35,6 +40,8 @@ const RssList = (props) =>{
             <Text style={styles.error}>No Rss</Text>
         }
         </ScrollView>
+        // </View>
+        // </TouchableWithoutFeedback>
     )
 
 }

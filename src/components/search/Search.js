@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, ActivityIndicator, TextInput, FlatList } from 'react-native';
+import { View, Text, StyleSheet, ActivityIndicator, TextInput, FlatList ,Keyboard, TouchableOpacity } from 'react-native';
 import { SearchBar, ButtonGroup } from 'react-native-elements'
 import * as _ from 'lodash';
 import axios from 'axios'
@@ -409,6 +409,10 @@ class Search extends Component {
     }
   }
 
+  onPressDismiss = ()=> {
+    Keyboard.dismiss()
+  }
+
   render() {
     const { isSearching, onFilterChanged,
        config, popular, onSearchResultSelected } = this.props;
@@ -418,7 +422,7 @@ class Search extends Component {
     return (
 
 
-      <View style={styles.container}>
+      <TouchableOpacity style={styles.container} onPress={this.onPressDismiss}>
         <View style={styles.searchbox}>
           <View style={styles.searchboxBorder}>
             <TextInput
@@ -441,7 +445,7 @@ class Search extends Component {
         </View>
 
         {this.calculateRenderPage(selectedIndex)}
-      </View>
+      </TouchableOpacity>
     );
   }
 }
