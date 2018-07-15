@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, ScrollView, Text, Button } from 'react-native';
+import { View, ScrollView, Text, Button ,TouchableOpacity } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import { connect } from 'react-redux';
 
@@ -9,6 +9,7 @@ import { MovieDBListItem, TouchableListItem } from './../common/ListItem';
 import style from './../../styles/light-theme';
 import language from '../../Config/languagues'
 import region from '../../Config/region'
+import { cleartItem } from '../../utilities/globalFunction'
 const appInfo = [
   {
     name: 'App Name',
@@ -48,7 +49,14 @@ class Settings extends Component {
   onSettingsChange = (values) => {
     this.props.saveSettingsAction(values);
   }
-
+  onPressSearchYoutube = () => {
+    this.props.navigation.dispatch(NavigationActions.navigate({
+      routeName: 'YoutubeDetails'
+    }))
+  }
+  onPressResetData  = async () => {
+    await cleartItem()
+  }
   render() {
     return (
       <View>
@@ -79,6 +87,16 @@ class Settings extends Component {
                 }))
             }}/>))}
           </View>
+          <TouchableOpacity style={{ backgroundColor: '#D9D9D9', padding :3 }}>
+          <Text style={[style.text, style.headingText]} onPress={this.onPressResetData}>
+              Reset Data
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={{ backgroundColor: '#D9D9D9', padding: 3, marginTop :6}}>
+          <Text style={[style.text, style.headingText]} onPress={this.onPressSearchYoutube}>
+              Search Youtube
+            </Text>
+            </TouchableOpacity>
         </ScrollView>
       </View>
     );

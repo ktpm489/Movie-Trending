@@ -21,7 +21,7 @@ class SplashScreen extends Component {
       }} = this.props
  setTimeout( async () => {
   console.log('Uri', uri)
-
+   console.log('language', language, 'config', config)
    let currentData = await getAllItemFromStorage(uri)
    let movieLink = `${Constant.api_base_url}/movie/now_playing?${apiKey}&language=${language}&page=1`
    if (currentData && usedLocalData(currentData)) {

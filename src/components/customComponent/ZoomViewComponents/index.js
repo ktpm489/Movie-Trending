@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import ZoomHeader from './subHeader'
 import ZoomPage from './page'
-import { Alert ,Platform} from 'react-native'
+import { Alert, Platform, CameraRoll, PermissionsAndroid } from 'react-native'
 const ISIOS = Platform.OS === 'ios'
 const RNFS = require('react-native-fs')
 const progressDivider = 1
@@ -13,6 +13,7 @@ export default class Main extends Component {
       modalVisible: false,
       showHeader: true
     }
+    this.notification  = null
   }
 
   componentWillReceiveProps = (nextProps) => {
@@ -60,29 +61,89 @@ export default class Main extends Component {
     )
   }
 
-  onSaveImage = (link) => {
-   // console.log('link', link)
-    link && this.downloadFile(false, link)
+  onSaveImage = async  (link) => {
+    console.log('link', link)
+    link && await this.downloadFile(false, link)
   }
 
-  downloadFile = (backgroundFlag, url) => {
+  downloadFile =  async (backgroundFlag, url) => {
     let dir = ISIOS ? RNFS.DocumentDirectoryPath : RNFS.PicturesDirectoryPath
     let downloadDest = `${dir}/${(Math.random() * 1000) | 0 + '-' + Date.now()}.jpg`
     const { begin, progressDownload } = this
+    const THIS = this
     console.log('DownLoad Destination', downloadDest)
     let response = RNFS.downloadFile({ fromUrl: url, toFile: downloadDest, begin, progressDownload, backgroundFlag, progressDivider })
-    response.promise.then(res => {
-      this.onShowDownloadFunction()
-      console.log('DownloadSuccess', res)
+    await response.promise.then( async (res) => {
+      // save to lib
+     // this.onShowDownloadFunction()
+      // var promise = CameraRoll.saveImageWithTag(downloadDest);
+      // promise.then(function (result) {
+      //   console.log('save succeeded ' + result);
+      //   this.onShowDownloadFunction()
+      // }).catch(function (error) {
+      //   this.onShowDownloadFunction(true)
+      //   console.log('save failed ' + error);
+      // });
+    // console.log('DownloadSuccess', res)
+      await this.saveImgToCameraRoll(downloadDest, THIS)
     }).catch(err => {
+     // THIS.onShowDownloadFunction(true)
       console.log('Show Error', err)
     })
   }
+  saveImgToCameraRoll=  async (url, THIS) => {
+    if (ISIOS) {
+      this.saveDataToPhotoGallery(url, THIS)
+    } else {
+      try {
+        const granted = await PermissionsAndroid.request(
+          PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+          {
+            'title': 'Permisson denied',
+            'message': '"Moive Trenind 24h" Would like to write data to phone'
+          }
+        )
+        if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+          this.saveDataToPhotoGallery(url, THIS)
+          console.log('You can write data')
+        } else {
+          console.log('Write Data permission denied')
+        }
+      } catch (err) {
+        console.warn(err)
+      }
+    }
+  }
 
-  onShowDownloadFunction = () => {
-    this.notification && this.notification.show({
+  saveDataToPhotoGallery = (downloadDest, THIS) => {
+    var promise = CameraRoll.saveToCameraRoll('file://' +downloadDest);
+      promise.then((result) => {
+        console.log('save succeeded ' + result);
+        console.log('SAVE DATA THIS', THIS)
+        THIS.onShowDownloadFunction(THIS, false)
+        THIS.deleteLocalFile('file://' + downloadDest)
+      }).catch((error) =>{
+      THIS.onShowDownloadFunction(THIS,true)
+        console.log('save failed ' + error);
+      });
+  }
+
+  deleteLocalFile = (uri) => {
+    RNFS.unlink(uri)
+      .then(() => {
+        console.log('FILE DELETED')
+      })
+      .catch((err) => {
+        console.log(err.message)
+      })
+  }
+
+
+  onShowDownloadFunction = (THIS, isError = false) => {
+   // console.log('THIS', THIS)
+     THIS.notification && THIS.notification.show({
       title: 'Download Files !!!',
-      message: 'Download Files Successfully !!!',
+      message: isError ?'Download File Error. Please try again !' : 'Download Files Successfully !!!',
     })
   }
  setNotificatioRefs = (ref) => {

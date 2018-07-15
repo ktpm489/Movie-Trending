@@ -6,6 +6,7 @@ import MoviesStack from './routes/Movies'
 import TvShowStack from './routes/TvShows'
 import SearchStack from './routes/Search'
 import SettingsStack from './routes/Settings'
+import RssStack from './routes/RssRead'
 
 // import { primaryColor, headerBackgroundColor, headerBorderColor } from './styles/styles.js'
 import { primaryColor, headerBackgroundColor, headerBorderColor } from './styles/light-theme'
@@ -33,6 +34,13 @@ const MainScreen = TabNavigator({
       tabBarIcon: ({tintColor}) => <Icon name='search' size={30} color={tintColor} />
     }
   },
+  RssReader: {
+    screen: RssStack,
+    navigationOptions: {
+      tabBarLabel: 'Rss Reader',
+      tabBarIcon: ({ tintColor }) => <Icon name='wifi' size={30} color={tintColor} />
+    }
+  },
   Settings: {
     screen: SettingsStack,
     navigationOptions: {
@@ -40,21 +48,8 @@ const MainScreen = TabNavigator({
       tabBarIcon: ({tintColor}) => <Icon name='settings' size={30} color={tintColor} />
     }
   }
-  // ,
-  // SettingsDemo: {
-  //   screen: SettingsStack,
-  //   navigationOptions: {
-  //     tabBarLabel: 'SettingsDemo',
-  //     tabBarIcon: ({ tintColor }) => <Icon name='settings' size={30} color={tintColor} />
-  //   }
-  // },
-  // SettingsDemo1: {
-  //   screen: SettingsStack,
-  //   navigationOptions: {
-  //     tabBarLabel: 'SettingsDemo1',
-  //     tabBarIcon: ({ tintColor }) => <Icon name='settings' size={30} color={tintColor} />
-  //   }
-  // }
+ 
+  
 },
 {
   initialRouteName: 'Movies',

@@ -22,7 +22,7 @@ class AsyncImage extends Component {
                 new Animated.Value(0.0),
             placeholderOpacity: new Animated.Value(1.0),
             placeholderScale: new Animated.Value(1.0),
-            modalVisible : false
+            modalVisible: false
         }
     }
     _onLoad = () => {
@@ -71,19 +71,19 @@ class AsyncImage extends Component {
             }))
         })
     }
-   
 
 
-    onCloseImageView  = () => {
+
+    onCloseImageView = () => {
         this.setState({ modalVisible: false })
     }
 
     pressItem = () => {
         const { isNeedShowFull, imgDetailsData } = this.props
-        console.log("Press Item", this.state.loaded , imgDetailsData , imgDetailsData.length > 0)
+        console.log("Press Item", this.state.loaded, imgDetailsData, imgDetailsData.length > 0)
         if (this.state.loaded && imgDetailsData && imgDetailsData.length > 0 && isNeedShowFull) {
             console.log('PressItem')
-            this.setState({ modalVisible : true })
+            this.setState({ modalVisible: true })
         }
     }
 
@@ -108,11 +108,11 @@ class AsyncImage extends Component {
             modalVisible
         } = this.state
         // console.log('isNeedShowFull', isNeedShowFull)
-        return ( 
+        return (
             <View style={[style, { backgroundColor: 'transparent', alignItems: 'center', justifyContent: 'center', borderRadius: 0 }]} >
-             <View style={[style, { backgroundColor: 'transparent', alignItems: 'center', justifyContent: 'center', borderRadius: 0 }]} >
-                {isNeedShowFull ? 
-                    <TouchableWithoutFeedback onPress={this.pressItem}>
+                <View style={[style, { backgroundColor: 'transparent', alignItems: 'center', justifyContent: 'center', borderRadius: 0 }]} >
+                    {isNeedShowFull ?
+                        <TouchableWithoutFeedback onPress={this.pressItem}>
                             < FastImage source={source}
                                 index={Math.random(100).toString()}
                                 resizeMode={FastImage.resizeMode.cover}
@@ -128,16 +128,16 @@ class AsyncImage extends Component {
                                         }
                                     ]
                                 }
-                            onLoad={
-                                this._onLoad
-                            } 
-                            onError = {
-                                this._onError
-                            } />
-                    </TouchableWithoutFeedback>
-                
-                : 
-                    
+                                onLoad={
+                                    this._onLoad
+                                }
+                                onError={
+                                    this._onError
+                                } />
+                        </TouchableWithoutFeedback>
+
+                        :
+
                         < FastImage source={source}
                             index={Math.random(100).toString()}
                             resizeMode={FastImage.resizeMode.cover}
@@ -153,25 +153,25 @@ class AsyncImage extends Component {
                                     }
                                 ]
                             }
-                        onLoad={
-                            this._onLoad
-                        }
-                        
-                         onError={
+                            onLoad={
+                                this._onLoad
+                            }
+
+                            onError={
                                 this._onError
-                            } 
-                            />
-                   
-                
-                } 
-            {
-            isYoutubeIcon && < Icon
-                                name='youtube-play'
-                                type='font-awesome'
-                                size={50}
-                                color='#ff0000'
-                                style = {
-                                [ {
+                            }
+                        />
+
+
+                    }
+                    {
+                        isYoutubeIcon && < Icon
+                            name='youtube-play'
+                            type='font-awesome'
+                            size={50}
+                            color='#ff0000'
+                            style={
+                                [{
                                     position: 'absolute',
                                     alignSelf: 'center',
                                     paddingVertical: height(20),
@@ -180,55 +180,54 @@ class AsyncImage extends Component {
                                     zIndex: 999,
                                     elevation: 2
                                 }]
-                             }/>
-            }
-            {/* No use custom image */}
-            {/* {
-                (placeholderSource && !loaded) &&
-                < Animated.Image
-                index={Math.random(100).toString()}
-                source = {  placeholderSource  }
-                style = {
-                    [style,
-                        {
-                            opacity: placeholderOpacity,
-                            position: 'absolute',
-                            resizeMode: 'cover',
-                            overflow: 'hidden'
-                        }
-                    ]
-                }
-                />
-            } */}
+                            } />
+                    }
+                    {/* {
+                        (placeholderSource && !loaded) &&
+                        < Animated.Image
+                            index={Math.random(100).toString()}
+                            source={placeholderSource}
+                            style={
+                                [style,
+                                    {
+                                        opacity: placeholderOpacity,
+                                        position: 'absolute',
+                                        resizeMode: 'cover',
+                                        overflow: 'hidden'
+                                    }
+                                ]
+                            }
+                        />
+                    }
 
-            {
-                (!placeholderSource && !loaded) &&
-                <Animated.View
-                style = {
-                    [ style, {
-                            backgroundColor: placeholderColor || '#90a4ae',
-                            opacity: placeholderOpacity,
-                            position: 'absolute',
-                            resizeMode: 'cover',
-                            overflow: 'hidden',
-                            transform: [{
-                                scale: placeholderScale
-                            }]
-                        }
-                    ]
-                }
-                />
-            }
-               
-            </View>
-                {isNeedShowFull && <ZoomView data={imgDetailsData} modalVisible={modalVisible} onCloseImageView={this.onCloseImageView} /> }
+                    {
+                        (!placeholderSource && !loaded) &&
+                        <Animated.View
+                            style={
+                                [style, {
+                                    backgroundColor: placeholderColor || '#90a4ae',
+                                    opacity: placeholderOpacity,
+                                    position: 'absolute',
+                                    resizeMode: 'cover',
+                                    overflow: 'hidden',
+                                    transform: [{
+                                        scale: placeholderScale
+                                    }]
+                                }
+                                ]
+                            }
+                        />
+                    } */}
+
+                </View>
+                {isNeedShowFull && <ZoomView data={imgDetailsData} modalVisible={modalVisible} onCloseImageView={this.onCloseImageView} />}
             </View>
         )
     }
 }
 AsyncImage.defaultProps = {
-    isNeedShowFull :false,
-    imgDetailsData : []
+    isNeedShowFull: false,
+    imgDetailsData: []
 }
 
 export default AsyncImage

@@ -1,11 +1,12 @@
 import React from 'react'
-import { View, TouchableOpacity } from 'react-native'
+import { View, TouchableOpacity ,Platform } from 'react-native'
 import * as Animatable from 'react-native-animatable'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import styles from './styles'
 import Notification from 'react-native-in-app-notification';
 const icCustomBack = <Ionicons name='ios-arrow-back' size={30} color={'#FEFEFE'} />
 const icDownload = <Ionicons name='ios-download-outline' size={30} color={'#FEFEFE'} />
+const ISIOS = Platform.OS ==='ios'
 const zoomHeader = (props) => {
   const { showHeader, index, data, animationEnd, onClickBack, onClickDownload, setNotificatioRefs } = props
   const clickDownloadItem = () => {onClickDownload(index)}
@@ -23,11 +24,11 @@ const zoomHeader = (props) => {
           {icDownload}
       </TouchableOpacity>
       </View>
-      <Notification ref={setNotificatioRefs}  closeInterval={1000} />
+    {<Notification ref={setNotificatioRefs}  closeInterval={1000} /> }
     </Animatable.View>
   )
-  const hideData = (<View style={styles.mainHeaderContainer}> 
-    <Notification ref={setNotificatioRefs}  closeInterval={1000} />
+  const hideData = (<View style={{opacity : 0 }}> 
+    {<Notification ref={setNotificatioRefs} closeInterval={1000} />}
     </View>
   )
   return (

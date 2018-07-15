@@ -136,7 +136,9 @@ export const checkLocationSaveDataNoDispatch = async (link, functionData) => {
 export const getSettings = async(keyword = null ) => {
     //  'language': 'en-US',
    //  'region': 'US',
-    const data = JSON.parse(await AsyncStorage.getItem('Settings') ||   initialState['settings'])
+    const data = JSON.parse(await AsyncStorage.getItem('Settings')) || initialState['settings']
+    console.log('getData', await AsyncStorage.getItem('Settings'), data)
+    //const data = await AsyncStorage.getItem('Settings') || JSON.parse(initialState['settings'])
     if (keyword !== null) {
         return data[keyword]
     }

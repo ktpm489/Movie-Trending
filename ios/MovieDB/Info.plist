@@ -37,6 +37,20 @@
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string/>
+	<key>NSBluetoothPeripheralUsageDescription</key>
+	<string>Some description</string>
+	<key>NSCalendarsUsageDescription</key>
+	<string>Some description</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Please accept camera permission to scan QR code</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Some description</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>Some description</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>My description about why I need this capability</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>Some description</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Entypo.ttf</string>
