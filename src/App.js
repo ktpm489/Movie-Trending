@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {createStore, applyMiddleware} from 'redux'
 import {Provider, connect} from 'react-redux'
-import {StyleSheet, View, StatusBar} from 'react-native'
+import {StyleSheet, View, StatusBar , Keyboard } from 'react-native'
 import Orientation from 'react-native-orientation'
 import promise from 'redux-promise'
 import logger from 'redux-logger'
@@ -43,6 +43,7 @@ if (process.env['NODE_ENV'] === 'development') {
 export default class App extends Component {
   // Component did mount event
   componentDidMount () {
+    Keyboard.dismiss()
     Orientation.lockToPortrait()
   }
 

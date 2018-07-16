@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {ActivityIndicator, Text, View} from 'react-native'
+import {ActivityIndicator, Text, View, Keyboard } from 'react-native'
 import * as _ from 'lodash'
 import {connect} from 'react-redux'
 import axios from 'axios'
@@ -14,6 +14,7 @@ import style, {primaryColor} from '../styles/light-theme'
 //SAVESTORE
 class SplashScreen extends Component {
   componentDidMount = async () => {
+    Keyboard.dismiss()
     const apiKey = Constant.api_key
     let uri = `${Constant.api_base_url}/configuration?${apiKey}`
     const {onFetchCompleted, onConfigFetched, config, settings: {

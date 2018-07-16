@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { BackHandler } from 'react-native'
+import { BackHandler , Keyboard } from 'react-native'
 import { connect } from 'react-redux'
 import { addNavigationHelpers } from 'react-navigation'
 import { NavigationActions } from 'react-navigation'
@@ -23,6 +23,7 @@ const addListener = createReduxBoundAddListener('root')
 
 class AppNavigation extends Component {
   componentDidMount() {
+    Keyboard.dismiss()
     BackHandler.addEventListener('hardwareBackPress', this.onBackPress)
   }
 

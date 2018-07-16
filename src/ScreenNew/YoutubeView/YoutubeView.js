@@ -9,6 +9,8 @@ class ReactWebView extends Component {
                 <WebView
                     javaScriptEnabled={true}
                     domStorageEnabled={true}
+                    scalesPageToFit={true}
+                    startInLoadingState={true}
                     source={{ uri: 'https://m.youtube.com/' }} />
             </View>
         )

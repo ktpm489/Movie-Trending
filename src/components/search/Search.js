@@ -60,7 +60,10 @@ class Search extends Component {
       dataPersonSource: [] 
     }
   }
-
+  componentDidMount() {
+    Keyboard.dismiss()
+  }
+  
   _handleTextInput = async (event) => {
     const query = event.nativeEvent.text;
     this.setState({ query });

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, AsyncStorage, Alert, StyleSheet } from 'react-native'
+import { View, AsyncStorage, Alert, StyleSheet, Keyboard } from 'react-native'
 import _ from 'underscore'
 import Colors from '../constants/Colors'
 import RssAddInput from '../components/rsscomponents/RssAddInput'
@@ -14,6 +14,7 @@ class RssListScreen extends Component {
     }
   }
   componentWillMount() {
+    Keyboard.dismiss()
     this.getRssList()
   }
 

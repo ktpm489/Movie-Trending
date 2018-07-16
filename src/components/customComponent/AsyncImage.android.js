@@ -182,7 +182,7 @@ class AsyncImage extends Component {
                                 }]
                             } />
                     }
-                    {/* {
+                    {
                         (placeholderSource && !loaded) &&
                         < Animated.Image
                             index={Math.random(100).toString()}
@@ -217,7 +217,7 @@ class AsyncImage extends Component {
                                 ]
                             }
                         />
-                    } */}
+                    }
 
                 </View>
                 {isNeedShowFull && <ZoomView data={imgDetailsData} modalVisible={modalVisible} onCloseImageView={this.onCloseImageView} />}
