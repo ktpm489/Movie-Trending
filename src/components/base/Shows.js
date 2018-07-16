@@ -1,7 +1,8 @@
 import React, {Component} from 'react'
 import {
   ActivityIndicator,
-  ScrollView
+  ScrollView,
+  Keyboard
 } from 'react-native'
 import axios from 'axios'
 
@@ -18,6 +19,7 @@ String.prototype.toTitle = function () {
 
 class Shows extends Component {
   componentDidMount () {
+    Keyboard.dismiss()
     console.error('Need to override this in base class')
   }
 

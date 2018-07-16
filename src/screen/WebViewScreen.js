@@ -1,5 +1,5 @@
 import React , { Component} from 'react'
-import { ScrollView, Text, Linking, StyleSheet, WebView, View, ActivityIndicator } from 'react-native'
+import { ScrollView, Text, Linking, StyleSheet, WebView, View, ActivityIndicator,Keyboard } from 'react-native'
 import HTMLView from 'react-native-htmlview'
 import Colors from '../constants/Colors'
 
@@ -13,7 +13,9 @@ class WebViewScreen extends Component {
         }
     }
 
-    
+    componentDidMount() {
+        Keyboard.dismiss()
+    }
 
     onLoad = (e) => {
         console.log('Load End', e)

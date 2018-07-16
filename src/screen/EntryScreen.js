@@ -1,5 +1,5 @@
 import React , {Component} from 'react'
-import {View, StyleSheet, Share } from 'react-native'
+import {View, StyleSheet, Share,Keyboard } from 'react-native'
 import Colors from '../constants/Colors'
 import EntryDetail from '../components/rsscomponents/EntryDetail'
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -14,6 +14,7 @@ class EntryScreen extends Component {
     };
 
     componentDidMount() {
+        Keyboard.dismiss()
         this.props.navigation.setParams({ handleSave : this.handleSave })   
     }
 

@@ -295,7 +295,7 @@ class Details extends Component {
                 :
                 <View style={{ flex: 1, marginBottom: 20 }}>
                     <Text style={{ textAlign: 'left', justifyContent: 'center', alignItems: 'flex-start', paddingVertical: 10, fontSize: 20, color: 'gray' }}> Similar TV Shows</Text>
-                    <OptimizedFlatList
+                    <FlatList
                         key={'dummy_key_' + Math.random(10)}
                         style={{
                             backgroundColor: style.screenBackgroundColor,

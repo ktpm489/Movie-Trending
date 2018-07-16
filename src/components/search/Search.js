@@ -60,7 +60,7 @@ class Search extends Component {
       dataPersonSource: [] 
     }
   }
-  componentDidMount() {
+  componentWillMount() {
     Keyboard.dismiss()
   }
   
