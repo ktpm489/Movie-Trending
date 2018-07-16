@@ -5,7 +5,7 @@ import styles from './styles'
 
 const zoomPage = (props) => {
   const { data, onShowHeader, index, modalVisible, onRequestClose, renderHeader, onChangeImage, onSwipeDown } = props
-  const others = { alignItems: 'flex-start', justifyContent: 'flex-start', backgroundColor: '#303030', flex: 1 }
+  const others = { alignItems: 'flex-start', justifyContent: 'flex-start', backgroundColor: '#303030', flex: 1, width : '100%' }
   return (
     <View style={styles.mainContainer}>
       {

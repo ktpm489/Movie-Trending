@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, ScrollView, Text, Alert ,TouchableOpacity } from 'react-native';
+import { View, ScrollView, Text, Alert ,TouchableOpacity, Linking } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import { connect } from 'react-redux';
 
@@ -10,7 +10,7 @@ import style from './../../styles/light-theme';
 import language from '../../Config/languagues'
 import region from '../../Config/region'
 import { cleartItem } from '../../utilities/globalFunction'
-//import email from 'react-native-email'
+import email from 'react-native-email'
 const appInfo = [
   {
     name: 'App Name',
@@ -73,16 +73,21 @@ class Settings extends Component {
       { cancelable: false }
     )
   }
+  openUrl = async (url) => {
+    try {
+      await Linking.openURL(url)
+    }catch(error){
+      console.log(error)
+    }
+  }
 
-  handleEmail = () => {
-    // const to = ['tiaan@email.com', 'foo@bar.com'] // string or array of email addresses
-    // email(to, {
-    //   // Optional additional arguments
-    //   cc: ['bazzy@moo.com', 'doooo@daaa.com'], // string or array of email addresses
-    //   bcc: 'mee@mee.com', // string or array of email addresses
-    //   subject: 'Show how to use',
-    //   body: 'Some body right here'
-    // }).catch(console.error)
+  handleEmail = async () => {
+    // await this.openUrl('mailto:ktpm489@gmail.com')
+    const to = ['ktpm489@gmail.com'] // string or array of email addresses
+    email(to, {
+      subject: 'Feedback Movie Trending App',
+      body: 'Write you feedback here'
+    }).catch(console.error)
   }
 
   render() {
@@ -120,11 +125,16 @@ class Settings extends Component {
               Reset Data
             </Text>
           </TouchableOpacity>
+          <TouchableOpacity style={{ backgroundColor: '#D9D9D9', padding :3 ,marginTop :6 }}>
+            <Text style={[style.text, style.headingText]} onPress={this.handleEmail}>
+              Send Feedback
+            </Text>
+          </TouchableOpacity>
           <TouchableOpacity style={{ backgroundColor: '#D9D9D9', padding: 3, marginTop :6}}>
           <Text style={[style.text, style.headingText]} onPress={this.onPressSearchYoutube}>
               Search Youtube
             </Text>
-            </TouchableOpacity>
+          </TouchableOpacity>
         </ScrollView>
       </View>
     );
