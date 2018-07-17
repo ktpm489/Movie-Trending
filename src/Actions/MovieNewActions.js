@@ -21,7 +21,7 @@ export function retrieveMoviesGenres() {
         //         dispatch(retrieveMoviesGenresSuccess(res));
         //     })
         //     .catch(error => {
-        //         console.log(error); //eslint-disable-line
+        //         // console.log(error); //eslint-disable-line
         //     });
       return  checkLocationSaveData(linkData, retrieveMoviesGenresSuccess, dispatch )
     };
@@ -42,7 +42,7 @@ export function  retrievePopularMovies(page) {
         //         dispatch(retrievePopularMoviesSuccess(res));
         //     })
         //     .catch(error => {
-        //         console.log('Popular', error); //eslint-disable-line
+        //         // console.log('Popular', error); //eslint-disable-line
         //     });
         let settings = await getSettings(LANGUAGE_KEY);
         return checkLocationSaveData(`${Constant.TMDB_URL}/movie/popular?api_key=${Constant.TMDB_API_KEY}&language=${settings}&page=${page}`, retrievePopularMoviesSuccess, dispatch)
@@ -64,7 +64,7 @@ export function retrieveNowPlayingMovies(page) {
         //         dispatch(retrieveNowPlayingMoviesSuccess(res));
         //     })
         //     .catch(error => {
-        //         console.log('Now Playing', error); //eslint-disable-line
+        //         // console.log('Now Playing', error); //eslint-disable-line
         //     });
         let settings = await getSettings(LANGUAGE_KEY);
         return checkLocationSaveData(`${Constant.TMDB_URL}/movie/now_playing?api_key=${Constant.TMDB_API_KEY}&language=${settings}&page=${page}`, retrieveNowPlayingMoviesSuccess, dispatch)
@@ -81,13 +81,13 @@ export function retrieveMoviesListSuccess(res) {
 
 export function retrieveMoviesList(type, page) {
     return async function (dispatch) {
-        console.log('Link RetriveMoviesList', Constant.TMDB_URL)
+        // console.log('Link RetriveMoviesList', Constant.TMDB_URL)
         // return axios.get(`${Constant.TMDB_URL}/movie/${type}?api_key=${Constant.TMDB_API_KEY}&page=${page}`)
         //     .then(res => {
         //         dispatch(retrieveMoviesListSuccess(res));
         //     })
         //     .catch(error => {
-        //         console.log('Movies List', error); //eslint-disable-line
+        //         // console.log('Movies List', error); //eslint-disable-line
         //     });
         let settings = await getSettings(LANGUAGE_KEY);
         return checkLocationSaveData(`${Constant.TMDB_URL}/movie/${type}?api_key=${Constant.TMDB_API_KEY}&language=${settings}&page=${page}`, retrieveMoviesListSuccess, dispatch)
@@ -109,7 +109,7 @@ export function retrieveMoviesSearchResults(query, page) {
         //         dispatch(retrieveMoviesSearchResultsSuccess(res));
         //     })
         //     .catch(error => {
-        //         console.log('Movies Search Results', error); //eslint-disable-line
+        //         // console.log('Movies Search Results', error); //eslint-disable-line
         //     });
         let settings = await getSettings(LANGUAGE_KEY);
         return checkLocationSaveData(`${Constant.TMDB_URL}/search/movie?api_key=${Constant.TMDB_API_KEY}&query=${query}&language=${settings}&page=${page}`, retrieveMoviesSearchResultsSuccess, dispatch)
@@ -131,10 +131,10 @@ export function retrieveMovieDetails(movieId) {
         //         dispatch(retrieveMovieDetailsSuccess(res));
         //     })
         //     .catch(error => {
-        //         console.log('Movie Details', error); //eslint-disable-line
+        //         // console.log('Movie Details', error); //eslint-disable-line
         //     });
-        let settings = await getSettings(LANGUAGE_KEY);
-        //console.log('settings', settings)
+       // let settings = await getSettings(LANGUAGE_KEY);
+        //// console.log('settings', settings)
         return checkLocationSaveData(`${Constant.TMDB_URL}/movie/${movieId}?api_key=${Constant.TMDB_API_KEY}&append_to_response=casts,images,videos`, retrieveMovieDetailsSuccess, dispatch)
     };
 }
@@ -156,10 +156,10 @@ export function retrieveMovieReviewDetails(movieId,page) {
         //         dispatch(retrieveMovieReviewSuccess(res));
         //     })
         //     .catch(error => {
-        //         console.log('Movie  Review Details', error); //eslint-disable-line
+        //         // console.log('Movie  Review Details', error); //eslint-disable-line
         //     });
         let settings = await getSettings(LANGUAGE_KEY);
-       // console.log('settings', settings)
+       // // console.log('settings', settings)
         return checkLocationSaveData(`${Constant.TMDB_URL}/movie/${movieId}/reviews?api_key=${Constant.TMDB_API_KEY}&language=${settings}&page=${page}`, retrieveMovieReviewSuccess, dispatch)
     };
 }
@@ -177,14 +177,14 @@ export function retrieveMovieSimilarDetails(movieId, page) {
     return   async function (dispatch) {
         let settings = await getSettings(LANGUAGE_KEY);
         let settingData = await getSettings()
-       console.log('settings', settingData)
+       // console.log('settings', settingData)
         let linkData = `${Constant.TMDB_URL}/movie/${movieId}/similar?api_key=${Constant.TMDB_API_KEY}&language=${settings}&page=${page}`
        return checkLocationSaveData(linkData, retrieveMovieSimilarSuccess,dispatch)
     
-        // console.log('Link Similar', linkData)
+        // // console.log('Link Similar', linkData)
         // let currentData =   await getAllItemFromStorage(linkData)
         // if (currentData &&  usedLocalData(currentData)) {
-        //     console.log('Use current Data', currentData)
+        //     // console.log('Use current Data', currentData)
         //     return dispatch(retrieveMovieSimilarSuccess(currentData));
         // } else {
         //     return axios.get(linkData)
@@ -193,7 +193,7 @@ export function retrieveMovieSimilarDetails(movieId, page) {
         //             dispatch(retrieveMovieSimilarSuccess(res));
         //         })
         //         .catch(error => {
-        //             console.log('Movie  Similar Details', error); //eslint-disable-line
+        //             // console.log('Movie  Similar Details', error); //eslint-disable-line
         //         });
         // }
         

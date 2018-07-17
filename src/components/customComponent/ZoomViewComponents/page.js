@@ -8,9 +8,7 @@ const zoomPage = (props) => {
   const others = { alignItems: 'flex-start', justifyContent: 'flex-start', backgroundColor: '#303030', flex: 1, width : '100%' }
   return (
     <View style={styles.mainContainer}>
-      {
-        modalVisible && <StatusBar backgroundColor={'black'} barStyle={'light-content'} />
-      }
+        <StatusBar hidden/>
 
       <Modal
         visible={modalVisible}

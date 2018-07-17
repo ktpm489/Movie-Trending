@@ -3,6 +3,7 @@ import {StyleSheet, Platform} from 'react-native'
 import APP_CONSTANT from './../utilities/constants.js'
 const marginTop = APP_CONSTANT.height / APP_CONSTANT.goldenRatio
 const primaryColor = '#32CD32'
+const primaryColor2 = '#41f4a6'
 const headerBackgroundColor = '#F1F1F1'
 const headerBorderColor = '#E1E1E1'
 const backgroundColor = '#FFFFFF'
@@ -147,7 +148,7 @@ const style = StyleSheet.create({
     fontWeight: '500'
   },
   startupScreenTextProps: {
-    color: primaryColor,
+    color: primaryColor2,
     textAlign: 'center'
   },
   flexContainer: {
@@ -247,6 +248,6 @@ const StackNavHeaderStyles = {
   headerTintColor: primaryColor
 }
 
-export {StackNavHeaderStyles, primaryColor, marginTop, headerBackgroundColor, headerBorderColor}
+export { StackNavHeaderStyles, primaryColor,  primaryColor2, marginTop, headerBackgroundColor, headerBorderColor}
 
 export default style

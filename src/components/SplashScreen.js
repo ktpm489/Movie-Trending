@@ -10,7 +10,7 @@ import {getUriPopulated} from '../utilities/utils'
 import Constant from '../utilities/constants'
 import { checkLocationSaveDataNoDispatch, saveItemToStorageNoCheck, usedLocalData, getAllItemFromStorage } from '../utilities/globalFunction'
 // import style, {primaryColor} from '../styles/light-theme'
-import style, {primaryColor} from '../styles/light-theme'
+import style, {primaryColor2} from '../styles/light-theme'
 //SAVESTORE
 class SplashScreen extends Component {
   componentDidMount = async () => {
@@ -84,7 +84,7 @@ class SplashScreen extends Component {
           xlarge
           rounded
           containerStyle={{
-          backgroundColor: primaryColor
+          backgroundColor: primaryColor2
         }}
           title='M'
           titleStyle={{
@@ -98,7 +98,7 @@ class SplashScreen extends Component {
           marginTop: 50,
           marginBottom: 50
         }}>
-          <ActivityIndicator size='large' color={primaryColor}/>
+          <ActivityIndicator size='large' color={primaryColor2}/>
         </View>
         <Text style={[style.titleText, style.startupScreenTextProps]}>
           For everyone in love with movies and TV Shows
