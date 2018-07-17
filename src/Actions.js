@@ -129,8 +129,8 @@ export const castDetailsFetched = (details, category, screen) => ({
 
 export const FETCH_CAST_DETAILS = 'FETCH_CAST_DETAILS'
 
-export async  function fetchCastDetails (castId) {
-  const request =  await getCastDetails(castId);
+export function fetchCastDetails (castId) {
+  const request = getCastDetails(castId);
   
   return {
     type: FETCH_CAST_DETAILS,
@@ -182,7 +182,7 @@ export const FETCH_SEASON_DETAILS = 'FETCH_SEASON_DETAILS';
 
 export const fetchSeasonDetails =  async (showId, season_number, success, err) => {
   const request = await getSeasonDetails(showId, season_number);
-
+  
   return {
     type: FETCH_SEASON_DETAILS,
     payload: request

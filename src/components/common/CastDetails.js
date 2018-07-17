@@ -19,12 +19,12 @@ import {
   selectedMovie, 
   searchItemDetailsFetched, 
   fetchCastDetails} from '../../Actions'
-
+import { checkLocationSaveData, saveItemToStorageNoCheck, usedLocalData, getAllItemFromStorage, getSettings }  from '../../utilities/globalFunction'
 import style, {primaryColor, StackNavHeaderStyles} from '../../styles/light-theme'
 
 class CastDetails extends Component {
-  componentDidMount = async ()  => {
-   await  this.props.fetchCastDetails(this.props.details.id)
+  componentDidMount =  async ()  => {
+    this.props.fetchCastDetails(this.props.details.id)
 
     const baseUrl = Constant.api_base_url
     const apiKey = Constant.api_key
@@ -42,30 +42,83 @@ class CastDetails extends Component {
     } = this.props
 
     if (currentTab !== 'Search') // search tab already has the data available
-    { this.props.onFetching(currentTab) }
+    { 
+      this.props.onFetching(currentTab) 
+    }
 
     // fetch Cast Details
-    axios.get(`${baseUrl}${castDetailUrl}?${apiKey}`)
+    let castDetailLink  = `${baseUrl}${castDetailUrl}?${apiKey}`
+
+    let currentCastDetail = await getAllItemFromStorage(castDetailLink)
+    if (currentCastDetail && usedLocalData(currentCastDetail)) {
+      console.log('Use currentCastDetail', currentCastDetail)
+      let castData = currentCastDetail.data
+      castData.imageSrc = `${secureBaseUrl}${posterSizeForBackground}${castData['profile_path']}`
+      this.props.onDetailsFetched(castData, 'bio', this.props.currentTab)
+    } else {
+     axios.get(`${baseUrl}${castDetailUrl}?${apiKey}`)
       .then(({data}) => {
+        saveItemToStorageNoCheck(castDetailLink, data)
         data.imageSrc = `${secureBaseUrl}${posterSizeForBackground}${data['profile_path']}`
         this.props.onDetailsFetched(data, 'bio', this.props.currentTab)
       }).catch((error) => {
         console.error(error.response)
       })
+    }
+
+
+    // axios.get(`${baseUrl}${castDetailUrl}?${apiKey}`)
+    //   .then(({data}) => {
+    //     data.imageSrc = `${secureBaseUrl}${posterSizeForBackground}${data['profile_path']}`
+    //     this.props.onDetailsFetched(data, 'bio', this.props.currentTab)
+    //   }).catch((error) => {
+    //     console.error(error.response)
+    //   })
+
+
 
     // fetch Casts other movies
-    axios.get(`${baseUrl}${castKnownForUrl}?${apiKey}`)
-      .then(({data}) => {
-        const movieList = [
-          ...data.cast,
-          ...data.crew
-        ]
-        this.props.onDetailsFetched(getUriPopulated(movieList, config, 'posterSizeForImageList'),
-          'movies',
-          this.props.currentTab)
-      }).catch((error) => {
-        console.error(error)
-      })
+    let otherCastLink = `${baseUrl}${castKnownForUrl}?${apiKey}`
+    let otherCastData = await getAllItemFromStorage(otherCastLink)
+
+    if (otherCastData && usedLocalData(otherCastData)) {
+      console.log('Use otherCastData', otherCastData)
+      let data = otherCastData.data
+      const movieList = [
+        ...data.cast,
+        ...data.crew
+      ]
+      this.props.onDetailsFetched(getUriPopulated(movieList, config, 'posterSizeForImageList'),
+        'movies',
+        this.props.currentTab)
+      } else {
+        axios.get(`${baseUrl}${castKnownForUrl}?${apiKey}`)
+              .then(({data}) => {
+                saveItemToStorageNoCheck(otherCastLink, data)
+                const movieList = [
+                  ...data.cast,
+                  ...data.crew
+                ]
+                this.props.onDetailsFetched(getUriPopulated(movieList, config, 'posterSizeForImageList'),
+                  'movies',
+                  this.props.currentTab)
+              }).catch((error) => {
+                console.error(error)
+              })
+      }
+
+    // axios.get(`${baseUrl}${castKnownForUrl}?${apiKey}`)
+    //   .then(({data}) => {
+    //     const movieList = [
+    //       ...data.cast,
+    //       ...data.crew
+    //     ]
+    //     this.props.onDetailsFetched(getUriPopulated(movieList, config, 'posterSizeForImageList'),
+    //       'movies',
+    //       this.props.currentTab)
+    //   }).catch((error) => {
+    //     console.error(error)
+    //   })
   }
 
   showDetails(item) {
@@ -78,9 +131,9 @@ class CastDetails extends Component {
 
     if (isFetching) {
       return (
-        <ScrollView style={style.screenBackgroundColor}>
+        <View style={[style.screenBackgroundColor, { width : '100%', height : '100%', justifyContent: 'center' ,alignSelf :'center', alignItems :'center'}]}>
           <ActivityIndicator size='large' color={primaryColor} />
-        </ScrollView>
+        </View>
       )
     }
 

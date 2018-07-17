@@ -430,7 +430,6 @@ class Search extends Component {
           <View style={styles.searchboxBorder}>
             <TextInput
               style={[styles.textInput]}
-              autoFocus
               returnKeyType={'search'}
               placeholder="Enter Keyword Search" placeholderTextColor="white"
               value={this.state.query}

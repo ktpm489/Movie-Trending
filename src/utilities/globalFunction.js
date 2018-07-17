@@ -98,8 +98,8 @@ export const drawImageScaled = (img) => {
 export const usedLocalData = (item) => {
   //  console.log('item current Data', item, item.date)
   // let result = item && new Date() - item.date < 400000
-    console.log('usedLocal Data', (new Date().getTime() - new Date(item.date).getTime() < 300000))
-    return (new Date().getTime() - item.date) < 300000
+  //  console.log('usedLocal Data', (new Date().getTime() - new Date(item.date).getTime() < 500000))
+    return (new Date().getTime() - item.date) < 500000
 }
 
 export const checkLocationSaveData =  async (link, functionData, dispatchFunction) => {
