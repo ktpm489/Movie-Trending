@@ -11,7 +11,7 @@ import axios from 'axios'
 import Constant from '../../utilities/constants'
 import CardItem from '../customComponent/CardItem/CardItem'
 import Icon from 'react-native-vector-icons/Ionicons'
-import { checkLocationSaveData, saveItemToStorageNoCheck, usedLocalData, getAllItemFromStorage, getSettings  } from '../../utilities/globalFunction'
+import { checkLocationSaveData, saveItemToStorageNoCheck, usedLocalData, getAllItemFromStorage, getSettings, calculateRating } from '../../utilities/globalFunction'
 import { LANGUAGE_KEY } from '../../utilities/constants'
 // return device width and height
 const {height, width} = Dimensions.get('window')

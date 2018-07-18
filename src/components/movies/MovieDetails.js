@@ -13,7 +13,7 @@ import { bindActionCreators } from 'redux'
 import { NavigationActions } from 'react-navigation'
 import { selectedMovie } from '../../Actions'
 import { LANGUAGE_KEY } from '../../utilities/constants'
-import { checkLocationSaveData, saveItemToStorageNoCheck, usedLocalData, getAllItemFromStorage, getSettings } from '../../utilities/globalFunction'
+import { checkLocationSaveData, saveItemToStorageNoCheck, usedLocalData, getAllItemFromStorage, getSettings, calculateRating } from '../../utilities/globalFunction'
 
 class MovieDetails extends Details {
 
@@ -32,6 +32,7 @@ class MovieDetails extends Details {
     const movieCreditsUrl = `${baseUrl}${movie_url}${movieId}/credits?${apiKey}&language=${settings}`
 
    await this.fetchDetails(movieUrl, movieCreditsUrl , movieId)
+    await calculateRating()
     //  this.retrieveSimilarMovieList()
    // this.forceUpdate()
   }

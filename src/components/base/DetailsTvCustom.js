@@ -26,7 +26,7 @@ import Constant from '../../utilities/constants'
 import { getUriPopulated } from '../../utilities/utils';
 // import MovieSimilar from './movieDetailComponent/tvFlatlist'
 import ScrollableTabView, { DefaultTabBar, } from 'react-native-scrollable-tab-view'
-import { checkLocationSaveData, saveItemToStorageNoCheck, usedLocalData, getAllItemFromStorage, getSettings } from '../../utilities/globalFunction'
+import { checkLocationSaveData, saveItemToStorageNoCheck, usedLocalData, getAllItemFromStorage, getSettings, calculateRating } from '../../utilities/globalFunction'
 import { LANGUAGE_KEY } from '../../utilities/constants'
 
 const heightScreen = Dimensions.get('window').height
@@ -64,6 +64,7 @@ class Details extends Component {
             similarPageResults: [],
             onEndReachedCalledDuringMomentum: true
         })
+        calculateRating()
     }
 
     getSpecialComponent() {

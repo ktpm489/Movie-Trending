@@ -7,24 +7,25 @@ const styles = StyleSheet.create({
     },
     textInput: {
         backgroundColor: '#E3E2E3',
+        paddingLeft :2,
         ...Platform.select({
             ios: {
                 height: 30,
             },
             android: {
-                height: 48
+                height: 35
             }
         })
     },
     searchboxBorder: {
         borderRadius: 3,
         backgroundColor: '#E3E2E3',
-        paddingHorizontal: 10,
+        paddingHorizontal: 5,
         marginHorizontal: 14,
     },
     searchbox: {
        // backgroundColor: '#191919',
-        paddingHorizontal: 22,
+        paddingHorizontal: 10,
         paddingVertical: 2,
        // marginBottom: 16
     },

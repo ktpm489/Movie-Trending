@@ -1,6 +1,6 @@
 import React from 'react'
 import axios from 'axios'
-import { AsyncStorage, Dimensions } from 'react-native'
+import { AsyncStorage, Dimensions, Alert, Linking } from 'react-native'
 import _ from 'underscore'
 import initialState from '../State'
 const patternParseYoutube = /^.*(?:(?:youtu\.be\/|v\/|vi\/|u\/\w\/|embed\/)|(?:(?:watch)?\?v(?:i)?=|\&v(?:i)?=))([^#\&\?]*).*/
@@ -63,8 +63,9 @@ export const resetItem = (keyword) => {
  //clear all data
  export const cleartItem = async () => {
     // await AsyncStorage.clear()
+    let ratingApp = await getRating() || 'false'
     await AsyncStorage.getAllKeys().then(AsyncStorage.multiRemove)
-
+     await saveItemToStorageNoCheck('Ratings', ratingApp)
 
  }
 export const getItemFromStorage = (keyword, object) => {
@@ -149,6 +150,41 @@ export const getSettings = async(keyword = null ) => {
     return data
 }
 
+export const getRating = async ()=> {
+    const data = JSON.parse(await AsyncStorage.getItem('Ratings')).data || 'false'
+    return data
+}
+export const ratingLink = () => {
+    saveItemToStorageNoCheck('Ratings', 'true')
+    console.log('rating Link App')
+    return Linking.openURL("market://details?id=com.facebook.orca");
+}
+
+export const showRatingApp = () => {
+    Alert.alert(
+        'Rating Movie 24h Trending Appp',
+        'How about a rating on the Google Play Store, then ?',
+        [
+            { text: 'No, thanks', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
+            { text: 'Ok,sure', onPress: () => ratingLink(), style: 'ok'},
+        ],
+        { cancelable: false }
+    )
+}
+
+const getRandomInt = (max) => {
+    return Math.floor(Math.random() * Math.floor(max))
+}
+
+export const calculateRating =  async () =>{
+   
+    const showRating = await getRating()
+    console.log('Rating', showRating)
+    // && getRandomInt(10) % 3 === 0
+    if (showRating.data === 'false' && getRandomInt(10) % 3 === 0) {
+        showRatingApp()
+    }
+}
 
 
 module.exports = {
@@ -166,5 +202,9 @@ module.exports = {
     drawImageScaled,
     checkLocationSaveData,
     getSettings,
-    cleartItem
+    cleartItem,
+    ratingLink,
+    getRating,
+    showRatingApp,
+    calculateRating
 }

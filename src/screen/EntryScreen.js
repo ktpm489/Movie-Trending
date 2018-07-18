@@ -22,7 +22,7 @@ class EntryScreen extends Component {
         const { entry } = this.props.navigation.state.params
         let shareData = {
             title: entry.title,
-            message: entry.date || entry.pubDate,
+            message: entry.title,
             url: entry.link
 
         };

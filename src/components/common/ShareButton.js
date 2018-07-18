@@ -28,7 +28,7 @@ const ShareButton = (props) => {
       color='#32CD32'
       containerStyle={{ paddingRight :20}}
       size={30}
-      underlayColor='#222222'
+     // underlayColor='#222222'
       onPress={() => { onShare(name, type, id) }} />
   )
 }

@@ -87,3 +87,6 @@ NSURL *jsCodeLocation;
 <div style="text-align:center">
 	<img src="screenshots/demo.gif" />
 </div>
+
+
+/// https://stackoverflow.com/questions/40262036/react-native-how-to-open-google-play-store-from-react-native-app

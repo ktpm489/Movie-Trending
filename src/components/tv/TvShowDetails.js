@@ -8,7 +8,7 @@ import { selectedTvShow } from '../../Actions'
 import * as _ from 'lodash'
 import { getUriPopulated } from '../../utilities/utils'
 import { connect } from 'react-redux'
-import { checkLocationSaveData, saveItemToStorageNoCheck, usedLocalData, getAllItemFromStorage, getSettings } from '../../utilities/globalFunction'
+import { checkLocationSaveData, saveItemToStorageNoCheck, usedLocalData, getAllItemFromStorage, getSettings ,calculateRating } from '../../utilities/globalFunction'
 import { LANGUAGE_KEY } from '../../utilities/constants'
 import {
   castSelected,
@@ -31,6 +31,7 @@ class TvShowDetails extends Details {
     const tvShowCreditsUrl = `${baseUrl}${tvShow_url}${tvShowId}/credits?${apiKey}&language=${settings}`
 
      await this.fetchDetails(tvShowUrl, tvShowCreditsUrl)
+     await calculateRating()
   }
 
   showSeasonDetails (season) {

@@ -163,7 +163,7 @@ export const fetchSettingsAction = async () => {
 export const saveSettingsAction = async (values = initialState['settings']) => {
   try {
     await AsyncStorage.setItem(SETTINGS_KEY, JSON.stringify(values))
-    const payload = JSON.parse(await AsyncStorage.getItem(SETTINGS_KEY))
+    const payload = JSON.parse(await AsyncStorage.getItem(SETTINGS_KEY)) 
 
     return {
       type: SAVE_SETTINGS,

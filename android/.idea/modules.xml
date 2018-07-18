@@ -4,8 +4,15 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/MovieDB.iml" filepath="$PROJECT_DIR$/MovieDB.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../node_modules/react-native-config/android/react-native-config.iml" filepath="$PROJECT_DIR$/../node_modules/react-native-config/android/react-native-config.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../node_modules/react-native-fast-image/android/react-native-fast-image.iml" filepath="$PROJECT_DIR$/../node_modules/react-native-fast-image/android/react-native-fast-image.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../node_modules/react-native-fetch-blob/android/react-native-fetch-blob.iml" filepath="$PROJECT_DIR$/../node_modules/react-native-fetch-blob/android/react-native-fetch-blob.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../node_modules/react-native-fs/android/react-native-fs.iml" filepath="$PROJECT_DIR$/../node_modules/react-native-fs/android/react-native-fs.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../node_modules/react-native-orientation/android/react-native-orientation.iml" filepath="$PROJECT_DIR$/../node_modules/react-native-orientation/android/react-native-orientation.iml" />
       <module fileurl="file://$PROJECT_DIR$/../node_modules/react-native-orientation/android/react-native-orientation.iml" filepath="$PROJECT_DIR$/../node_modules/react-native-orientation/android/react-native-orientation.iml" />
       <module fileurl="file://$PROJECT_DIR$/../node_modules/react-native-vector-icons/android/react-native-vector-icons.iml" filepath="$PROJECT_DIR$/../node_modules/react-native-vector-icons/android/react-native-vector-icons.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../node_modules/react-native-vector-icons/android/react-native-vector-icons.iml" filepath="$PROJECT_DIR$/../node_modules/react-native-vector-icons/android/react-native-vector-icons.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../node_modules/react-native-youtube/android/react-native-youtube.iml" filepath="$PROJECT_DIR$/../node_modules/react-native-youtube/android/react-native-youtube.iml" />
     </modules>
   </component>
 </project>

@@ -13,7 +13,7 @@ import { bindActionCreators } from 'redux'
 import Constant from '../../utilities/constants'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { FlatImageList } from '../common/ImageList'
-import { checkLocationSaveData, saveItemToStorageNoCheck, usedLocalData, getAllItemFromStorage, getSettings } from '../../utilities/globalFunction'
+import { checkLocationSaveData, saveItemToStorageNoCheck, usedLocalData, getAllItemFromStorage, getSettings, calculateRating } from '../../utilities/globalFunction'
 import { LANGUAGE_KEY } from '../../utilities/constants'
 // return device width and height
 const { height, width } = Dimensions.get('window')
@@ -78,7 +78,8 @@ class AllMovies extends Component {
     this._retrieveMoviesList()
   }
 
-  componentDidMount() {
+  componentDidMount = async () => {
+    await calculateRating()
     this.props.navigation.setParams({ handleSave: this.saveDetails });
 
   }
