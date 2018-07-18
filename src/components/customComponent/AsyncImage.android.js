@@ -6,7 +6,8 @@ import {
 } from 'react-native-elements'
 import {
     Animated,
-    View, TouchableWithoutFeedback
+    View, TouchableWithoutFeedback,
+    StatusBar
 } from 'react-native'
 import ZoomView from './ZoomViewComponents'
 import { height } from './ZoomViewComponents/globalStyles';
@@ -110,6 +111,7 @@ class AsyncImage extends Component {
         // console.log('isNeedShowFull', isNeedShowFull)
         return (
             <View style={[style, { backgroundColor: 'transparent', alignItems: 'center', justifyContent: 'center', borderRadius: 0 }]} >
+                <StatusBar hidden={true}/>
                 <View style={[style, { backgroundColor: 'transparent', alignItems: 'center', justifyContent: 'center', borderRadius: 0 }]} >
                     {isNeedShowFull ?
                         <TouchableWithoutFeedback onPress={this.pressItem}>

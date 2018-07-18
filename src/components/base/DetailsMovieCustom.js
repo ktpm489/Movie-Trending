@@ -8,7 +8,8 @@ import {
   FlatList,
   Linking,
   Platform,
-  Dimensions
+  Dimensions,
+  StatusBar
 } from 'react-native';
 import axios from 'axios'
 import style, { marginTop } from '../../styles/light-theme'
@@ -293,6 +294,7 @@ class Details extends Component {
         <View style={styles.progressBar}><ProgressBar /></View>
         :
         <View style={{ flex: 1, marginBottom: 20 }}>
+          <StatusBar hidden={true}/>
           <Text style={{ textAlign: 'left', justifyContent: 'center', alignItems: 'flex-start', paddingVertical: 10, fontSize: 20 ,color :'gray' }}> Similar Movie</Text>
           <FlatList
             key={'dummy_key_' + Math.random(10)}
