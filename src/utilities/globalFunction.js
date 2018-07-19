@@ -152,7 +152,7 @@ export const getSettings = async(keyword = null ) => {
 
 export const getRating = async ()=> {
     const dataStorage = JSON.parse(await AsyncStorage.getItem('Ratings')) 
-   let data =   dataStorage ? dataFromStorage.data || 'false'
+   let data =  dataStorage ?(dataFromStorage.data  || 'false'): 'false'
     return data
 }
 export const ratingLink = () => {
