@@ -354,6 +354,7 @@ class Details extends Component {
         console.log('Render Details Movies')
         return (
             <View style={[{ flex: 1 }, style.screenBackgroundColor]}>
+                <StatusBar hidden={true}/>
                 <BackgroundImage
                     uri={bgImage}
                     opacity={this.state.opacity}

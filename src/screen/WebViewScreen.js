@@ -1,8 +1,8 @@
 import React , { Component} from 'react'
-import { ScrollView, Text, Linking, StyleSheet, WebView, View, ActivityIndicator,Keyboard } from 'react-native'
+import { ScrollView, Text, Linking, StyleSheet, View, ActivityIndicator,Keyboard } from 'react-native'
 import HTMLView from 'react-native-htmlview'
 import Colors from '../constants/Colors'
-
+import WebView from 'react-native-android-fullscreen-webview-video'
 class WebViewScreen extends Component {
     constructor(props){
         super(props)
@@ -50,6 +50,14 @@ class WebViewScreen extends Component {
         // https://stackoverflow.com/questions/38963046/can-i-use-webview-inside-a-view-react-native
         <View style={styles.containerMain}>
                 <WebView 
+                javaScriptEnabled={true}
+                javaScriptEnabledAndroid={true}
+                domStorageEnabled={true}
+                scalesPageToFit={true}
+                nativeConfig={true}
+                allowUniversalAccessFromFileURLs={true}
+                mixedContentMode={'compatibility'}
+                startInLoadingState={true}
                 renderLoading={this.renderLoading}
                 renderError={this.renderError}
                 startInLoadingState={true}

@@ -291,7 +291,9 @@ class Details extends Component {
 
     return (
       this.state.isLoading ?
-        <View style={styles.progressBar}><ProgressBar /></View>
+        <View style={styles.progressBar}>
+          <StatusBar hidden={true} />
+        <ProgressBar /></View>
         :
         <View style={{ flex: 1, marginBottom: 20 }}>
           <StatusBar hidden={true}/>

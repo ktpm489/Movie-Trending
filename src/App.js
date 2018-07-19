@@ -13,12 +13,13 @@ import thunk from 'redux-thunk';
 class Screen extends Component {
   render () {
     const {isFetching, onLayoutChange} = this.props
-    const color = isFetching ? "#000000" : "#222222"
+    const color = isFetching ? "#222222" : "#222222"
     return (
       <View style={styles.container} onLayout={onLayoutChange}>
          <StatusBar
-           backgroundColor={color}
-           barStyle="light-content"
+          //  backgroundColor={color}
+          // barStyle="light-content"
+           hidden={true}
          />
         { isFetching ? <SplashScreen /> : <AppNavigation /> }
       </View>
@@ -63,6 +64,6 @@ export default class App extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#040404'
+    backgroundColor: '#222222'
   }
 })

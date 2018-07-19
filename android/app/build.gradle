@@ -148,6 +148,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-android-fullscreen-webview-video')
     compile project(':react-native-fast-image')
     compile project(':react-native-fs')
     compile project(':react-native-youtube')

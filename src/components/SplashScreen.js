@@ -92,7 +92,7 @@ class SplashScreen extends Component {
           fontSize: 100
         }}/>
         <Text style={[style.appName, style.startupScreenTextProps]}>
-          MovieDB
+          Movie 24h Trending
         </Text>
         <View style={{
           marginTop: 50,

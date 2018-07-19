@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, TouchableOpacity ,Platform } from 'react-native'
+import { View, TouchableOpacity ,Platform, StatusBar} from 'react-native'
 import * as Animatable from 'react-native-animatable'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import styles from './styles'

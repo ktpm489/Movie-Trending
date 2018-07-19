@@ -3,6 +3,7 @@ package com.moviedb;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.airship.customwebview.CustomWebViewPackage;
 import com.dylanvann.fastimage.FastImageViewPackage;
 import com.rnfs.RNFSPackage;
 import com.inprogress.reactnativeyoutube.ReactNativeYouTube;
@@ -30,6 +31,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new CustomWebViewPackage(),
             new FastImageViewPackage(),
             new RNFSPackage(),
             new ReactNativeYouTube(),
