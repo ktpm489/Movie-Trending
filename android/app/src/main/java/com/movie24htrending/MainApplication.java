@@ -1,4 +1,4 @@
-package com.moviedb;
+package com.movie24htrending;
 
 import android.app.Application;
 

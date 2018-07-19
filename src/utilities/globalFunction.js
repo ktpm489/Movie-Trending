@@ -151,13 +151,14 @@ export const getSettings = async(keyword = null ) => {
 }
 
 export const getRating = async ()=> {
-    const data = JSON.parse(await AsyncStorage.getItem('Ratings')).data || 'false'
+    const dataStorage = JSON.parse(await AsyncStorage.getItem('Ratings')) 
+   let data =   dataStorage ? dataFromStorage.data || 'false'
     return data
 }
 export const ratingLink = () => {
     saveItemToStorageNoCheck('Ratings', 'true')
     console.log('rating Link App')
-    return Linking.openURL("market://details?id=com.facebook.orca");
+    return Linking.openURL("market://details?id=com.movie24htrending");
 }
 
 export const showRatingApp = () => {
@@ -166,22 +167,23 @@ export const showRatingApp = () => {
         'How about a rating on the Google Play Store, then ?',
         [
             { text: 'No, thanks', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
-            { text: 'Ok,sure', onPress: () => ratingLink(), style: 'ok'},
+            { text: 'Ok, sure', onPress: () => ratingLink(), style: 'ok'},
         ],
         { cancelable: false }
     )
 }
 
-const getRandomInt = (max) => {
-    return Math.floor(Math.random() * Math.floor(max))
+const getRandomInt = () => {
+    return Math.floor((Math.random() * 5) + 1) === 3
 }
 
 export const calculateRating =  async () =>{
    
     const showRating = await getRating()
-    console.log('Rating', showRating)
+    // const showRating = 'false'
+    console.log('Rating')
     // && getRandomInt(10) % 3 === 0
-    if (showRating.data === 'false' && getRandomInt(10) % 3 === 0) {
+    if (showRating === 'false' && getRandomInt()) {
         showRatingApp()
     }
 }

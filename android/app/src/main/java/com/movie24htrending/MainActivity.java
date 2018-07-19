@@ -1,4 +1,4 @@
-package com.moviedb;
+package com.movie24htrending;
 
 import com.facebook.react.ReactActivity;
 

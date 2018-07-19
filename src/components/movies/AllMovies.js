@@ -78,8 +78,8 @@ class AllMovies extends Component {
     this._retrieveMoviesList()
   }
 
-  componentDidMount = async () => {
-    await calculateRating()
+  componentDidMount = () => {
+    // await calculateRating()
     this.props.navigation.setParams({ handleSave: this.saveDetails });
 
   }

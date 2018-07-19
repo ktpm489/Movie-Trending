@@ -119,6 +119,7 @@
     <orderEntry type="module" module-name="react-native-fs" exported="" />
     <orderEntry type="module" module-name="react-native-fast-image" exported="" />
     <orderEntry type="module" module-name="react-native-youtube" exported="" />
+    <orderEntry type="module" module-name="react-native-android-fullscreen-webview-video" exported="" />
     <orderEntry type="module" module-name="react-native-vector-icons" exported="" />
     <orderEntry type="module" module-name="react-native-config" exported="" />
     <orderEntry type="module" module-name="react-native-fetch-blob" exported="" />
